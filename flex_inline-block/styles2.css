@@ -1,0 +1,24 @@
+div, a {
+    margin: 5px;
+    padding: 5px;
+}
+
+header {
+    background: lightsalmon;
+    text-align: center;
+}
+
+nav {
+    background-color: lightcoral;
+}
+
+nav > a {
+    display: inline-block;
+}
+
+content > * {
+    display: inline-block;
+    width: 48%;
+    vertical-align: middle;
+}
+

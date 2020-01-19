@@ -1,0 +1,57 @@
+div, nav, body > * {
+  display: flex;
+  flex-direction: column;
+}
+
+div, a {
+    margin: 5px;
+    padding: 5px;
+}
+
+header {
+    background: lightsalmon;
+}
+
+.head > img {
+    align-self: center;
+    width: auto;
+    height: 140px;
+}
+
+header ~ nav {
+    background-color: lightcoral;
+    flex-direction: row;
+    justify-content: left;
+    align-items: baseline;
+}
+
+.main {
+    flex-direction: row;
+}
+  
+.clmn {
+    align-self: center;
+    width: 50%;
+}
+
+span {
+    background-color: lightgreen;
+}
+
+.row > div {
+    display: inline;
+}
+
+td {
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    align-self: center;
+}
+nav {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-around;
+}

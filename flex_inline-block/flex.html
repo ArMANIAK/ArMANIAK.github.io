@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flex vs inline-block</title>
+    <link href="styles.css" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="head">
+          <img src="logo_hor.png" alt="logo">
+      </div>
+    </header>
+    <nav>
+        <a class="active_link" href="#">Flex mode</a> VS 
+        <a href="inline-block.html">Inline-block mode</a>
+    </nav>
+    <content class="main">
+      <div class="clmn">
+        <div class="row">
+          <h2>Flex mode для html</h2>
+          <p>Как написал один веб-разработчик в<a href="www.howtocenterincss.com">ссылке, которую дала Татьяна в телеграмме:</a>"Центрирование чего-либо в CSS - настоящая заноза в заднице.</p>
+          <div>
+            Есть куча вариантов, как отцентровать/поровнять элементы. Есть куча свойств, которые фиг запомнишь, и которые смешиваются в голове у начинающего верстальщика, 
+            стоит лишь на секунду зазеваться.<span> Поэтому в качестве тренировки и домашнего задания</span> я решил сделать подсказку по двум вариантам: Flex и<a href="inline-block.html">inline-block.</a>
+            Эта страница посвящена варианту Flex.
+          </div>
+        </div>
+        <div class="row">
+          <ol>В режиме Flex у блоков есть следующие свойства, которые позволяют центрировать/ровнять содержимое:
+            <li><strong>justify-content</strong> предназначен для выравнивания блоков по основной оси</li>               
+            <li><strong>align-items</strong> выравнивает блоки по поперечной оси</li>
+            <li><strong>align-self</strong> выравнивает один элемент по поперечной оси</li>
+            <li><strong>align-content</strong> предназначен для контроля пространства между строчками в поперечной оси</li>
+          </ol>
+        </div>
+        <div class="row">
+          <table>
+              <caption><h4>Значения свойств flex-контейнеров</h4></caption>
+              <thead>
+                <thead>
+                    <tr>
+                      <th>justify-content</th>
+                      <th>align-items</th>
+                      <th>align-self</th>
+                      <th>align-content</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <td>flex-start</td>
+                        <td>flex-start</td>
+                        <td>flex-start</td>
+                        <td>flex-start</td>
+                    </tr>
+                    <tr>
+                        <td>center</td>
+                        <td>center</td>
+                        <td>center</td>
+                        <td>center</td>
+                    </tr>
+                    <tr>
+                        <td>flex-end</td>
+                        <td>flex-end</td>
+                        <td>flex-end</td>
+                        <td>flex-end</td>
+                    </tr>
+                    <tr>
+                        <td>space-around</td>
+                        <td>baseline</td>
+                        <td>baseline</td>
+                        <td>space-around</td>
+                    </tr>
+                    <tr>
+                        <td>space-between</td>
+                        <td>stretch</td>
+                        <td>stretch</td>
+                        <td>space-between</td>
+                    </tr>
+                    <tr>
+                        <td>space-evenly</td>
+                        <td></td>
+                        <td>auto</td>
+                        <td>stretch</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>space-evenly</td>
+                    </tr>
+                  </tbody>
+              </thead>
+          </table>
+        </div>
+      </div>
+      <div class="clmn">
+        <div class="row">
+          <img src="flex.png" alt="Kirtynka">
+        </div>
+      </div>
+    </content>
+    <footer>
+      <nav>
+        <a href="#">link1</a>
+        <a href="#">link2</a>
+        <a href="#">link3</a>
+        <a href="#">link4</a>
+      </nav>
+  </body>
+</html>
