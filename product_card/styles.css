@@ -1,0 +1,82 @@
+.body {
+    position: relative;
+    display: inline-block;
+    margin: 2.5%;
+    width: 28%;
+}
+
+.bg {
+    border: solid 1px lightgray;
+    padding: 30px;
+    box-shadow: 0px 10px 10px 10px lightgray;
+}
+
+.image {
+    position: relative;
+    top: 50px;
+    margin-top: -20px;
+    text-align: center;
+}
+
+img {
+    position: relative;
+    border: solid 1px lightgray;
+    box-sizing: border-box;
+    top: -90px;
+    width: 100%;
+    margin: auto;
+}
+
+.label {
+    display: inline-block;
+    padding: 15px;
+}
+
+.sale {
+    position: absolute;
+    top: 20%;
+    left: 0%;
+    background-color: red;
+    color: white;
+}
+
+.new {
+    position: absolute;
+    top: 20%;
+    right: 0%;
+    background-color: black;
+    color: white;
+}
+
+.button {
+    display: inline-block;
+    width: 35%;
+    padding: 15px;
+    text-align: center;
+}
+
+.add {
+    /*font-size: 1.1rem;*/
+    font-weight: bold;
+    background-color: lightcoral;
+    color: red;
+}
+
+.view {
+    background-color: lightgray;
+    color: gray;
+}
+
+.new_price {
+    display: inline-block;
+    font-size: 1.5rem;
+    margin: 20px;
+}
+
+.old_price {
+    display: inline-block;
+    font-size: 1.2rem;;
+    margin: 20px;
+    color: red;
+    text-decoration: line-through;
+}
