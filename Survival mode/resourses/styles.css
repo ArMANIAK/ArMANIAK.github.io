@@ -1,14 +1,224 @@
+body {
+    font-family: Cambria;
+}
+
+h3, h2 {
+    color: orange;
+}
+
+nav a {
+    color: white;
+}
+
 header {
     background-image: url("../img/header_bg.jpg");
 }
 
-.container {
+header .container {
     display: flex;
     color: white;
     align-items: flex-end;
     justify-content: space-around;
 }
 
-.container a {
+header .container a {
     color: white;
+}
+
+.line {
+    opacity: 0.5;
+    height: 1px;
+    background-color: white;
+}
+
+.body {
+    padding: 20px;
+    text-align: center;
+    background-image: url("../img/body_bg.jpg");
+}
+
+.body > * {
+    display: inline-block;
+    vertical-align: top;
+
+}
+
+#leftbar, #rightbar {
+    text-align: left;
+    width: 24%;
+    max-width: 310px;
+}
+
+#leftbar li, #rightbar li {
+    list-style: url(../img/left_li.png);
+}
+
+section {
+    width: 48%;
+    max-width: 620px;
+}
+
+.top-menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+}
+
+.icon {
+    opacity: 0.5;
+    margin: auto;
+}
+
+.option1 {
+    width: 42px;
+    height: 33px;
+    background: url("../img/vector.png") no-repeat;
+}
+
+.option2 {
+    width: 43px;
+    height: 30px;
+    background: url("../img/vector.png") no-repeat;
+    background-position: 0 -33px;
+}
+
+.option3 {
+    width: 35px;
+    height: 36px;
+    background: url("../img/vector.png") no-repeat;
+    background-position: 0 -63px;
+}
+
+.option4 {
+    width: 43px;
+    height: 35px;
+    background: url("../img/vector.png") no-repeat;
+    background-position: 0 -99px;
+}
+
+.option5 {
+    width: 25px;
+    height: 30px;
+    background: url("../img/vector.png") no-repeat;
+    background-position: 0 -134px;
+}
+
+.option6 {
+    width: 35px;
+    height: 35px;
+    background: url("../img/vector.png") no-repeat;
+    background-position: 0 -164px;
+}
+
+.icon.active {
+    opacity: 1;
+}
+
+.button {
+    color: white;
+    padding: 5px;
+    margin-top: 7px;
+}
+
+.button.active {
+    border-radius: 14px;
+    background-color: white;
+    color: blue;
+}
+
+.option5 > a > * {
+    margin: auto;
+}
+
+.relative {
+    position: relative;
+}
+
+.relative > img {
+    width: 100%;
+}
+
+.discount_bg {
+    position: relative;
+    top: -9.7vh;
+    width: 100%;
+}
+
+.discount_bottom {
+    position: relative;
+    margin: 0 5px;
+    width: 96%;
+    bottom: 34vh;
+}
+
+.discount_menu {
+    position: relative;
+    height: 50vh;
+}
+
+.discount_menu > nav {
+    position: relative;
+    top: -63vh;
+    margin: auto 1vh;
+}
+
+.discount_header {
+    position: relative;
+    top: -2vh;
+    color: white;
+}
+
+.option_nav {
+    display: inline-block;
+    width: 18%;
+    padding: 1vh 0;
+}
+
+.option_nav > * {
+    color: orange;
+    margin: auto 10px;
+}
+
+.active_nav {
+    background: url(../img/tab_selected.png) no-repeat;
+}
+
+.active_nav > * {
+    color: white;
+}
+
+.discount_body {
+    position: relative;
+    bottom: 60vh;
+    margin: auto;
+}
+
+.option_tab {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#discount_app {
+    display: none;
+}
+
+#discount_houses {
+    display: none;
+}
+
+#discount_rest {
+    display: none;
+}
+
+#discount_n-club {
+    display: none;
+}
+
+.copyright {
+    vertical-align: bottom;
+    text-align: right;
+}
+footer {
+    height: 17px;
+    background-image: url(../img/footer_bg.png);
 }
