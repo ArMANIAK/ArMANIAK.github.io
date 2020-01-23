@@ -1,0 +1,37 @@
+.card {
+    border: solid 1px;
+    padding: 10px;
+}
+
+.image {
+    padding: 10px;
+    position: relative;
+    vertical-align: middle;
+}
+
+.image > * {
+    width: 100%;
+}
+
+.button_group {
+    position: absolute;
+    top: 40%;
+    left: 20%;
+}
+
+.button {
+    width: 60%;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    margin: 10px 0px;
+    border: solid 1px white;
+    border-radius: 2px;
+}
+
+.button:hover {
+    background-color: white;
+    color: black;
+    transition: all 0.5s ease-out;
+}
