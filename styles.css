@@ -1,0 +1,33 @@
+body {
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    background-color: yellow;
+    padding: 20px;
+}
+
+header > * {
+    margin-right: 50px;
+    vertical-align: middle;
+    color: royalblue;
+    display: inline-block;
+}
+
+nav {
+    padding: 10px;
+    background-color: #7777ff;
+}
+
+nav > ul > li {
+    margin-right: 30px;
+    padding: 10px;
+    display: inline-block;
+}
+
+nav > ul > li > a {
+    font-weight: bold;
+    text-decoration: none;
+    color: yellow;
+}
