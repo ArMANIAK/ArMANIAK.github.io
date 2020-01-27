@@ -3,9 +3,23 @@ div, a {
     padding: 5px;
 }
 
+body {
+    margin: 0;
+}
+
 header {
     background: lightsalmon;
     text-align: center;
+}
+
+.head {
+    margin: 0;
+}
+
+.head > img {
+    align-self: center;
+    width: auto;
+    height: 140px;
 }
 
 nav {
