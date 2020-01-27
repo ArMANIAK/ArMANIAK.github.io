@@ -80,3 +80,22 @@ img {
     color: red;
     text-decoration: line-through;
 }
+
+nav {
+    padding: 15px;
+    text-align: center;
+}
+
+nav > * { 
+    text-align: center;
+    padding: 10px;
+    border: 2px solid red;
+    color: red;
+    background-color: white;
+}
+
+nav > *:hover {
+    background-color: red;
+    color: white;
+    transition: all 0.7s ease;
+}
