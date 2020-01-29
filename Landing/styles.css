@@ -1,0 +1,48 @@
+body > div {
+    background-image: url(images/img/bg.jpg);
+    filter: hue-rotate(180deg);
+    padding: 10px;
+}
+
+.container {
+    padding: 0px;
+    border-radius: 5px;
+    background-color: cornsilk;
+}
+
+nav {
+    display: flex;
+    justify-content: end;
+    margin-right: 15px;
+}
+
+nav > * {
+    color: black;
+    margin-left: 15px;
+}
+
+#bla-bla-bla {
+    border-radius: 5px 5px 0px 0px;
+    text-align: center;
+    height: 800px;
+    background: url(images/img/hero-2.jpg) 100% 100%;
+    background-size: cover;
+}
+
+.row {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: 0px;
+    margin-right: 0px;
+    text-align: center;
+}
+
+.block {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.icon {
+    text-align: center;
+    width: 40%;
+}
