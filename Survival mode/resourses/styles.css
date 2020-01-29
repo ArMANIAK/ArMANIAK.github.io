@@ -11,7 +11,12 @@ nav a {
 }
 
 header {
+    border-bottom: solid 1px white;;
     background-image: url("../img/header_bg.jpg");
+}
+
+.container > div, .container > a {
+    margin-bottom: 10px;
 }
 
 header .container {
@@ -23,12 +28,6 @@ header .container {
 
 header .container a {
     color: white;
-}
-
-.line {
-    opacity: 0.5;
-    height: 1px;
-    background-color: white;
 }
 
 .body {
@@ -45,18 +44,12 @@ header .container a {
 
 #leftbar, #rightbar {
     text-align: left;
-    width: 24%;
-    max-width: 310px;
 }
 
 #leftbar li, #rightbar li {
     list-style: url(../img/left_li.png);
 }
 
-section {
-    width: 48%;
-    max-width: 620px;
-}
 
 .top-menu {
     display: flex;
@@ -126,7 +119,7 @@ section {
     color: blue;
 }
 
-.option5 > a > * {
+.option > a > * {
     margin: auto;
 }
 
@@ -140,38 +133,33 @@ section {
 
 .discount_bg {
     position: relative;
-    top: -9.7vh;
     width: 100%;
 }
 
 .discount_bottom {
     position: relative;
     margin: 0 5px;
-    width: 96%;
-    bottom: 34vh;
+    width: 97%;
 }
 
 .discount_menu {
     position: relative;
-    height: 50vh;
 }
 
 .discount_menu > nav {
     position: relative;
-    top: -63vh;
-    margin: auto 1vh;
 }
 
 .discount_header {
     position: relative;
-    top: -2vh;
     color: white;
 }
 
 .option_nav {
     display: inline-block;
+    bottom: 0px;
+    padding: 5px 0;
     width: 18%;
-    padding: 1vh 0;
 }
 
 .option_nav > * {
@@ -180,6 +168,7 @@ section {
 }
 
 .active_nav {
+    height: 60px;
     background: url(../img/tab_selected.png) no-repeat;
 }
 
@@ -189,7 +178,6 @@ section {
 
 .discount_body {
     position: relative;
-    bottom: 60vh;
     margin: auto;
 }
 
@@ -212,6 +200,118 @@ section {
 
 #discount_n-club {
     display: none;
+}
+
+@media screen and (min-width: 768px) {
+    #leftbar, #rightbar {
+        width: 140px;
+        font-size: 65%;
+    }
+    
+    section {
+        width: 400px;
+    }
+
+    .discount_bg {
+        top: -82px;
+    }
+
+    .discount_bottom {
+        bottom: 245px;
+    }
+
+    .discount_menu {
+        height: 370px;
+    }
+
+    .discount_menu > nav {
+        height: 60px;
+        top: -460px;
+    }
+
+    .discount_header {
+        top: -10px;
+    }
+
+    .discount_body {
+        bottom: 450px;
+    }
+
+    .active_nav {
+        height: 60px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    #leftbar, #rightbar {
+        width: 220px;
+        font-size: 100%;
+    }
+    
+    section {
+        width: 450px;
+    }
+
+    .discount_bg {
+        top: -84px;
+    }
+
+    .discount_bottom {
+        bottom: 267px;
+    }
+
+    .discount_menu {
+        height: 370px;
+    }
+
+    .discount_menu > nav {
+        height: 60px;
+        top: -500px;
+    }
+
+    .discount_body {
+        bottom: 475px;
+    }
+
+    .active_nav {
+        height: 60px;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    #leftbar, #rightbar {
+        width: 300px;
+        font-size: 100%;
+    }
+    
+    section {
+        width: 600px;
+    }
+
+    .discount_bg {
+        top: -92px;
+    }
+
+    .discount_bottom {
+        bottom: 335px;
+    }
+
+    .discount_menu {
+        height: 370px;
+    }
+
+    .discount_menu > nav {
+        height: 60px;
+        top: -620px;
+    }
+
+    .discount_body {
+        bottom: 570px;
+    }
+
+    .active_nav {
+        height: 40px;
+    }
 }
 
 .copyright {
