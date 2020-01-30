@@ -1,0 +1,30 @@
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.tile {
+    border: solid 15px lightblue;
+    border-radius: 7px;
+    margin: 20% auto;
+    width: 50%;
+    height: 50%;
+    padding: 15px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.task {
+    font-size: 120%;
+}
+
+.note {
+    font-size: 70%;
+}
+
+#guess {
+    margin: 10px;
+    display: none;
+}
