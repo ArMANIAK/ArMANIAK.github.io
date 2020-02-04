@@ -1,0 +1,86 @@
+body {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 13px;
+    margin: 0px;
+    background: url('img/01_homepage.png');
+}
+
+.none {
+    display: none;
+}
+
+header {
+    width: 100%;
+    background: url();
+    text-align: center;
+    /* background-color: rgb(26, 39, 49); */
+}
+
+hr {
+    opacity: 0.1;
+}
+
+.navigation {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 25px;
+}
+
+.navigation > * {
+    margin-right: 200px;
+    display: inline-block;
+}
+
+nav > * {
+    padding-right: 10px;
+    color: white;
+    text-decoration: none;
+}
+
+.button {
+    vertical-align: middle;
+    text-decoration: none;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 10px;
+    margin-right: 20px;
+}
+
+.login {
+    border: 1px solid lightblue;
+    background-color: transparent;
+    color: white;
+}
+
+.register {
+    background: green;
+    color: white;
+    border: none;
+}
+
+.arrow-right {
+    display: inline-block;
+    width: 0px;
+    height: 0px;
+    border-left: 8px solid blue;
+    border-bottom: 5px solid transparent;
+    border-top: 5px solid transparent;
+    border-right: 0px solid transparent;
+}
+
+.language-menu {
+    position: absolute;
+    top: 30px;
+    right: 50px;
+}
+
+.language-menu > * {
+    display: none;
+}
+
+.active {
+    display: initial;
+}
+
+/* font-family: 'Montserrat', sans-serif; 
+   font-family: 'Raleway', sans-serif;       */

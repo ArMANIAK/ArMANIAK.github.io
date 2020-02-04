@@ -10,22 +10,53 @@ body > div {
     background-color: cornsilk;
 }
 
-nav {
+.top-nav {
     display: flex;
-    justify-content: end;
-    margin-right: 15px;
+    width: 100%;
+    justify-content: space-between;
 }
 
-nav > * {
+
+nav a {
     color: black;
     margin-left: 15px;
+}
+
+.top-nav > * {
+    margin: 10px 0px;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-icon {
+        display: inline-block;
+    }
+    .menu-detailed {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .menu-icon {
+        display: none;
+    }
+    .menu-detailed {
+        display: inline-block;
+    }
+}
+
+.header {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 #bla-bla-bla {
     border-radius: 5px 5px 0px 0px;
     text-align: center;
-    height: 800px;
-    background: url(images/img/hero-2.jpg) 100% 100%;
+    height: 100vmin;
+    background: url(images/img/hero-2.jpg) 100%;
+    background-position: center bottom;
     background-size: cover;
 }
 
