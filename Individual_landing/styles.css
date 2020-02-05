@@ -2,7 +2,7 @@ body {
     font-family: 'Work Sans', sans-serif;
     font-size: 13px;
     margin: 0px;
-    background: url('img/01_homepage.png');
+    /* background: url('img/01_homepage.png'); */
 }
 
 .none {
@@ -10,31 +10,41 @@ body {
 }
 
 header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    background: url();
+    background: url('img/header_bg_1.jpg') /*url('img/header_bg_2.jpg') url('img/header_bg_3.jpg')*/;
+    background-size: cover;
     text-align: center;
-    /* background-color: rgb(26, 39, 49); */
-}
-
-hr {
-    opacity: 0.1;
+    /* background-color: rgb(75, 104, 126); */
 }
 
 .navigation {
-    display: inline-block;
-    vertical-align: middle;
+    display: flex;
+    align-items: baseline;
     margin: 25px;
+    border-bottom: 1px solid white;
+    padding-bottom: 25px;
 }
 
-.navigation > * {
-    margin-right: 200px;
-    display: inline-block;
+.navigation > *:first-child {
+    height: 30px;
+    margin-right: 120px;
+}
+
+.navigation > *:last-child {
+    margin-right: 0px;
 }
 
 nav > * {
-    padding-right: 10px;
+    padding-right: 60px;
     color: white;
     text-decoration: none;
+}
+
+nav > *:last-child {
+    margin-right: 0px;
 }
 
 .button {
