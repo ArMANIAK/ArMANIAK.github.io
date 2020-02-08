@@ -13,15 +13,15 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    background: url('img/header_bg_1.jpg') /*url('img/header_bg_2.jpg') url('img/header_bg_3.jpg')*/;
+    background: url('img/header_bg_1.jpg') center no-repeat /*url('img/header_bg_2.jpg') url('img/header_bg_3.jpg')*/;
     background-size: cover;
-    text-align: center;
+    height: 100%;
     /* background-color: rgb(75, 104, 126); */
 }
 
 .navigation {
     display: flex;
+    justify-content: space-between;
     align-items: baseline;
     margin: 25px;
     border-bottom: 1px solid white;
@@ -30,21 +30,19 @@ header {
 
 .navigation > *:first-child {
     height: 30px;
-    margin-right: 120px;
+    margin-right: 100px;
 }
 
-.navigation > *:last-child {
-    margin-right: 0px;
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }
 
 nav > * {
-    padding-right: 60px;
+    margin-right: 50px;
     color: white;
     text-decoration: none;
-}
-
-nav > *:last-child {
-    margin-right: 0px;
 }
 
 .button {
@@ -78,10 +76,21 @@ nav > *:last-child {
     border-right: 0px solid transparent;
 }
 
+.arrow-down {
+    display: inline-block;
+    width: 0px;
+    height: 0px;
+    border-left: 3px solid transparent;
+    border-bottom: 0px solid transparent;
+    border-top: 5px solid white;
+    border-right: 3px solid transparent;
+}
+
 .language-menu {
     position: absolute;
     top: 30px;
     right: 50px;
+    color: white;
 }
 
 .language-menu > * {
@@ -91,6 +100,73 @@ nav > *:last-child {
 .active {
     display: initial;
 }
+
+h1, h2, h4 {
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 150px;
+    font-size: 24px;
+    font-weight: 100;
+}
+
+h2 {
+    margin: 15px 0px;
+    font-size: 72px;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 24px;
+    font-weight: 300;
+}
+
+
+@media screen and (max-width: 1200px) {
+    nav > * {
+        margin-right: 40px;
+    }
+    .navigation {
+        width: 98%;
+    }
+    .navigation > *:first-child {
+        margin-right: 0px;
+    }
+    .title > h1 {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 993px) {
+    .buttons > * {
+        display: none;
+    }
+    .buttons > *:last-child {
+        display: block;
+    }
+    .title > h2 {
+        font-size: 24px;
+    }
+    .title > h4 {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    nav {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .language-menu {
+        display: none;
+    }
+}
+
 
 /* font-family: 'Montserrat', sans-serif; 
    font-family: 'Raleway', sans-serif;       */
