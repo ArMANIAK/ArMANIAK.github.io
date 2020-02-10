@@ -1,0 +1,30 @@
+body {
+    text-align: center;
+}
+
+button {
+    padding: 7px;
+    color: white;
+    background-color: limegreen;
+    border-radius: 3px;
+}
+
+.field, .instructions {
+    margin: 20px;
+    display: none;
+}
+
+.row {
+    display: block;
+}
+
+.tile {
+    display: inline-block;
+    text-align: center;
+    vertical-align: bottom;
+    font-size: 210px;
+    width: 200px;
+    height: 200px;
+    border: solid 3px gray;
+    margin: 2px 0px;
+}
