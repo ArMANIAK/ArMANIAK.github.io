@@ -1,3 +1,9 @@
+let firstPlayerMove = true;
+const beginning = document.querySelector('.beginning');
+const instructions = document.querySelector('.instructions');
+const field = document.querySelector('.field');
+const tiles = document.querySelectorAll('.tile');
+
 const Flip = () => Math.floor(Math.random() * 2);
 
 const tileOccupied = (el) => {
@@ -19,14 +25,11 @@ const winningCondition = (field) => {
            
     return false;
 }
+
 const button = document.querySelector('button');
 button.onclick = () => {
-    let firstPlayerMove = true;
-    const beginning = document.querySelector('.beginning');
-    const instructions = document.querySelector('.instructions');
-    const field = document.querySelector('.field');
-    const tiles = document.querySelectorAll('.tile');
-    Flip() ? instructions.innerHTML = '<p>It is tail. Now let,s start</p>' : instructions.innerHTML = '<p>It is head. Now let,s start</p>';
+    let moves = 0;
+    Flip() ? instructions.innerHTML = '<p>It is tail. Now let\'s start</p>' : instructions.innerHTML = '<p>It is head. Now let\'s start</p>';
     beginning.style.display = 'none';
     instructions.style.display = field.style.display = 'block';
     tiles.forEach(element => {
@@ -37,15 +40,19 @@ button.onclick = () => {
             else {
                 if (firstPlayerMove) element.innerText = 'x';
                 else element.innerText = 'o';
-                if (winningCondition(tiles)) {
+                moves++;
+            }
+            if (winningCondition(tiles)) {
                     let winner = firstPlayerMove ? 'Player one' : 'Player Two';
-                    instructions.innerHTML = '<p> Congratulations ' + winner + '! You won';
+                    instructions.innerHTML = '<p> Congratulations ' + winner + '! You won</p>';
                 }
                 else {
-                    firstPlayerMove = !firstPlayerMove;
+                    if (moves === 9) {
+                        instructions.innerHTML = '<p> It\'s draw </p>';
+                    } else {
+                        firstPlayerMove = !firstPlayerMove;
+                    }
                 }
             }
-        }
-    });
-
-}
+        });
+    }
