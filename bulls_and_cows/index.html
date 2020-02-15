@@ -15,62 +15,75 @@
                 Ваша задача за минимальное количество попыток угадать задуманное число
             </p>
             <div class="description">
-                <div class="lamp"></div><p>Неправильная цифра</p>
+                <div class="socket"><div class="lamp"></div></div>
+                <p>Неправильная цифра</p>
             </div>
             <div class="description">
-                <div class="lamp cow"></div><p>Корова - это правильная цифра на неправильном месте</p>
+                <div class="socket"><div class="lamp cow"></div></div>
+                <p>Корова - это правильная цифра на неправильном месте</p>
             </div>
             <div class="description">
-                <div class="lamp bull"></div><p>Бык - это правильная цифра на правильном месте</p>
+                <div class="socket"><div class="lamp bull"></div></div>
+                <p>Бык - это правильная цифра на правильном месте</p>
             </div>           
         </div>
     </header>
     <main>
         <div class="input">
-            <div class="digit">
-                <div class="arrow">
-                    <div class="arrow-up"></div>
-                </div>
-                <div class="figure">0</div>
-                <div class="arrow">
-                    <div class="arrow-down"></div>
-                </div>
-            </div>
-            <div class="digit">
-                <div class="arrow">
-                    <div class="arrow-up"></div>
-                </div>
-                <div class="figure">0</div>
-                <div class="arrow">
-                    <div class="arrow-down"></div>
+            <div class="slot">
+                <div class="digit">
+                    <div class="arrowUp">
+                        <div class="arrow-up"></div>
+                    </div>
+                    <div class="figure">0</div>
+                    <div class="arrowDown">
+                        <div class="arrow-down"></div>
+                    </div>
                 </div>
             </div>
-            <div class="digit">
-                <div class="arrow">
-                    <div class="arrow-up"></div>
-                </div>
-                <div class="figure">0</div>
-                <div class="arrow">
-                    <div class="arrow-down"></div>
+            <div class="slot">
+                <div class="digit">
+                    <div class="arrowUp">
+                        <div class="arrow-up"></div>
+                    </div>
+                    <div class="figure">0</div>
+                    <div class="arrowDown">
+                        <div class="arrow-down"></div>
+                    </div>
                 </div>
             </div>
-            <div class="digit">
-                <div class="arrow">
-                    <div class="arrow-up"></div>
+            <div class="slot">
+                <div class="digit">
+                    <div class="arrowUp">
+                        <div class="arrow-up"></div>
+                    </div>
+                    <div class="figure">0</div>
+                    <div class="arrowDown">
+                        <div class="arrow-down"></div>
+                    </div>
                 </div>
-                <div class="figure">0</div>
-                <div class="arrow">
-                    <div class="arrow-down"></div>
+            </div>
+            <div class="slot">
+                <div class="digit">
+                    <div class="arrowUp">
+                        <div class="arrow-up"></div>
+                    </div>
+                    <div class="figure">0</div>
+                    <div class="arrowDown">
+                        <div class="arrow-down"></div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="signals">
-            <div class="lamp"></div>
-            <div class="lamp"></div>
-            <div class="lamp"></div>
-            <div class="lamp"></div>
+            <div class="socket"><div class="lamp"></div></div>
+            <div class="socket"><div class="lamp"></div></div>
+            <div class="socket"><div class="lamp"></div></div>
+            <div class="socket"><div class="lamp"></div></div>
         </div>
+        <div class="tries">Попыток: <span class="tries_count"></span></div>
         <div class="button"></div>
+        <div class="result"></div>
     </main>
     <script src="script.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
