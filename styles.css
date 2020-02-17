@@ -44,7 +44,18 @@ li {
     list-style: none;
 }
 
-.inactive {
+content > table.inactive {
     display: none;
 }
 
+td, th {
+    padding: 20px 10px;
+}
+
+td:first-child {
+    width: 20%;
+}
+
+td:last-child {
+    width: 80%;
+}

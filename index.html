@@ -20,33 +20,127 @@
         </ul>
     </nav>
     <content>
-        <ul id="landings" class="inactive">
-            <li><a href="Survival mode/index.html">Survival Mode</a></li>
-            <li><a href="Landing/index.html">Landing_class</a></li>
-            <li><a href="Individual_landing/index.html">Landing_individual_task</a></li>
-        </ul>
-        <ul id="js-fun" class="active">
-            <li><a href="moving square/index.html">Moving square</a></li>
-            <li><a href="Moving windows/index.html">Moving windows</a></li>
-            <li><a href="Guess the number/index.html">Guess the number game</a></li>
-            <li><a href="tic-tac-toe/index.html">Tic-tac-toe game</a></li>
-            <li><a href="bulls_and_cows/index.html">Bulls and Cows game</a></li>
-        </ul>
-        <ul id="different-exercises" class="inactive">
-            <li><a href="flex_inline-block/flex.html">Flex / Inline-block</a></li>
-            <li><a href="product_card/index.html">Product card</a></li>
-            <li><a href="project picker//index.html">Project picker</a></li>
-        </ul>
+        <table id="landings" class="inactive">
+            <thead>
+                <tr>
+                    <th colspan="2">These are exercises I've taken to practice my mark-up language and page-making skills</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    <a href="Survival mode/index.html">Survival Mode</a>
+                </td>
+                <td>
+                    This mock-up was stated as a survival mode for our group. The most difficult parts were making correct media quaries, 
+                    setting proper position properties and values and completing part with tabs without bootstrap. So I trained these difficult parts on this page.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="Landing/index.html">Landing_class</a>
+                </td>
+                <td>
+                    This landing was just a part of our "classwork". Positioning, properties for elements and so on.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="Individual_landing/index.html">Landing_individual_task</a>
+                </td>
+                <td>
+                    This landing is the individual task for me to train "pixel-perfect" page-making. If You press "E" You can find Print Screen of the original page. 
+                    Still working on it (Or maybe not if too much time passed after last commit).
+                </td>
+            </tr>
+        </table>
+        <table id="js-fun" class="active">
+            <thead>
+                <tr>
+                    <th colspan="2">These exercises tend to be sort of a practice in JavaScript. Some Small Games and fun-pieces.</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    <a href="moving square/index.html">Moving square</a>
+                </td>
+                <td>
+                    A square which moves from the mouse pointer in random direction. Nice exercise to practice logic and JS.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="Moving windows/index.html">Moving windows</a>
+                </td>
+                <td>
+                    Back in the days, when I was young and carefree it was a joke-flash asking question whether one is satisfied with sallery. There were two options 'Yes' and 'No'.
+                    And it was easy to answer 'Yes', but if You tried to choose 'No' the button starts running away from pointer. I tried to make something similar to that joke.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="Guess the number/index.html">Guess the number game</a>
+                </td>
+                <td>
+                    Quite classic 'game' of guessing the number. You make Your try and programm say whether You guessed or not, and if not whether Your number is bigger or lesser.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="tic-tac-toe/index.html">Tic-tac-toe game</a>
+                </td>
+                <td>
+                    First try to make something more difficult than one-line programms with some sort of logic. A game for two players (but via one desktop)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="bulls_and_cows/index.html">Bulls and Cows game</a>
+                </td>
+                <td>
+                    I tried to make this game more complicated: both design and logic. I've added sort of UI and controls. I'm not sure whether the logic is the simpliest but it works.
+                </td>
+            </tr>
+        </table>
+        <table id="different-exercises" class="inactive">
+            <thead>
+                <tr>
+                    <th colspan="2">Other exercises made during the web-programming cources</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    <a href="flex_inline-block/flex.html">Flex / Inline-block</a>
+                </td>
+                <td>
+                    Problem of aligning text in blox was quite tough for me. So to understand it better I created two pages. One is made with flex another one with inline-block. It helped me a lot.
+                </td>
+            </tr><tr>
+                <td>
+                    <a href="product_card/index.html">Product card</a>
+                </td>
+                <td>
+                    Another try to make the job done without bootstrap. A card with labels, photo and prices. Done.
+                </td>
+            </tr><tr>
+                <td>
+                    <a href="project picker/index.html">Project picker</a>
+                </td>
+                <td>
+                    When the tutor reminded us about final projects we were a little bit confused. Well, totally confused to be honest. Few of us had ideas what to do as a final projects. 
+                    Others asked what projects can be performed, what idea to choose. So this was a sort of idea-generator. Try it if You are in doubts =)
+                </td>
+            </tr>            
+        </table>
     </content>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         $link = $('nav a');
-        $ul = $('content > ul');
+        $table = $('content > table');
         $link.each((index, element) => {
             element.onclick = () => {
                 $('.active').toggleClass('active').toggleClass('inactive');
-                $ul[index].classList.toggle('active');
-                $ul[index].classList.toggle('inactive');
+                $table[index].classList.toggle('active');
+                $table[index].classList.toggle('inactive');
             }
         });
     </script>
