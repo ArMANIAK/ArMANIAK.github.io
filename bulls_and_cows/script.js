@@ -26,29 +26,31 @@ const start = () => {
     for (let i = 0, n = task.length; i < n; i++) {
         task[i] = Math.floor(Math.random() * 10);
     }
+    console.dir(task);
 }
 
 const checkValue = () => {
-    let cows = 0;
-    let bulls = 0;
-    let skip = [];
+
+    let skipBulls = [];
+    let skipCows = [];
     for (let i = 0; i < 4; i++) {
         if (guess[i].innerHTML == task[i]) {
-            skip.push(i);
-            bulls++;
+            skipBulls.push(i);
         }
     }
     for (let i = 0, n = task.length; i < n; i++) {
+        if (skipBulls.indexOf(i) !== -1) continue;
         for (let j = 0, m = guess.length; j < m; j++) {
+            if (skipCows.indexOf(j) !== -1) continue;
+            if (skipBulls.indexOf(j) !== -1) continue;
             if (i === j) continue;
             if (guess[j].innerHTML == task[i]) {
-                if (skip.indexOf(i) !== -1) break;
-                cows++;
+                skipCows.push(j);
                 break;
             }
         }
     }
-    return {'bulls': bulls, 'cows': cows};
+    return {'bulls': skipBulls.length, 'cows': skipCows.length};
 }
 
 const lightLamp = (bullsAndCows) => {
@@ -74,6 +76,7 @@ button.onclick = () => {
     if (button.innerText === 'Проверить') {
         let res = checkValue();
         if (res.bulls === 4) {
+            lightLamp(res);
             result.innerHTML = '<h2>Поздравляю, Вы справились за ' + counter + ' попыток!</h2>';
             button.innerText = 'Новая игра'
         }
