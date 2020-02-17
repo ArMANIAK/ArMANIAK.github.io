@@ -4,7 +4,7 @@ body {
 
 header {
     text-align: center;
-    background-color: yellow;
+    background-color: #ccccff;
     padding: 20px;
 }
 
@@ -16,18 +16,35 @@ header > * {
 }
 
 nav {
-    padding: 10px;
     background-color: #7777ff;
 }
 
-nav > ul > li {
-    margin-right: 30px;
-    padding: 10px;
+nav > * {
     display: inline-block;
 }
 
-nav > ul > li > a {
+nav li {
+    margin-right: 30px;
+    display: inline-block;
+}
+
+li > a {
+    color: #7777ff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav li > a {
     font-weight: bold;
     text-decoration: none;
     color: yellow;
 }
+
+li {
+    list-style: none;
+}
+
+.inactive {
+    display: none;
+}
+

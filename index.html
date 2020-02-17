@@ -13,22 +13,43 @@
         <h1>BrainBasket Course Repository</h1>
     </header>
     <nav>
-        <ul class="nav">
-            <li><a href="flex_inline-block/flex.html">Flex / Inline-block</a></li>
-            <li><a href="moving square/index.html">Moving square</a></li>
-            <li><a href="Moving windows/index.html">Moving windows</a></li>
-            <li><a href="product_card/index.html">Product card</a></li>
+        <ul>
+            <li><a href="#landings">Landings</a></li>
+            <li><a href="#js-fun">JavaScript Fun</a></li>
+            <li><a href="#different-exercises">Different exercises</a></li>
+        </ul>
+    </nav>
+    <content>
+        <ul id="landings" class="inactive">
             <li><a href="Survival mode/index.html">Survival Mode</a></li>
             <li><a href="Landing/index.html">Landing_class</a></li>
             <li><a href="Individual_landing/index.html">Landing_individual_task</a></li>
-            <li><a href="project picker//index.html">Project picker</a></li>
+        </ul>
+        <ul id="js-fun" class="active">
+            <li><a href="moving square/index.html">Moving square</a></li>
+            <li><a href="Moving windows/index.html">Moving windows</a></li>
             <li><a href="Guess the number/index.html">Guess the number game</a></li>
             <li><a href="tic-tac-toe/index.html">Tic-tac-toe game</a></li>
             <li><a href="bulls_and_cows/index.html">Bulls and Cows game</a></li>
         </ul>
-    </nav>
-    <content>
-               
+        <ul id="different-exercises" class="inactive">
+            <li><a href="flex_inline-block/flex.html">Flex / Inline-block</a></li>
+            <li><a href="product_card/index.html">Product card</a></li>
+            <li><a href="project picker//index.html">Project picker</a></li>
+        </ul>
     </content>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $link = $('nav a');
+        $ul = $('content > ul');
+        $link.each((index, element) => {
+            element.onclick = () => {
+                $('.active').toggleClass('active').toggleClass('inactive');
+                $ul[index].classList.toggle('active');
+                $ul[index].classList.toggle('inactive');
+            }
+        });
+    </script>
+
 </body>
 </html>
