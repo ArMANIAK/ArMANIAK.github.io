@@ -1,0 +1,16 @@
+.field {
+    height: 290px;
+    width: 290px;
+}
+
+.field > * {
+    display: inline-block;
+    background-color: #222;
+    border: #222 solid 2px;
+    padding: 3px;
+    width: 30px;
+    height: 30px;
+    box-sizing: border-box;
+    margin: 5px;
+    /* visibility: hidden; */
+}
