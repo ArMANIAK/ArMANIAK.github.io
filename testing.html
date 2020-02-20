@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var a = new Array();
+        for (let i = 0; i < 100000; i++) {
+            a[i] = Math.floor(Math.random() * 101);
+        }
+
+        const findWithFor = function (num) {
+            for (let i = 0, n = a.length; i < n; i++) {
+                if (a[i] == num) return true;
+            }
+            return false;
+        };
+
+        const findWithIndexOf = function (num) {
+            return a.indexOf(num);
+        };
+
+        const findWithFind = function (num) {
+            return a.find(function(element) {return element == num;});
+        }
+
+        const findWithInclude = function (num) {
+            return a.includes(num);
+        }
+
+        const test = func => {
+            for (let i = 0; i < 100000; i++) {
+                let result = func(i);
+                result++;
+            }
+        }
+
+        let start = new Date();
+        // test(findWithInclude);
+        // test(findWithFind);
+        // test(findWithFor);
+        // test(findWithIndexOf);
+        for (let i = 0; i < 100000; i++) {
+                let result = findWithInclude(i);
+                // let result = findWithFind(i);
+                // let result = findWithFor(i);
+                // let result = findWithIndexOf(i);
+                result++;
+            }
+        let finish = new Date();
+
+        document.write(finish - start);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
