@@ -1,55 +1,85 @@
-const snake = {
-    size: 1,
-    direction: 'right',
-    position: [25],
-}
+let snake;
+
+const GameIsOn = () => {
+    snake = {
+        size: 1,
+        direction: 'right',
+        position: [24],
+    };
+    console.log('game Is on');
+    generateFood();
+    renderSnake();
+    gameInterval = setInterval(Move, gameSpeed);
+ }
 
 const ROW_SIZE = 7;
-const FIELD = new Array(ROW_SIZE * ROW_SIZE);
+const SIZE = ROW_SIZE * ROW_SIZE;
 let gameSpeed = 500;
 let nextTile;
+let foodPosition;
 let gameInterval = null;
 let moves = 0;
+let points = document.querySelector('.points');
 
 
 document.onkeypress = (event) => {
+    console.log(event.keyCode);
     switch (event.keyCode) {
-        case '97':
+        case 97:
+            console.log('changing direction');
             snake.direction = snake.direction == 'right' ? 'right' : 'left';
             break;
-        case '100':
+        case 100:
+            console.log('changing direction');
             snake.direction = snake.direction == 'left' ? 'left' : 'right';
             break;
-        case '115':
+        case 115:
+            console.log('changing direction');
             snake.direction = snake.direction == 'up' ? 'up' : 'down';
             break;
-        case '119':
+        case 119:
+            console.log('changing direction');
             snake.direction = snake.direction == 'down' ? 'down' : 'up';
             break;
     }
 }
 
 let field = document.querySelector('.field');
-for (let i = 0, n = FIELD.length; i < n; i++) {
+for (let i = 0; i < SIZE; i++) {
     let node = document.createElement('div');
     field.appendChild(node);
 }
+let tiles = document.querySelectorAll('.field > *');
 //console.dir(field);
 
 
 const renderSnake = () => {
-
+    console.log('render started');
+    for (let i = 0; i < SIZE; i++) {
+        if (snake.position.includes(i)) {
+            tiles[i].style.visibility = 'visible';
+            tiles[i].style.backgroundColor = 'black';
+        }
+        else if (i == foodPosition) {
+            tiles[i].style.visibility = 'visible';
+            tiles[i].style.backgroundColor = 'red';
+        }
+        else tiles[i].style.visibility = 'hidden';
+    }
 }
 
 const gameOver = () => {
     clearInterval(gameInterval);
+    let gameOverAnnouncement = document.createElement('h2');
+    gameOverAnnouncement.innerText = 'Game over'
+    document.querySelector('body').appendChild(gameOverAnnouncement);
     // OUTPUT GAME OVER
 }
 
 const generateFood = () => {
     while(true) {
-        let position = Math.floor(Math.random() * ROW_SIZE * ROW_SIZE);
-        if (!snake.position[position]) break;
+        foodPosition = Math.floor(Math.random() * SIZE);
+        if (!snake.position.includes(foodPosition)) break;
     }
 }
 
@@ -70,11 +100,11 @@ const checkDirection = () => {
         if (snake.position[0] % ROW_SIZE == 0) gameOver();
         nextTile = snake.position[0] - 1;
     }
-    if (nextTile == snake.position[snake.size - 1]) gameOver();
+    if (snake.position.includes(nextTile) && nextTile != snake.position[snake.size - 1]) gameOver();
 }
 
 const checkFood = () => {
-    return nextTile == food
+    return nextTile == foodPosition;
 }
 
 const changePosition = () => {
@@ -89,16 +119,14 @@ const changePosition = () => {
 }
 
 const Move = () => {
+    console.log('move activated' + snake.direction);
     checkDirection();
     changePosition();
-    moves++;
+    points.innerText = "Очки: " + ++moves;
     renderSnake();
 
 }
 
-const GameIsOn = () => {
-    generateFood();
-    renderSnake();
-    gameInterval = setInterval(Move, gameSpeed);
- }
 
+let button = document.querySelector('.button');
+button.onclick = GameIsOn;
