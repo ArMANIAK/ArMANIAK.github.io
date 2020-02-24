@@ -26,19 +26,15 @@ document.onkeypress = (event) => {
     console.log(event.keyCode);
     switch (event.keyCode) {
         case 97:
-            console.log('changing direction');
             snake.direction = snake.direction == 'right' ? 'right' : 'left';
             break;
         case 100:
-            console.log('changing direction');
             snake.direction = snake.direction == 'left' ? 'left' : 'right';
             break;
         case 115:
-            console.log('changing direction');
             snake.direction = snake.direction == 'up' ? 'up' : 'down';
             break;
         case 119:
-            console.log('changing direction');
             snake.direction = snake.direction == 'down' ? 'down' : 'up';
             break;
     }
@@ -50,11 +46,9 @@ for (let i = 0; i < SIZE; i++) {
     field.appendChild(node);
 }
 let tiles = document.querySelectorAll('.field > *');
-//console.dir(field);
 
 
 const renderSnake = () => {
-    console.log('render started');
     for (let i = 0; i < SIZE; i++) {
         if (snake.position.includes(i)) {
             tiles[i].style.visibility = 'visible';
@@ -71,9 +65,8 @@ const renderSnake = () => {
 const gameOver = () => {
     clearInterval(gameInterval);
     let gameOverAnnouncement = document.createElement('h2');
-    gameOverAnnouncement.innerText = 'Game over'
+    gameOverAnnouncement.innerText = 'Game over. You\'ve earned ' + moves + ' points';
     document.querySelector('body').appendChild(gameOverAnnouncement);
-    // OUTPUT GAME OVER
 }
 
 const generateFood = () => {
