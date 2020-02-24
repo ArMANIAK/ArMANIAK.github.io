@@ -1,0 +1,22 @@
+body, body > * {
+    margin: 0px;
+}
+
+main {
+    background-color: #6699ff;
+    display: inline-block;
+    width: 70%;
+    height: 70vh;
+}
+aside {
+    background-color: ivory;
+    display: inline-block;
+    width: 29%;
+    height: 70vh;
+}
+content {
+    background-color: khaki;
+    overflow: auto;
+    display: block;
+    height: 30vh;
+}
