@@ -5,7 +5,7 @@
 //    1. Rendering map
 //       1.1. Building an array of tiles
 //       1.2. Checking whether within borders
-//       1.3. Calculating and rendering from the center og the map
+//       1.3. Calculating and rendering from the center of the map
 //    2. Placement and movement of the character
 //    3. Interaction with objects and characters
 //    4. Skills
@@ -21,12 +21,16 @@
 
 'use strict'
 
+const TILE_SIZE = 75;
+
 const LANDSCAPE_TYPES = [
     'forest',
     'sand',
+    'rock',
     'mountain',
     'water',
-    'meadow',
+    'field',
+    'deep_water',
 ];
 
 const MAP = [
@@ -100,10 +104,11 @@ class Item {
 };
 
 class Tile {
-    constructor(type = 'deep_water') { // add landscape type into constructor
+    constructor(type = 'deep_water') { 
         this.filled = 'empty';
         this.landscape = type;
         this.exaughstance = 2;
+//        this.discovered = false;
     }
 }
 
@@ -126,21 +131,36 @@ const buildMapArray = (x, y, x_center, y_center) => {
     return map;
 }
 
+const renderMap = map => {
+    mainScreen.innerHTML = '';
+    for (let tile in map) {
+        let element = document.createElement('img');
+        element.src = 'resources/img/' + map[tile].landscape + '.png';
+        element.width = element.height = TILE_SIZE;
+        element.alt = map[tile].landscape + ' tile';
+        let div = document.createElement('div').appendChild(element);
+        div.className = 'tile';
+        mainScreen.appendChild(div);
+    }
+}
+
 const mainScreen = document.querySelector('main');
 const debugChat = document.querySelector('content');
 let height = mainScreen.scrollHeight;
 let width = mainScreen.scrollWidth;
-debugChat.innerHTML += ('<p>' + width + 'x' + height + '</p>');
-let x_tiles = Math.floor(width / 50);
-let y_tiles = Math.floor(height / 50);
+let x_tiles = Math.floor(width / TILE_SIZE);
+let y_tiles = Math.floor(height / TILE_SIZE);  //  defining the quantity of tiles on each axis
 debugChat.innerHTML += ('<p>' + x_tiles + 'x' + y_tiles + '</p>');
-console.log(checkIndex(0, 0), checkIndex(0, 3), checkIndex(-1,5));
-let viewport_x_center = Math.floor(x_tiles / 2);
-let viewport_y_center = Math.floor(y_tiles / 2);
+// let viewport_x_center = Math.floor(x_tiles / 2);
+// let viewport_y_center = Math.floor(y_tiles / 2);
+let viewport_x_center = 3;
+let viewport_y_center = 2;  // defining coordinates of the center of the screen
 let map = buildMapArray(x_tiles, y_tiles, viewport_x_center, viewport_y_center);
-console.log(map);
+renderMap(map);
 
 const levelUp = (character) => {}
+
+const skillUp = () => {}
 
 const isSuccess = (chance) => {
     console.log('isSuccess');
@@ -150,8 +170,8 @@ const isSuccess = (chance) => {
 }
 
 class Character {
-    constructor() {  // add charType as a parameter?
-        this.charType = ['enemy'];
+    constructor(type = 'enemy') { 
+        this.charType = type;
         this.stats = {
             strength: 0,
             agility: 0,

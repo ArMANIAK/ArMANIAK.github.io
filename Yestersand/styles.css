@@ -20,3 +20,8 @@ content {
     display: block;
     height: 30vh;
 }
+
+.tile {
+    display: inline-block;
+    margin: 0px 0px -4px 0px;
+}
