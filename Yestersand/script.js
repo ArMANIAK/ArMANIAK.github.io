@@ -108,6 +108,11 @@ class Tile {
         this.filled = 'empty';
         this.landscape = type;
         this.exaughstance = 2;
+        //  switch(type) {
+        //      case 'forest':
+        //      this.exaughstance = 1.5;
+        //      break;
+        //  }
 //        this.discovered = false;
     }
 }
@@ -135,12 +140,17 @@ const renderMap = map => {
     mainScreen.innerHTML = '';
     for (let tile in map) {
         let element = document.createElement('img');
-        element.src = 'resources/img/' + map[tile].landscape + '.png';
+        element.src = 'resources/img/' + map[tile].landscape + '.svg';
         element.width = element.height = TILE_SIZE;
         element.alt = map[tile].landscape + ' tile';
         let div = document.createElement('div').appendChild(element);
         div.className = 'tile';
         mainScreen.appendChild(div);
+        // let element = document.createElement('div');
+        // element.className = 'tile';
+        // element.style.background = 'url(resources/img/' + map[tile].landscape + '.png no-repeat cover';
+        // element.style.width = element.style.height = TILE_SIZE;
+        // mainScreen.appendChild(element);
     }
 }
 
@@ -157,6 +167,25 @@ let viewport_x_center = 3;
 let viewport_y_center = 2;  // defining coordinates of the center of the screen
 let map = buildMapArray(x_tiles, y_tiles, viewport_x_center, viewport_y_center);
 renderMap(map);
+
+document.body.addEventListener('keypress', event => {
+    console.log(event);
+    switch (event.keyCode) {
+        case 100:
+            viewport_x_center++;
+            break;
+        case 97:
+            viewport_x_center--;
+            break;
+        case 115:
+            viewport_y_center++;
+            break;
+        case 119:
+            viewport_y_center--;
+            break;
+    }
+    renderMap(buildMapArray(x_tiles, y_tiles, viewport_x_center, viewport_y_center));
+});
 
 const levelUp = (character) => {}
 
