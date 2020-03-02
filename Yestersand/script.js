@@ -105,7 +105,7 @@ class Item {
 
 class Tile {
     constructor(type = 'deep_water') { 
-        this.filled = 'empty';
+        this.filled = null;
         this.landscape = type;
         this.exaughstance = 2;
         //  switch(type) {
@@ -118,55 +118,138 @@ class Tile {
 }
 
 const checkIndex = (x, y) => {
-    if (x < 0 || y < 0 || x >= MAP[0].length || y >= MAP.length) return new Tile();
-    return new Tile(MAP[y][x]);
+    if (x < 0 || y < 0 || x >= map[0].length || y >= map.length) return new Tile();
+    return map[y][x];
 }
 
-const buildMapArray = (x, y, x_center, y_center) => {
-    let map = new Array;
-    let x_start = x_center - Math.floor(x / 2); 
-    let x_finish = x_start + x;
-    let y_start = y_center - Math.floor(y / 2); 
-    let y_finish = y_start + y;
-    for (let i = y_start; i < y_finish; i++) {
-        for (let j = x_start; j < x_finish; j++) {
-            map.push(checkIndex(j, i));
+window.onresize = () => {
+    height = mainScreen.scrollHeight;
+    width = mainScreen.scrollWidth;
+    x_tiles = Math.floor(width / TILE_SIZE);
+    y_tiles = Math.floor(height / TILE_SIZE);
+    renderScreen();
+}
+
+const buildMap = () => {
+    let worldMap = new Array;
+    for (let y in MAP) {
+        let row = new Array;
+        for (let x in MAP[y]) {
+            row.push(new Tile(MAP[y][x]));
         }
+        worldMap.push(row);
     }
-    return map;
-}
-
-const renderMap = map => {
-    mainScreen.innerHTML = '';
-    for (let tile in map) {
-        let element = document.createElement('img');
-        element.src = 'resources/img/' + map[tile].landscape + '.svg';
-        element.width = element.height = TILE_SIZE;
-        element.alt = map[tile].landscape + ' tile';
-        let div = document.createElement('div').appendChild(element);
-        div.className = 'tile';
-        mainScreen.appendChild(div);
-        // let element = document.createElement('div');
-        // element.className = 'tile';
-        // element.style.background = 'url(resources/img/' + map[tile].landscape + '.png no-repeat cover';
-        // element.style.width = element.style.height = TILE_SIZE;
-        // mainScreen.appendChild(element);
-    }
+    return worldMap;
 }
 
 const mainScreen = document.querySelector('main');
 const debugChat = document.querySelector('content');
-let height = mainScreen.scrollHeight;
-let width = mainScreen.scrollWidth;
-let x_tiles = Math.floor(width / TILE_SIZE);
-let y_tiles = Math.floor(height / TILE_SIZE);  //  defining the quantity of tiles on each axis
+const map = buildMap();
+var height = mainScreen.scrollHeight;
+var width = mainScreen.scrollWidth;
+var x_tiles = Math.floor(width / TILE_SIZE);
+var y_tiles = Math.floor(height / TILE_SIZE);  //  defining the quantity of tiles on each axis
 debugChat.innerHTML += ('<p>' + x_tiles + 'x' + y_tiles + '</p>');
-// let viewport_x_center = Math.floor(x_tiles / 2);
-// let viewport_y_center = Math.floor(y_tiles / 2);
+
+const renderScreen = (x, y) => {
+    mainScreen.innerHTML = '';
+    let x_start = x - Math.floor(x_tiles / 2); 
+    let x_finish = x_start + x_tiles;
+    let y_start = y - Math.floor(y_tiles / 2); 
+    let y_finish = y_start + y_tiles;
+    for (let i = y_start; i < y_finish; i++) {
+        for (let j = x_start; j < x_finish; j++) {
+            let element = document.createElement('img');
+            let tile = checkIndex(j, i);
+            element.src = 'resources/img/' + tile.landscape + '.svg';
+            element.width = element.height = TILE_SIZE;
+            element.alt = tile.landscape + ' tile';
+            let div = document.createElement('div').appendChild(element);
+            div.className = 'tile';
+            mainScreen.appendChild(div);    
+        }
+    }
+}
+
 let viewport_x_center = 3;
 let viewport_y_center = 2;  // defining coordinates of the center of the screen
-let map = buildMapArray(x_tiles, y_tiles, viewport_x_center, viewport_y_center);
-renderMap(map);
+renderScreen(viewport_x_center, viewport_y_center);
+
+
+const isTileFree = (x, y) => {
+    return map[y][x].filled;
+}
+
+const levelUp = (character) => {}
+
+const skillUp = () => {}
+
+const isSuccess = (chance) => {
+    console.log('isSuccess');
+    // generate number
+    // compare to chance
+    skillUp();
+}
+
+class Character {
+    constructor(type = 'enemy', x, y) {
+        this.x_coord = x;
+        this.y_coord = y; 
+        this.charType = type;
+        this.stats = {
+            strength: 1,
+            agility: 1,
+            endurance: 1,
+            intellect: 1,
+            charm: 1,
+        }
+        this.aggroSkills = {
+            magic: 0,
+            knife: 0,
+            sword: 0,
+        }
+        this.peaceSkills = {
+            repair: 0,
+            healing: 0,
+        }
+        this.stamina = 100;
+        this.exp = 0;
+        this.level = 0;
+        this.maxHP = 
+        this.hitPoints = 10;
+        this.race = 'human';
+        this.attackSpeed = 0;
+        this.inventory = [];
+        this.equipped = [];
+    }
+}
+
+let hero = new Character();
+console.log(hero);
+
+Character.prototype.chanceCalc = function() {
+    console.log(this);
+    //calculate chance according to skills
+}
+
+Character.prototype.attack = function() {
+    chanceCalc();
+    isSuccess(); // add raising skill after successes
+    //relationChange();
+    //showResult();
+}
+Character.prototype.defence = function() {
+    chanceCalc();
+    isSuccess();
+}
+
+Character.prototype.interact = function() {
+    // check
+    showInteractionMenu();
+}
+Character.prototype.steal = function() {}
+Character.prototype.trade = function() {}
+Character.prototype.talk = function() {}
 
 document.body.addEventListener('keypress', event => {
     console.log(event);
@@ -184,71 +267,5 @@ document.body.addEventListener('keypress', event => {
             viewport_y_center--;
             break;
     }
-    renderMap(buildMapArray(x_tiles, y_tiles, viewport_x_center, viewport_y_center));
+    renderScreen(viewport_x_center, viewport_y_center);
 });
-
-const levelUp = (character) => {}
-
-const skillUp = () => {}
-
-const isSuccess = (chance) => {
-    console.log('isSuccess');
-    // generate number
-    // compare to chance
-    skillUp();
-}
-
-class Character {
-    constructor(type = 'enemy') { 
-        this.charType = type;
-        this.stats = {
-            strength: 0,
-            agility: 0,
-            endurance: 0,
-            intelect: 0,
-            charm: 0,
-        }
-        this.aggroSkills = {
-            magic: 0,
-            knife: 0,
-            sword: 0,
-        }
-        this.peaceSkills = {
-            repair: 0,
-            healing: 0,
-        }
-        this.stamina = 100;
-        this.exp = 0;
-        this.level = 0;
-        this.hitPoints = 10;
-        this.race = 'human';
-        this.attackSpeed = 0;
-        this.inventory = [];
-        this.equipped = [];
-    }
-    
-    chanceCalc = () => {
-        //calculate chance according to skills
-        console.log('chanceCalc');
-        console.dir(this);
-    }
-    
-    attack() {
-        chanceCalc();
-        isSuccess(); // add raising skill after successes
-        //relationChange();
-        //showResult();
-    }
-    defence() {
-        chanceCalc();
-        isSuccess();
-    }
-
-    interact() {
-        // check
-        showInteractionMenu();
-    }
-    steal() {}
-    trade() {}
-    talk() {}
-}
