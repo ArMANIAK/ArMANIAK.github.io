@@ -78,6 +78,40 @@ const CHARACTER_TYPE = [
     'beast',
 ];
 
+class Character {
+    constructor(x, y, type = 'enemy') {
+        this.x_coord = x;
+        this.y_coord = y; 
+        this.charType = type;
+        this.stats = {
+            strength: 1,
+            agility: 1,
+            endurance: 1,
+            intellect: 1,
+            charm: 1,
+        }
+        this.aggroSkills = {
+            magic: 0,
+            knife: 0,
+            sword: 0,
+        }
+        this.peaceSkills = {
+            repair: 0,
+            healing: 0,
+        }
+        this.stamina = 100;
+        this.exp = 0;
+        this.level = 0;
+        this.maxHP = 
+        this.hitPoints = 10;
+        this.race = 'human';
+        this.attackSpeed = 0;
+        this.inventory = [];
+        this.equipped = [];
+        map[y][x].filled = JSON.stringify(this);
+    }
+}
+
 const USAGE_TYPES = [
     'head',
     'body',
@@ -159,21 +193,30 @@ const renderScreen = (x, y) => {
     let y_finish = y_start + y_tiles;
     for (let i = y_start; i < y_finish; i++) {
         for (let j = x_start; j < x_finish; j++) {
-            let element = document.createElement('img');
-            let tile = checkIndex(j, i);
-            element.src = 'resources/img/' + tile.landscape + '.svg';
-            element.width = element.height = TILE_SIZE;
-            element.alt = tile.landscape + ' tile';
-            let div = document.createElement('div').appendChild(element);
-            div.className = 'tile';
-            mainScreen.appendChild(div);    
+            let tile = checkIndex(j, i);  
+            let element = document.createElement('div');
+            element.className = 'tile';
+            element.style.backgroundImage = 'url(resources/img/' + tile.landscape + '.svg)';
+            element.style.backgroundSize = 'contain';
+            element.style.width = element.style.height = TILE_SIZE + 'px';
+            if (tile.filled) {
+                let object = JSON.parse(tile.filled);
+                console.dir(object);
+                let object_image = document.createElement('img');
+                object_image.src = 'resources/img/' + object.charType + '.svg';
+                object_image.alt = object.charType;
+                object_image.height = object_image.width = TILE_SIZE;
+                element.appendChild(object_image);
+            }
+            mainScreen.appendChild(element);
         }
     }
 }
 
 let viewport_x_center = 3;
 let viewport_y_center = 2;  // defining coordinates of the center of the screen
-renderScreen(viewport_x_center, viewport_y_center);
+let hero = new Character(3, 2, 'hero');
+renderScreen(hero.x_coord, hero.y_coord);
 
 
 const isTileFree = (x, y) => {
@@ -190,42 +233,6 @@ const isSuccess = (chance) => {
     // compare to chance
     skillUp();
 }
-
-class Character {
-    constructor(type = 'enemy', x, y) {
-        this.x_coord = x;
-        this.y_coord = y; 
-        this.charType = type;
-        this.stats = {
-            strength: 1,
-            agility: 1,
-            endurance: 1,
-            intellect: 1,
-            charm: 1,
-        }
-        this.aggroSkills = {
-            magic: 0,
-            knife: 0,
-            sword: 0,
-        }
-        this.peaceSkills = {
-            repair: 0,
-            healing: 0,
-        }
-        this.stamina = 100;
-        this.exp = 0;
-        this.level = 0;
-        this.maxHP = 
-        this.hitPoints = 10;
-        this.race = 'human';
-        this.attackSpeed = 0;
-        this.inventory = [];
-        this.equipped = [];
-    }
-}
-
-let hero = new Character();
-console.log(hero);
 
 Character.prototype.chanceCalc = function() {
     console.log(this);
