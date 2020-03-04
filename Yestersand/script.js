@@ -141,7 +141,7 @@ class Tile {
     constructor(type = 'deep_water') { 
         this.filled = null;
         this.landscape = type;
-        this.discovered = 'false';
+        this.discovered = false;
         this.exaughstance = 2;
         //  switch(type) {
         //      case 'forest':
@@ -197,27 +197,50 @@ const renderScreen = (x, y) => {
             let tile = checkIndex(j, i);  
             let element = document.createElement('div');
             element.className = 'tile';
-            element.style.backgroundImage = 'url(resources/img/' + tile.landscape + '.svg)';
             element.style.backgroundSize = 'contain';
             element.style.width = element.style.height = TILE_SIZE + 'px';
-            if (tile.filled) {
-                let object = JSON.parse(tile.filled);
-                console.dir(object);
-                let object_image = document.createElement('img');
-                object_image.src = 'resources/img/' + object.charType + '.svg';
-                object_image.alt = object.charType;
-                object_image.height = object_image.width = TILE_SIZE;
-                element.appendChild(object_image);
+            if (tile.discovered) {
+                element.style.backgroundImage = 'url(resources/img/' + tile.landscape + '.svg)';
+                if (tile.filled) {
+                    let object = JSON.parse(tile.filled);
+                    console.dir(object);
+                    let object_image = document.createElement('img');
+                    object_image.src = 'resources/img/' + object.charType + '.svg';
+                    object_image.alt = object.charType;
+                    object_image.height = object_image.width = TILE_SIZE;
+                    element.appendChild(object_image);
+                }
             }
+            else element.style.backgroundImage = 'url(resources/img/fog.svg)';
             mainScreen.appendChild(element);
         }
     }
 }
 
+const removeFog = (x, y) => {
+    let x_start = x - 2;
+    let x_finish = x + 2;
+    let y_start = y - 2;
+    let y_finish = y + 2;
+    for (let i = y_start; i <= y_finish; i++) {
+        for (let j = x_start; j <= x_finish; j++) {
+            console.log(map[i][j]);
+            let distance = Math.abs(i - y) + Math.abs(j - x);
+            if (distance < 3) {
+                //console.log('x: ' + x + '\nj: ' + j + '\ny: ' + y + '\ni: ' + i + '\n' + distance);
+                let tile = checkIndex(j, i);
+                if (!tile.discovered) tile.discovered = 'true';
+            }
+            //else console.log('x: ' + x + '\nj: ' + j + '\ny: ' + y + '\ni: ' + i + '\nskipped ' + distance);
+        }
+    }
+    renderScreen(x, y);
+}
+
 let viewport_x_center = 3;
 let viewport_y_center = 2;  // defining coordinates of the center of the screen
 let hero = new Character(3, 2, 'hero');
-renderScreen(hero.x_coord, hero.y_coord);
+removeFog(hero.x_coord, hero.y_coord);
 
 
 const isTileFilled = (x, y) => {
@@ -286,7 +309,7 @@ document.body.addEventListener('keypress', event => {
         hero.x_coord = nextTile.x;
         hero.y_coord = nextTile.y;
         map[hero.y_coord][hero.x_coord].filled = JSON.stringify(hero);
-        renderScreen(nextTile.x, nextTile.y);
+        removeFog(nextTile.x, nextTile.y);
     }
     else showInteractionMenu();
 });
