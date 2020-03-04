@@ -141,6 +141,7 @@ class Tile {
     constructor(type = 'deep_water') { 
         this.filled = null;
         this.landscape = type;
+        this.discovered = 'false';
         this.exaughstance = 2;
         //  switch(type) {
         //      case 'forest':
@@ -219,13 +220,15 @@ let hero = new Character(3, 2, 'hero');
 renderScreen(hero.x_coord, hero.y_coord);
 
 
-const isTileFree = (x, y) => {
+const isTileFilled = (x, y) => {
     return map[y][x].filled;
 }
 
 const levelUp = (character) => {}
 
 const skillUp = () => {}
+
+const showInteractionMenu = () => {}
 
 const isSuccess = (chance) => {
     console.log('isSuccess');
@@ -260,19 +263,30 @@ Character.prototype.talk = function() {}
 
 document.body.addEventListener('keypress', event => {
     console.log(event);
+    let nextTile = {
+        x: hero.x_coord, 
+        y: hero.y_coord,
+    }
     switch (event.keyCode) {
         case 100:
-            viewport_x_center++;
+            nextTile.x++;
             break;
         case 97:
-            viewport_x_center--;
+            nextTile.x--;
             break;
         case 115:
-            viewport_y_center++;
+            nextTile.y++;
             break;
         case 119:
-            viewport_y_center--;
+            nextTile.y--;
             break;
     }
-    renderScreen(viewport_x_center, viewport_y_center);
+    if (!isTileFilled(nextTile.x, nextTile.y)) {
+        map[hero.y_coord][hero.x_coord].filled = null;
+        hero.x_coord = nextTile.x;
+        hero.y_coord = nextTile.y;
+        map[hero.y_coord][hero.x_coord].filled = JSON.stringify(hero);
+        renderScreen(nextTile.x, nextTile.y);
+    }
+    else showInteractionMenu();
 });
