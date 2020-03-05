@@ -87,6 +87,7 @@ class Character {
         this.x_coord = x;
         this.y_coord = y; 
         this.type = type;
+        this.direction = 'right';
         this.stats = {
             strength: 1,
             agility: 1,
@@ -202,14 +203,15 @@ const renderScreen = (x, y) => {
             let tile = checkIndex(j, i);  
             let element = document.createElement('div');
             element.className = 'tile';
-            element.style.backgroundSize = 'contain';
+            element.style.backgroundSize = 'cover';
             element.style.width = element.style.height = TILE_SIZE + 'px';
             if (tile.discovered) {
                 element.style.backgroundImage = 'url(resources/img/bg/' + tile.landscape + '.svg)';
                 if (tile.filled) {
                     let object = JSON.parse(tile.filled);
                     let object_image = document.createElement('img');
-                    object_image.src = 'resources/img/' + object.type + '/' + object.type + '.svg';
+                    console.log(object);
+                    object_image.src = 'resources/img/' + object.type + '/' + object.direction + '.svg';
                     object_image.alt = object.type;
                     object_image.height = object_image.width = TILE_SIZE;
                     element.appendChild(object_image);
@@ -294,15 +296,19 @@ document.body.addEventListener('keypress', event => {
     switch (event.keyCode) {
         case 100:
             nextTile.x++;
+            hero.direction = 'right';
             break;
         case 97:
             nextTile.x--;
+            hero.direction = 'left';
             break;
         case 115:
             nextTile.y++;
+            hero.direction = 'down';
             break;
         case 119:
             nextTile.y--;
+            hero.direction = 'up';
             break;
     }
     if (map[nextTile.y][nextTile.x].landscape != 'deep_water') {
