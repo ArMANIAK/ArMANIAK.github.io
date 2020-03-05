@@ -163,14 +163,6 @@ const checkIndex = (x, y) => {
     return map[y][x];
 }
 
-window.onresize = () => {
-    height = mainScreen.scrollHeight;
-    width = mainScreen.scrollWidth;
-    x_tiles = Math.floor(width / TILE_SIZE);
-    y_tiles = Math.floor(height / TILE_SIZE);
-    renderScreen();
-}
-
 const buildMap = () => {
     let worldMap = new Array;
     for (let y in MAP) {
@@ -323,3 +315,11 @@ document.body.addEventListener('keypress', event => {
     }
     
 });
+
+window.onresize = () => {
+    height = mainScreen.scrollHeight;
+    width = mainScreen.scrollWidth;
+    x_tiles = Math.floor(width / TILE_SIZE);
+    y_tiles = Math.floor(height / TILE_SIZE);
+    renderScreen(hero.x_coord, hero.y_coord);
+}
