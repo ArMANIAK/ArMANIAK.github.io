@@ -34,17 +34,21 @@ const LANDSCAPE_TYPES = [
 ];
 
 const MAP = [
-    ['sand', 'sand', 'sand', 'rock', 'rock', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock',],
-    ['sand', 'sand', 'sand', 'sand', 'rock', 'rock', 'forest', 'forest', 'forest', 'forest', 'forest', 'sand', 'forest', 'forest', 'forest',],
-    ['sand', 'sand', 'rock', 'rock', 'rock', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock',],
-    ['sand', 'sand', 'sand', 'rock', 'rock', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock',],
-    ['sand', 'sand', 'sand', 'sand', 'sand', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock',],
-    ['sand', 'sand', 'sand', 'rock', 'sand', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock',],
-    ['sand', 'sand', 'sand', 'sand', 'rock', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock',],
-    ['sand', 'sand', 'sand', 'sand', 'sand', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock',],
-    ['sand', 'sand', 'sand', 'rock', 'sand', 'rock', 'sand', 'forest', 'forest', 'forest', 'sand', 'forest', 'forest', 'forest', 'rock',],
-    ['sand', 'sand', 'sand', 'rock', 'sand', 'sand', 'sand', 'forest', 'forest', 'forest', 'forest', 'forest', 'forest', 'forest', 'rock',],
-    ['sand', 'sand', 'sand', 'rock', 'rock', 'sand', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock',],
+    ['deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'sand', 'rock', 'rock', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'sand', 'sand', 'rock', 'rock', 'forest', 'forest', 'forest', 'forest', 'forest', 'sand', 'forest', 'forest', 'forest', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'rock', 'rock', 'rock', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'sand', 'rock', 'rock', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'sand', 'sand', 'sand', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'sand', 'rock', 'sand', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'sand', 'sand', 'rock', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'sand', 'sand', 'sand', 'rock', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'sand', 'rock', 'sand', 'rock', 'sand', 'forest', 'forest', 'forest', 'sand', 'forest', 'forest', 'forest', 'rock', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'sand', 'rock', 'sand', 'sand', 'sand', 'forest', 'forest', 'forest', 'forest', 'forest', 'forest', 'forest', 'rock', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'sand', 'sand', 'sand', 'rock', 'rock', 'sand', 'rock', 'forest', 'forest', 'forest', 'sand', 'sand', 'forest', 'forest', 'rock', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water'],
+    ['deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water'],
 ];
 
 const INVENTORY = {
@@ -82,7 +86,7 @@ class Character {
     constructor(x, y, type = 'enemy') {
         this.x_coord = x;
         this.y_coord = y; 
-        this.charType = type;
+        this.type = type;
         this.stats = {
             strength: 1,
             agility: 1,
@@ -101,8 +105,8 @@ class Character {
         }
         this.stamina = 100;
         this.exp = 0;
-        this.level = 0;
-        this.maxHP = 
+        this.level = 1;
+        this.maxHP = this.level * this.stats.strength;
         this.hitPoints = 10;
         this.race = 'human';
         this.attackSpeed = 0;
@@ -124,6 +128,7 @@ const USAGE_TYPES = [
 
 class Item {
     constructor() {
+        this.type = 'object';
         this.usage = 'head';
         this.solidity = 1;
         this.weight = 1;
@@ -142,10 +147,10 @@ class Tile {
         this.filled = null;
         this.landscape = type;
         this.discovered = false;
-        this.exaughstance = 2;
+        this.exhaustion = 2;
         //  switch(type) {
         //      case 'forest':
-        //      this.exaughstance = 1.5;
+        //      this.exhaustion = 1.5;
         //      break;
         //  }
 //        this.discovered = false;
@@ -200,18 +205,17 @@ const renderScreen = (x, y) => {
             element.style.backgroundSize = 'contain';
             element.style.width = element.style.height = TILE_SIZE + 'px';
             if (tile.discovered) {
-                element.style.backgroundImage = 'url(resources/img/' + tile.landscape + '.svg)';
+                element.style.backgroundImage = 'url(resources/img/bg/' + tile.landscape + '.svg)';
                 if (tile.filled) {
                     let object = JSON.parse(tile.filled);
-                    console.dir(object);
                     let object_image = document.createElement('img');
-                    object_image.src = 'resources/img/' + object.charType + '.svg';
-                    object_image.alt = object.charType;
+                    object_image.src = 'resources/img/' + object.type + '/' + object.type + '.svg';
+                    object_image.alt = object.type;
                     object_image.height = object_image.width = TILE_SIZE;
                     element.appendChild(object_image);
                 }
             }
-            else element.style.backgroundImage = 'url(resources/img/fog.svg)';
+            else element.style.backgroundImage = 'url(resources/img/bg/fog.svg)';
             mainScreen.appendChild(element);
         }
     }
@@ -224,14 +228,11 @@ const removeFog = (x, y) => {
     let y_finish = y + 2;
     for (let i = y_start; i <= y_finish; i++) {
         for (let j = x_start; j <= x_finish; j++) {
-            console.log(map[i][j]);
             let distance = Math.abs(i - y) + Math.abs(j - x);
             if (distance < 3) {
-                //console.log('x: ' + x + '\nj: ' + j + '\ny: ' + y + '\ni: ' + i + '\n' + distance);
                 let tile = checkIndex(j, i);
                 if (!tile.discovered) tile.discovered = 'true';
             }
-            //else console.log('x: ' + x + '\nj: ' + j + '\ny: ' + y + '\ni: ' + i + '\nskipped ' + distance);
         }
     }
     renderScreen(x, y);
@@ -304,12 +305,15 @@ document.body.addEventListener('keypress', event => {
             nextTile.y--;
             break;
     }
-    if (!isTileFilled(nextTile.x, nextTile.y)) {
-        map[hero.y_coord][hero.x_coord].filled = null;
-        hero.x_coord = nextTile.x;
-        hero.y_coord = nextTile.y;
-        map[hero.y_coord][hero.x_coord].filled = JSON.stringify(hero);
-        removeFog(nextTile.x, nextTile.y);
+    if (map[nextTile.y][nextTile.x].landscape != 'deep_water') {
+        if (!isTileFilled(nextTile.x, nextTile.y)) {
+            map[hero.y_coord][hero.x_coord].filled = null;
+            hero.x_coord = nextTile.x;
+            hero.y_coord = nextTile.y;
+            map[hero.y_coord][hero.x_coord].filled = JSON.stringify(hero);
+            removeFog(nextTile.x, nextTile.y);
+        }
+        else showInteractionMenu();
     }
-    else showInteractionMenu();
+    
 });
