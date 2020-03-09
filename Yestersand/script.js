@@ -33,6 +33,12 @@ const LANDSCAPE_TYPES = [
     'deep_water',
 ];
 
+const ITEM_TYPES = {
+    'container': ['barrel', 'chect', 'pot', 'armored chest', 'shelves', 'box'],
+    'resourses': ['coal', 'iron', 'copper', 'tree'],
+
+}
+
 const MAP = [
     ['deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water'],
     ['deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water'],
@@ -87,7 +93,7 @@ class Character {
         this.x_coord = x;
         this.y_coord = y; 
         this.type = type;
-        this.direction = 'right';
+        this.view = 'right';
         this.stats = {
             strength: 1,
             agility: 1,
@@ -128,8 +134,10 @@ const USAGE_TYPES = [
 ];
 
 class Item {
-    constructor() {
-        this.type = 'object';
+    constructor(view, itemClass, type = 'object') {
+        this.type = type;
+        this.class = itemClass;
+        this.view = view;
         this.usage = 'head';
         this.solidity = 1;
         this.weight = 1;
@@ -149,12 +157,35 @@ class Tile {
         this.landscape = type;
         this.discovered = false;
         this.exhaustion = 2;
+        this.prosperity = 0.1;
         //  switch(type) {
         //      case 'forest':
         //      this.exhaustion = 1.5;
+        //      this.prosperity = 0.15;
         //      break;
         //  }
-//        this.discovered = false;
+    }
+}
+
+const isSuccess = (chance) => {
+    console.log('isSuccess');
+    return Math.random() > chance ? true : false;
+
+
+    //
+    //
+    //   skillUp(); // remove to 'action' code
+    //
+    //
+}
+
+const generateItem = (tile) => {
+    if (isSuccess(1 - tile.prosperity)) {
+        let itemClass = 'container';
+        let view = 'barrel';
+        let object = new Item(view, itemClass);
+        console.log('Generating ', object);
+        tile.filled = JSON.stringify(object);
     }
 }
 
@@ -168,7 +199,9 @@ const buildMap = () => {
     for (let y in MAP) {
         let row = new Array;
         for (let x in MAP[y]) {
-            row.push(new Tile(MAP[y][x]));
+            let tile = new Tile(MAP[y][x]);
+            if (tile.landscape != 'deep_water') generateItem(tile);
+            row.push(tile);
         }
         worldMap.push(row);
     }
@@ -176,6 +209,7 @@ const buildMap = () => {
 }
 
 const mainScreen = document.querySelector('main');
+const aside = document.querySelector('aside');
 const debugChat = document.querySelector('content');
 const map = buildMap();
 var height = mainScreen.scrollHeight;
@@ -202,8 +236,8 @@ const renderScreen = (x, y) => {
                 if (tile.filled) {
                     let object = JSON.parse(tile.filled);
                     let object_image = document.createElement('img');
-                    console.log(object);
-                    object_image.src = 'resources/img/' + object.type + '/' + object.direction + '.svg';
+                    // console.log(object);
+                    object_image.src = 'resources/img/' + object.type + '/' + object.view + '.svg';
                     object_image.alt = object.type;
                     object_image.height = object_image.width = TILE_SIZE;
                     element.appendChild(object_image);
@@ -235,8 +269,8 @@ const removeFog = (x, y) => {
 let viewport_x_center = 3;
 let viewport_y_center = 2;  // defining coordinates of the center of the screen
 let hero = new Character(3, 2, 'hero');
+map[5][5].filled =JSON.stringify(new Item('barrel', 'container', 'object'));
 removeFog(hero.x_coord, hero.y_coord);
-
 
 const isTileFilled = (x, y) => {
     return map[y][x].filled;
@@ -246,13 +280,56 @@ const levelUp = (character) => {}
 
 const skillUp = () => {}
 
-const showInteractionMenu = () => {}
+const createButton = (message, subject) => {
+    console.log('Create button menu');
+    let button = document.createElement('div');
+    button.style.margin = '10px 20px';
+    button.style.border = 'solid 2px blue';
+    button.style.padding = '10px';
+    button.innerText = message;
+    button.style.textAlign = 'center';
+    button.setAttribute('data-target', JSON.stringify(subject));
+    console.log(button);
+    return button;
+}
 
-const isSuccess = (chance) => {
-    console.log('isSuccess');
-    // generate number
-    // compare to chance
-    skillUp();
+const showInteractionMenu = (options, subject) => {
+    console.log('Interaction menu', options);
+    aside.innerHTML = '';
+    for (let item in options) {
+        let button = createButton(options[item], subject);
+        aside.appendChild(button);
+    }
+    console.log(aside);
+}
+
+const checkOptions = (subject) => {
+    let options = [];
+    switch (subject.class) {
+        case 'container':
+        case 'barrel':
+        case 'chest':
+            console.log('It is container');
+            options.push('open', 'destroy', 'lock');
+            break;
+        case 'beast':
+            console.log("It's beast");
+            options.push('tame', 'feed', 'attack');
+            break;
+        case 'worker':
+        case 'trader':
+            console.log ('It is ' + subject.class);
+            options.push('trade', 'talk', 'steal', 'attack');
+            break;
+        case 'enemy':
+            console.log('It is enemy');
+            options.push('steal', 'attack', 'talk');
+            break;
+        default:
+            console.log('Can\'t define the class of the obstacle. It is: ' + subject);
+            break;
+    }
+    return options;
 }
 
 Character.prototype.chanceCalc = function() {
@@ -266,41 +343,52 @@ Character.prototype.attack = function() {
     //relationChange();
     //showResult();
 }
+
 Character.prototype.defence = function() {
     chanceCalc();
     isSuccess();
 }
 
-Character.prototype.interact = function() {
+Character.prototype.interact = function(subject) {
     // check
-    showInteractionMenu();
+    console.log('interaction ', subject, this);
+    let options = checkOptions(subject);
+    // if container show 'unlock', 'open', 'break'
+    // if resourses show 'collect', 'break'
+    // if character show 'attack', 'steal', 'talk'
+    // if beast show 'feed', 'tame', 'attack'
+    showInteractionMenu(options, subject);
 }
 Character.prototype.steal = function() {}
 Character.prototype.trade = function() {}
 Character.prototype.talk = function() {}
 
 document.body.addEventListener('keypress', event => {
-    console.log(event);
+    // console.log(event);
     let nextTile = {
         x: hero.x_coord, 
         y: hero.y_coord,
     }
     switch (event.keyCode) {
         case 100:
+        case 1074:
             nextTile.x++;
-            hero.direction = 'right';
+            hero.view = 'right';
             break;
         case 97:
+        case 1092:
             nextTile.x--;
-            hero.direction = 'left';
+            hero.view = 'left';
             break;
         case 115:
+        case 1099:
             nextTile.y++;
-            hero.direction = 'down';
+            hero.view = 'down';
             break;
         case 119:
+        case 1094:
             nextTile.y--;
-            hero.direction = 'up';
+            hero.view = 'up';
             break;
     }
     if (map[nextTile.y][nextTile.x].landscape != 'deep_water') {
@@ -311,7 +399,7 @@ document.body.addEventListener('keypress', event => {
             map[hero.y_coord][hero.x_coord].filled = JSON.stringify(hero);
             removeFog(nextTile.x, nextTile.y);
         }
-        else showInteractionMenu();
+        else hero.interact(JSON.parse(map[nextTile.y][nextTile.x].filled));
     }
     
 });
