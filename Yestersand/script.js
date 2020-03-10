@@ -34,9 +34,10 @@ const LANDSCAPE_TYPES = [
 ];
 
 const ITEM_TYPES = {
-    'container': ['barrel', 'chect', 'pot', 'armored chest', 'shelves', 'box'],
-    'resourses': ['coal', 'iron', 'copper', 'tree'],
-
+    'container': ['barrel', 'chest', 'pot', 'armored chest', 'shelves', 'box'],
+    'resources': {coal: {type: 'minerals', tool: 'pickaxe'}, iron: {type: 'minerals', tool: 'pickaxe'}, 
+        copper: {type: 'minerals', tool: 'pickaxe'}, tree: {type: 'wood', tool: 'axe'}, mushroom: {type: 'plants', tool: 'knife'}},
+    'item': ['money', 'potion', 'sword', 'pot', 'shovel']
 }
 
 const MAP = [
@@ -133,10 +134,42 @@ const USAGE_TYPES = [
     'off_hand',
 ];
 
+
+/*  
+    objects? containers, resourses, items
+    should inherit from one class or create different classes?
+
+    container class {type: , isLocked: , solidity: , content: []}
+    resources class {type: , neeedTool: , solidity: , content: []}
+    item class {type: , usage: , solidity: , weight: , damage: , aggroSkills: {}, peaceSkills: {}}  
+    should update heroes skills or calculate?
+*/
+class Container {
+    constructor(view) {
+        this.type = 'container';
+        this.view = view;
+        this.isLocked = (view == 'chest' || view == 'armored chest') ? true : false;
+        if (view = 'chest') this.solidity = 50;
+        else if (view = 'armored chest') this.solidity = 250;
+        else this.solidity = 10;
+        this.content = ['pot', 'money'];
+    }
+}
+
+class Resources {
+    constructor(view) {
+        this.type = 'resources';
+        this.view = view;
+        this.resourceType = ITEM_TYPES.resources.view.type;
+        this.needTool = ITEM_TYPES.resources.view.tool;
+        this.solidity = 1;
+        this.content = ['coal', 'iron bar'];
+    }
+}
+
 class Item {
-    constructor(view, itemClass, type = 'object') {
-        this.type = type;
-        this.class = itemClass;
+    constructor() {
+        this.type = 'item';
         this.view = view;
         this.usage = 'head';
         this.solidity = 1;
@@ -157,7 +190,7 @@ class Tile {
         this.landscape = type;
         this.discovered = false;
         this.exhaustion = 2;
-        this.prosperity = 0.1;
+        this.prosperity = 0.05;
         //  switch(type) {
         //      case 'forest':
         //      this.exhaustion = 1.5;
@@ -168,7 +201,7 @@ class Tile {
 }
 
 const isSuccess = (chance) => {
-    console.log('isSuccess');
+    // console.log('isSuccess');
     return Math.random() > chance ? true : false;
 
 
@@ -181,10 +214,9 @@ const isSuccess = (chance) => {
 
 const generateItem = (tile) => {
     if (isSuccess(1 - tile.prosperity)) {
-        let itemClass = 'container';
         let view = 'barrel';
-        let object = new Item(view, itemClass);
-        console.log('Generating ', object);
+        let object = new Container(view);
+        // console.log('Generating ', object);
         tile.filled = JSON.stringify(object);
     }
 }
@@ -269,7 +301,6 @@ const removeFog = (x, y) => {
 let viewport_x_center = 3;
 let viewport_y_center = 2;  // defining coordinates of the center of the screen
 let hero = new Character(3, 2, 'hero');
-map[5][5].filled =JSON.stringify(new Item('barrel', 'container', 'object'));
 removeFog(hero.x_coord, hero.y_coord);
 
 const isTileFilled = (x, y) => {
@@ -281,59 +312,59 @@ const levelUp = (character) => {}
 const skillUp = () => {}
 
 const createButton = (message, subject) => {
-    console.log('Create button menu');
+    // console.log('Create button menu');
     let button = document.createElement('div');
     button.style.margin = '10px 20px';
     button.style.border = 'solid 2px blue';
     button.style.padding = '10px';
     button.innerText = message;
     button.style.textAlign = 'center';
-    button.setAttribute('data-target', JSON.stringify(subject));
-    console.log(button);
+    // console.log(button);
     return button;
 }
 
 const showInteractionMenu = (options, subject) => {
-    console.log('Interaction menu', options);
+    // console.log('Interaction menu', options);
     aside.innerHTML = '';
+    aside.setAttribute('data-target', JSON.stringify(subject));
     for (let item in options) {
         let button = createButton(options[item], subject);
         aside.appendChild(button);
     }
-    console.log(aside);
+    // console.log(aside);
 }
 
 const checkOptions = (subject) => {
     let options = [];
-    switch (subject.class) {
+    switch (subject.type) {
         case 'container':
         case 'barrel':
         case 'chest':
-            console.log('It is container');
+            // console.log('It is container');
             options.push('open', 'destroy', 'lock');
             break;
         case 'beast':
-            console.log("It's beast");
+            // console.log("It's beast");
             options.push('tame', 'feed', 'attack');
             break;
         case 'worker':
         case 'trader':
-            console.log ('It is ' + subject.class);
+            // console.log ('It is ' + subject.class);
             options.push('trade', 'talk', 'steal', 'attack');
             break;
         case 'enemy':
-            console.log('It is enemy');
+            // console.log('It is enemy');
             options.push('steal', 'attack', 'talk');
             break;
         default:
-            console.log('Can\'t define the class of the obstacle. It is: ' + subject);
+            // console.log('Can\'t define the class of the obstacle. It is: ' + subject);
             break;
     }
     return options;
 }
 
 Character.prototype.chanceCalc = function() {
-    console.log(this);
+    // console.log(this);
     //calculate chance according to skills
 }
 
@@ -351,7 +382,7 @@ Character.prototype.defence = function() {
 
 Character.prototype.interact = function(subject) {
     // check
-    console.log('interaction ', subject, this);
+    // console.log('interaction ', subject, this);
     let options = checkOptions(subject);
     // if container show 'unlock', 'open', 'break'
     // if resourses show 'collect', 'break'
