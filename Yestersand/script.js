@@ -447,8 +447,9 @@ document.body.addEventListener('keypress', event => {
         case 1094:
             hero.move('up');
             break;
-        }
-    });
+    }
+    removeFog(hero.x_coord, hero.y_coord);
+});
 
 moveDown.addEventListener('click', function() { 
     hero.move('down');
