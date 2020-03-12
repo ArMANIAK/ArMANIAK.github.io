@@ -240,8 +240,12 @@ const buildMap = () => {
     return worldMap;
 }
 
-const mainScreen = document.querySelector('main');
+const mainScreen = document.querySelector('main > div.field');
 const aside = document.querySelector('aside');
+const moveLeft = document.querySelector('.arrow-left');
+const moveUp = document.querySelector('.arrow-up');
+const moveRight = document.querySelector('.arrow-right');
+const moveDown = document.querySelector('.arrow-down');
 const debugChat = document.querySelector('content');
 const map = buildMap();
 var height = mainScreen.scrollHeight;
@@ -394,45 +398,76 @@ Character.prototype.steal = function() {}
 Character.prototype.trade = function() {}
 Character.prototype.talk = function() {}
 
-document.body.addEventListener('keypress', event => {
-    // console.log(event);
+Character.prototype.move = function (direction) {
     let nextTile = {
-        x: hero.x_coord, 
-        y: hero.y_coord,
+        x: this.x_coord, 
+        y: this.y_coord,
     }
+    switch (direction) {
+        case 'right':
+            nextTile.x++;
+            break;
+        case 'left':
+            nextTile.x--;
+            break;
+        case 'down':
+            nextTile.y++;
+            break;
+        case 'up':
+            nextTile.y--;
+            break;
+    }
+    this.view = direction;
+    if (map[nextTile.y][nextTile.x].landscape != 'deep_water') {
+        if (!isTileFilled(nextTile.x, nextTile.y)) {
+            map[this.y_coord][this.x_coord].filled = null;
+            this.x_coord = nextTile.x;
+            this.y_coord = nextTile.y;
+            map[this.y_coord][this.x_coord].filled = JSON.stringify(this);
+        }
+        else this.interact(JSON.parse(map[nextTile.y][nextTile.x].filled));
+    }
+}
+
+document.body.addEventListener('keypress', event => {
     switch (event.keyCode) {
         case 100:
         case 1074:
-            nextTile.x++;
-            hero.view = 'right';
+            hero.move('right');
             break;
         case 97:
         case 1092:
-            nextTile.x--;
-            hero.view = 'left';
+            hero.move('left');
             break;
         case 115:
         case 1099:
-            nextTile.y++;
-            hero.view = 'down';
+            hero.move('down');
             break;
         case 119:
         case 1094:
-            nextTile.y--;
-            hero.view = 'up';
+            hero.move('up');
             break;
-    }
-    if (map[nextTile.y][nextTile.x].landscape != 'deep_water') {
-        if (!isTileFilled(nextTile.x, nextTile.y)) {
-            map[hero.y_coord][hero.x_coord].filled = null;
-            hero.x_coord = nextTile.x;
-            hero.y_coord = nextTile.y;
-            map[hero.y_coord][hero.x_coord].filled = JSON.stringify(hero);
-            removeFog(nextTile.x, nextTile.y);
         }
-        else hero.interact(JSON.parse(map[nextTile.y][nextTile.x].filled));
-    }
-    
+    });
+
+moveDown.addEventListener('click', function() { 
+    hero.move('down');
+    removeFog(hero.x_coord, hero.y_coord);
+});
+
+moveLeft.addEventListener('click', function() { 
+    hero.move('left');
+    removeFog(hero.x_coord, hero.y_coord);
+});
+
+moveRight.addEventListener('click', function() { 
+    hero.move('right');
+    removeFog(hero.x_coord, hero.y_coord);
+});
+
+moveUp.addEventListener('click', function() { 
+    hero.move('up');
+    removeFog(hero.x_coord, hero.y_coord);
 });
 
 window.onresize = () => {

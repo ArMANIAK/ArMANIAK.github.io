@@ -7,13 +7,38 @@ body {
 }
 
 main {
+    width: 80%;
+    height: 80vh;
+    position: relative;
     background-color: #6699ff;
+}
+
+main > div.field {
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    width: 80%;
-    height: 80vh;
 }
+
+main > div.controls {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+.arrow-up {
+    transform: rotate(90deg);
+}
+
+.arrow-right {
+    transform: rotate(180deg);
+}
+
+.arrow-down {
+    transform: rotate(270deg);
+}
+
 aside {
     background-color: ivory;
     display: flex;
