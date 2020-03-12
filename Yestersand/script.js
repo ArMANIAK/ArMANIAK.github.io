@@ -242,6 +242,7 @@ const buildMap = () => {
 
 const mainScreen = document.querySelector('main > div.field');
 const aside = document.querySelector('aside');
+const moveControl = document.querySelector('.controls');
 const moveLeft = document.querySelector('.arrow-left');
 const moveUp = document.querySelector('.arrow-up');
 const moveRight = document.querySelector('.arrow-right');
@@ -451,25 +452,11 @@ document.body.addEventListener('keypress', event => {
     removeFog(hero.x_coord, hero.y_coord);
 });
 
-moveDown.addEventListener('click', function() { 
-    hero.move('down');
+moveControl.addEventListener('click', function (e) {
+    e.stopPropagation();
+    hero.move(e.target.getAttribute('data-direction'));
     removeFog(hero.x_coord, hero.y_coord);
-});
-
-moveLeft.addEventListener('click', function() { 
-    hero.move('left');
-    removeFog(hero.x_coord, hero.y_coord);
-});
-
-moveRight.addEventListener('click', function() { 
-    hero.move('right');
-    removeFog(hero.x_coord, hero.y_coord);
-});
-
-moveUp.addEventListener('click', function() { 
-    hero.move('up');
-    removeFog(hero.x_coord, hero.y_coord);
-});
+})
 
 window.onresize = () => {
     height = mainScreen.scrollHeight;
