@@ -115,7 +115,7 @@ class Character {
         this.exp = 0;
         this.level = 1;
         this.maxHP = this.level * this.stats.strength;
-        this.hitPoints = 10;
+        this.hitPoints = this.maxHP;
         this.race = 'human';
         this.attackSpeed = 0;
         this.inventory = [];
@@ -134,24 +134,14 @@ const USAGE_TYPES = [
     'off_hand',
 ];
 
-
-/*  
-    objects? containers, resourses, items
-    should inherit from one class or create different classes?
-
-    container class {type: , isLocked: , solidity: , content: []}
-    resources class {type: , neeedTool: , solidity: , content: []}
-    item class {type: , usage: , solidity: , weight: , damage: , aggroSkills: {}, peaceSkills: {}}  
-    should update heroes skills or calculate?
-*/
 class Container {
     constructor(view) {
         this.type = 'container';
         this.view = view;
         this.isLocked = (view == 'chest' || view == 'armored chest') ? true : false;
-        if (view = 'chest') this.solidity = 50;
-        else if (view = 'armored chest') this.solidity = 250;
-        else this.solidity = 10;
+        if (view = 'chest') this.hitPoints = 50;
+        else if (view = 'armored chest') this.hitPoints = 250;
+        else this.hitPoints = 10;
         this.content = ['pot', 'money'];
     }
 }
@@ -172,6 +162,7 @@ class Item {
         this.type = 'item';
         this.view = view;
         this.usage = 'head';
+        if (this.usage == 'main_hand') attackType = 'blunt';
         this.solidity = 1;
         this.weight = 1;
         this.damage = 0; // allow wear pots on heads or use things as a weapon;
@@ -201,7 +192,6 @@ class Tile {
 }
 
 const isSuccess = (chance) => {
-    // console.log('isSuccess');
     return Math.random() > chance ? true : false;
 
 
@@ -216,7 +206,6 @@ const generateItem = (tile) => {
     if (isSuccess(1 - tile.prosperity)) {
         let view = 'barrel';
         let object = new Container(view);
-        // console.log('Generating ', object);
         tile.filled = JSON.stringify(object);
     }
 }
@@ -243,10 +232,6 @@ const buildMap = () => {
 const mainScreen = document.querySelector('main > div.field');
 const aside = document.querySelector('aside');
 const moveControl = document.querySelector('.controls');
-const moveLeft = document.querySelector('.arrow-left');
-const moveUp = document.querySelector('.arrow-up');
-const moveRight = document.querySelector('.arrow-right');
-const moveDown = document.querySelector('.arrow-down');
 const debugChat = document.querySelector('content');
 const map = buildMap();
 var height = mainScreen.scrollHeight;
@@ -273,7 +258,6 @@ const renderScreen = (x, y) => {
                 if (tile.filled) {
                     let object = JSON.parse(tile.filled);
                     let object_image = document.createElement('img');
-                    // console.log(object);
                     object_image.src = 'resources/img/' + object.type + '/' + object.view + '.svg';
                     object_image.alt = object.type;
                     object_image.height = object_image.width = TILE_SIZE;
@@ -317,26 +301,23 @@ const levelUp = (character) => {}
 const skillUp = () => {}
 
 const createButton = (message, subject) => {
-    // console.log('Create button menu');
     let button = document.createElement('div');
     button.style.margin = '10px 20px';
     button.style.border = 'solid 2px blue';
     button.style.padding = '10px';
+    button.dataset.option = message;
     button.innerText = message;
     button.style.textAlign = 'center';
-    // console.log(button);
     return button;
 }
 
 const showInteractionMenu = (options, subject) => {
-    // console.log('Interaction menu', options);
     aside.innerHTML = '';
     aside.setAttribute('data-target', JSON.stringify(subject));
     for (let item in options) {
         let button = createButton(options[item], subject);
         aside.appendChild(button);
     }
-    // console.log(aside);
 }
 
 const checkOptions = (subject) => {
@@ -345,36 +326,43 @@ const checkOptions = (subject) => {
         case 'container':
         case 'barrel':
         case 'chest':
-            // console.log('It is container');
-            options.push('open', 'destroy', 'lock');
+            options.push('open', 'break', 'lock');
             break;
         case 'beast':
-            // console.log("It's beast");
             options.push('tame', 'feed', 'attack');
             break;
         case 'worker':
         case 'trader':
-            // console.log ('It is ' + subject.class);
             options.push('trade', 'talk', 'steal', 'attack');
             break;
         case 'enemy':
-            // console.log('It is enemy');
             options.push('steal', 'attack', 'talk');
             break;
         default:
-            // console.log('Can\'t define the class of the obstacle. It is: ' + subject);
             break;
     }
     return options;
 }
 
-Character.prototype.chanceCalc = function() {
+Character.prototype.chanceCalc = function(skill) {
     // console.log(this);
     //calculate chance according to skills
 }
 
-Character.prototype.attack = function() {
-    chanceCalc();
+Character.prototype.attack = function(opponent) {
+    let attack, attackType;
+    this.stats.strength = 10;
+    this.aggroSkills.unarmed = 5;
+    if (this.equipped[5] == undefined) {
+        attackType = 'unarmed';
+        attack = this.stats.strength * (this.aggroSkills[attackType] || 1);
+    }
+    else {
+        attackType = this.equipped[5].attackType;
+        attack = this.stats.strength * (this.aggroSkills[attackType] || 1) + this.equipped[5].damage;
+    }
+    console.log(attack);
+    chanceCalc(attack);
     isSuccess(); // add raising skill after successes
     //relationChange();
     //showResult();
@@ -400,6 +388,7 @@ Character.prototype.trade = function() {}
 Character.prototype.talk = function() {}
 
 Character.prototype.move = function (direction) {
+    aside.innerHTML = '';
     let nextTile = {
         x: this.x_coord, 
         y: this.y_coord,
@@ -456,7 +445,14 @@ moveControl.addEventListener('click', function (e) {
     e.stopPropagation();
     hero.move(e.target.getAttribute('data-direction'));
     removeFog(hero.x_coord, hero.y_coord);
-})
+});
+
+aside.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (e.target.dataset.option == 'attack' || e.target.dataset.option == 'break') {
+        hero.attack(aside.dataset.target);
+    }
+});
 
 window.onresize = () => {
     height = mainScreen.scrollHeight;
