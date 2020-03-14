@@ -23,6 +23,12 @@
 
 const TILE_SIZE = 75;
 
+const INFECTING_CHANCE = 0.5;
+
+const INFECTION_DEADLINESS = 0.3;
+
+const MEDICINE_EFFECTIVNESS = 0.7;
+
 const LANDSCAPE_TYPES = [
     'forest',
     'sand',
@@ -32,14 +38,6 @@ const LANDSCAPE_TYPES = [
     'field',
     'deep_water',
 ];
-
-const ITEM_TYPES = {
-    'container': ['barrel', 'chest', 'pot', 'armored chest', 'shelves', 'box'],
-    'resources': {coal: {type: 'minerals', tool: 'pickaxe'}, iron: {type: 'minerals', tool: 'pickaxe'}, 
-        copper: {type: 'minerals', tool: 'pickaxe'}, tree: {type: 'wood', tool: 'axe'}, mushroom: {type: 'plants', tool: 'knife'}},
-    'item': ['money', 'potion', 'sword', 'pot', 'shovel']
-}
-
 const MAP = [
     ['deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water'],
     ['deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water'],
@@ -58,161 +56,20 @@ const MAP = [
     ['deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water', 'deep_water'],
 ];
 
-const INVENTORY = {
-    clothes: [],
-    armor: [],
-    weapon: [],
-    tools: [],
-
-};
-
-const RACES = [
-    'human',
-    'elf',
-    'draco',
-    'orc',
-];
-
-const FRACTION = [
-    'none',
-    'knights',
-    'assassins',
-    'peasants',
-];
-
-const CHARACTER_TYPE = [
-    'player',
-    'enemy',
-    'trader',
-    'worker',
-    'soldier',
-    'beast',
-];
-
-class Character {
-    constructor(x, y, type = 'enemy') {
-        this.x_coord = x;
-        this.y_coord = y; 
-        this.type = type;
-        this.view = 'right';
-        this.stats = {
-            strength: 1,
-            agility: 1,
-            endurance: 1,
-            intellect: 1,
-            charm: 1,
-        }
-        this.aggroSkills = {
-            magic: 0,
-            knife: 0,
-            sword: 0,
-        }
-        this.peaceSkills = {
-            repair: 0,
-            healing: 0,
-        }
-        this.stamina = 100;
-        this.exp = 0;
-        this.level = 1;
-        this.maxHP = this.level * this.stats.strength;
-        this.hitPoints = this.maxHP;
-        this.race = 'human';
-        this.attackSpeed = 0;
-        this.inventory = [];
-        this.equipped = [];
-        map[y][x].filled = JSON.stringify(this);
-    }
-}
-
-const USAGE_TYPES = [
-    'head',
-    'body',
-    'legs',
-    'arms',
-    'neck',
-    'main_hand',
-    'off_hand',
-];
-
-class Container {
-    constructor(view) {
-        this.type = 'container';
-        this.view = view;
-        this.isLocked = (view == 'chest' || view == 'armored chest') ? true : false;
-        if (view = 'chest') this.hitPoints = 50;
-        else if (view = 'armored chest') this.hitPoints = 250;
-        else this.hitPoints = 10;
-        this.content = ['pot', 'money'];
-    }
-}
-
-class Resources {
-    constructor(view) {
-        this.type = 'resources';
-        this.view = view;
-        this.resourceType = ITEM_TYPES.resources.view.type;
-        this.needTool = ITEM_TYPES.resources.view.tool;
-        this.solidity = 1;
-        this.content = ['coal', 'iron bar'];
-    }
-}
-
-class Item {
-    constructor() {
-        this.type = 'item';
-        this.view = view;
-        this.usage = 'head';
-        if (this.usage == 'main_hand') attackType = 'blunt';
-        this.solidity = 1;
-        this.weight = 1;
-        this.damage = 0; // allow wear pots on heads or use things as a weapon;
-        this.aggroSkills = {
-            blunt: 1.5,
-        }
-        this.peaceSkills = {
-            repair: 1,
-        }
-    }
-};
+const DIRECTIONS = [
+    'left',
+    'right',
+    'up',
+    'down',
+]
 
 class Tile {
     constructor(type = 'deep_water') { 
         this.filled = null;
         this.landscape = type;
-        this.discovered = false;
-        this.exhaustion = 2;
-        this.prosperity = 0.05;
-        //  switch(type) {
-        //      case 'forest':
-        //      this.exhaustion = 1.5;
-        //      this.prosperity = 0.15;
-        //      break;
-        //  }
+        this.hazardous = 0.5;
+        this.populatinDensity = 0.05;
     }
-}
-
-const isSuccess = (chance) => {
-    return Math.random() > chance ? true : false;
-
-
-    //
-    //
-    //   skillUp(); // remove to 'action' code
-    //
-    //
-}
-
-const generateItem = (tile) => {
-    if (isSuccess(1 - tile.prosperity)) {
-        let view = 'barrel';
-        let object = new Container(view);
-        tile.filled = JSON.stringify(object);
-    }
-}
-
-const checkIndex = (x, y) => {
-    if (x < 0 || y < 0 || x >= map[0].length || y >= map.length) return new Tile();
-    return map[y][x];
 }
 
 const buildMap = () => {
@@ -221,7 +78,6 @@ const buildMap = () => {
         let row = new Array;
         for (let x in MAP[y]) {
             let tile = new Tile(MAP[y][x]);
-            if (tile.landscape != 'deep_water') generateItem(tile);
             row.push(tile);
         }
         worldMap.push(row);
@@ -229,11 +85,153 @@ const buildMap = () => {
     return worldMap;
 }
 
+const map = buildMap();
+
+const CHARACTER_TYPE = [
+    'hero',
+    'infectious',
+    'cleaner',
+    'clear',
+    'panic',
+];
+
+const STATISTICS = {
+    total: 0,
+    infectious: 0,
+    clean: 0,
+    panic: 0,
+    cleaners: 0,
+    deaths: 0,
+}
+
+class Character {
+    constructor(x, y, type = 'clean') {
+        this.x_coord = x;
+        this.y_coord = y; 
+        this.type = 'characters';
+        this.view = type;
+        this.immunity = 0;
+        STATISTICS[type]++;
+        STATISTICS.total++;
+        map[y][x].filled = JSON.stringify(this);
+    }
+}
+
+const isSuccess = (chance) => {
+    return Math.random() > chance ? true : false;
+}
+
+const gameOver = (reason) => {
+    aside = '';
+    let element = document.createElement('h2');
+    element.innerText = 'Игра окончена! Вы умерли из-за ' + reason + '<br/> Вы стали ' + STATISTICS.deaths + ' жертвой эпидемии';
+    aside.appendChild(element);
+    renderScreen = null;
+}
+
+const checkNearby = (object, x, y) => {    
+    console.log('check nearby ' + x + ': ' + y);
+    if (map[y][x].filled) {
+        let neighbour = JSON.parse(map[y][x].filled);
+        if (object.view == 'panic' && neighbour.view == 'infectious') {
+            if (isSuccess(1 - object.immunity)) {
+                STATISTICS.total--;
+                STATISTICS.infectious--;
+                STATISTICS.deaths++;
+                map[y][x].filled = null;
+                if (x == hero.x_coord && y == hero.y_coord) gameOver('паники');
+                return;
+            }
+        }
+        if ((object.view == 'clean' || object.view == 'panic') && neighbour.view == 'infectious') {
+            if (isSuccess(INFECTING_CHANCE * (1 - object.immunity))) {
+                STATISTICS.clean--;
+                STATISTICS.infectious++;
+                object.view = 'infectious';
+            }
+        }
+        if (object.view == 'cleaner' && neighbour.view == 'infectious') {
+            if (isSuccess(1 - MEDICINE_EFFECTIVNESS)) {
+                STATISTICS.clean++;
+                STATISTICS.infectious--;
+                neighbour.view = 'infectious';
+            }
+        }
+        map[y][x].filled = JSON.stringify(neighbour);
+    }
+}
+
+const testPerson = (x, y) => {
+    console.log('test person ' + x + ': ' + y);
+    let object = JSON.parse(map[y][x].filled);
+    if (object.view == 'infectious' && isSuccess(1 - object.immunity)) {
+        STATISTICS.clean++;
+        STATISTICS.infectious--;
+        object.view = 'clean';
+    }
+    if (object.view == 'infectious' && isSuccess(INFECTION_DEADLINESS)) {
+        STATISTICS.deaths++;
+        STATISTICS.total--;
+        STATISTICS.infectious--;
+        map[y][x].filled = null;
+        if (x == hero.x_coord && y == hero.y_coord) gameOver('коронавируса');
+        return;
+    }
+    if (object.view == 'clean' && isSuccess((STATISTICS.infectious + STATISTICS.deaths) / STATISTICS.total)) {
+        STATISTICS.panic++;
+        object.view = 'panic';
+    }
+    checkNearby(object, parseInt(x) + 1, parseInt(y));
+    checkNearby(object, parseInt(x), parseInt(y) + 1);
+    map[y][x].filled = JSON.stringify(object);
+}
+
+const moveOn = () => {
+    for (let row in map) {
+        for (let column in map[row]) {
+            let tile = map[row][column];
+            if (tile.filled) testPerson(column, row);
+            if (tile.filled) {
+                if (hero.x_coord != column && hero.y_coord != row) {
+                    let person = JSON.parse(tile.filled);
+                    let direction = DIRECTIONS[Math.floor(Math.random() * 4)];
+                    person.move(direction);
+                }
+            }
+        }
+    }
+}
+
+(function generateChar() {
+    for (let row in map) {
+        for (let column in map[row]) {
+            let tile = map[row][column];
+            if (tile.landscape != "deep_water") {
+                if (isSuccess(1 - tile.populatinDensity)) {
+                    let view;
+                    if (isSuccess(1 - tile.hazardous)) {
+                        view = 'infectious';
+                    }
+                    else {
+                        view = 'clean';
+                    }
+                    let char = new Character(column, row, view);
+                    tile.filled = JSON.stringify(char);
+                }
+            }
+        }
+    }
+})();
+
+const checkIndex = (x, y) => {
+    if (x < 0 || y < 0 || x >= map[0].length || y >= map.length) return new Tile();
+    return map[y][x];
+}
+
 const mainScreen = document.querySelector('main > div.field');
-const aside = document.querySelector('aside');
+const aside = document.querySelector('.aside');
 const moveControl = document.querySelector('.controls');
 const debugChat = document.querySelector('content');
-const map = buildMap();
 var height = mainScreen.scrollHeight;
 var width = mainScreen.scrollWidth;
 var x_tiles = Math.floor(width / TILE_SIZE);
@@ -253,142 +251,38 @@ const renderScreen = (x, y) => {
             element.className = 'tile';
             element.style.backgroundSize = 'cover';
             element.style.width = element.style.height = TILE_SIZE + 'px';
-            if (tile.discovered) {
-                element.style.backgroundImage = 'url(resources/img/bg/' + tile.landscape + '.svg)';
-                if (tile.filled) {
-                    let object = JSON.parse(tile.filled);
-                    let object_image = document.createElement('img');
-                    object_image.src = 'resources/img/' + object.type + '/' + object.view + '.svg';
-                    object_image.alt = object.type;
-                    object_image.height = object_image.width = TILE_SIZE;
-                    element.appendChild(object_image);
-                }
+            element.style.backgroundImage = 'url(resources/img/bg/' + tile.landscape + '.svg)';
+            if (tile.filled) {
+                let object = JSON.parse(tile.filled);
+                let object_image = document.createElement('img');
+                object_image.src = 'resources/img/' + object.type + '/' + object.view + '.svg';
+                object_image.alt = object.type;
+                object_image.height = object_image.width = TILE_SIZE;
+                element.appendChild(object_image);
             }
-            else element.style.backgroundImage = 'url(resources/img/bg/fog.svg)';
             mainScreen.appendChild(element);
         }
     }
-}
-
-const removeFog = (x, y) => {
-    let x_start = x - 2;
-    let x_finish = x + 2;
-    let y_start = y - 2;
-    let y_finish = y + 2;
-    for (let i = y_start; i <= y_finish; i++) {
-        for (let j = x_start; j <= x_finish; j++) {
-            let distance = Math.abs(i - y) + Math.abs(j - x);
-            if (distance < 3) {
-                let tile = checkIndex(j, i);
-                if (!tile.discovered) tile.discovered = 'true';
-            }
+    aside.innerHTML = '';
+    for (let prop in STATISTICS) {
+        if (typeof prop != 'function') {
+            let element = document.createElement('p');
+            element.innerText = prop + ': ' + STATISTICS[prop];
+            aside.appendChild(element);
         }
     }
-    renderScreen(x, y);
 }
 
 let viewport_x_center = 3;
 let viewport_y_center = 2;  // defining coordinates of the center of the screen
-let hero = new Character(3, 2, 'hero');
-removeFog(hero.x_coord, hero.y_coord);
+let hero = new Character(3, 2, 'clean');
+renderScreen(hero.x_coord, hero.y_coord);
 
 const isTileFilled = (x, y) => {
     return map[y][x].filled;
 }
 
-const levelUp = (character) => {}
-
-const skillUp = () => {}
-
-const createButton = (message, subject) => {
-    let button = document.createElement('div');
-    button.style.margin = '10px 20px';
-    button.style.border = 'solid 2px blue';
-    button.style.padding = '10px';
-    button.dataset.option = message;
-    button.innerText = message;
-    button.style.textAlign = 'center';
-    return button;
-}
-
-const showInteractionMenu = (options, subject) => {
-    aside.innerHTML = '';
-    aside.setAttribute('data-target', JSON.stringify(subject));
-    for (let item in options) {
-        let button = createButton(options[item], subject);
-        aside.appendChild(button);
-    }
-}
-
-const checkOptions = (subject) => {
-    let options = [];
-    switch (subject.type) {
-        case 'container':
-        case 'barrel':
-        case 'chest':
-            options.push('open', 'break', 'lock');
-            break;
-        case 'beast':
-            options.push('tame', 'feed', 'attack');
-            break;
-        case 'worker':
-        case 'trader':
-            options.push('trade', 'talk', 'steal', 'attack');
-            break;
-        case 'enemy':
-            options.push('steal', 'attack', 'talk');
-            break;
-        default:
-            break;
-    }
-    return options;
-}
-
-Character.prototype.chanceCalc = function(skill) {
-    // console.log(this);
-    //calculate chance according to skills
-}
-
-Character.prototype.attack = function(opponent) {
-    let attack, attackType;
-    this.stats.strength = 10;
-    this.aggroSkills.unarmed = 5;
-    if (this.equipped[5] == undefined) {
-        attackType = 'unarmed';
-        attack = this.stats.strength * (this.aggroSkills[attackType] || 1);
-    }
-    else {
-        attackType = this.equipped[5].attackType;
-        attack = this.stats.strength * (this.aggroSkills[attackType] || 1) + this.equipped[5].damage;
-    }
-    console.log(attack);
-    chanceCalc(attack);
-    isSuccess(); // add raising skill after successes
-    //relationChange();
-    //showResult();
-}
-
-Character.prototype.defence = function() {
-    chanceCalc();
-    isSuccess();
-}
-
-Character.prototype.interact = function(subject) {
-    // check
-    // console.log('interaction ', subject, this);
-    let options = checkOptions(subject);
-    // if container show 'unlock', 'open', 'break'
-    // if resourses show 'collect', 'break'
-    // if character show 'attack', 'steal', 'talk'
-    // if beast show 'feed', 'tame', 'attack'
-    showInteractionMenu(options, subject);
-}
-Character.prototype.steal = function() {}
-Character.prototype.trade = function() {}
-Character.prototype.talk = function() {}
-
-Character.prototype.move = function (direction) {
-    aside.innerHTML = '';
+Object.prototype.move = function (direction) {
     let nextTile = {
         x: this.x_coord, 
         y: this.y_coord,
@@ -407,7 +301,6 @@ Character.prototype.move = function (direction) {
             nextTile.y--;
             break;
     }
-    this.view = direction;
     if (map[nextTile.y][nextTile.x].landscape != 'deep_water') {
         if (!isTileFilled(nextTile.x, nextTile.y)) {
             map[this.y_coord][this.x_coord].filled = null;
@@ -415,11 +308,11 @@ Character.prototype.move = function (direction) {
             this.y_coord = nextTile.y;
             map[this.y_coord][this.x_coord].filled = JSON.stringify(this);
         }
-        else this.interact(JSON.parse(map[nextTile.y][nextTile.x].filled));
     }
 }
 
 document.body.addEventListener('keypress', event => {
+    moveOn();
     switch (event.keyCode) {
         case 100:
         case 1074:
@@ -438,20 +331,14 @@ document.body.addEventListener('keypress', event => {
             hero.move('up');
             break;
     }
-    removeFog(hero.x_coord, hero.y_coord);
+    renderScreen(hero.x_coord, hero.y_coord);
 });
 
 moveControl.addEventListener('click', function (e) {
     e.stopPropagation();
+    moveOn();
     hero.move(e.target.getAttribute('data-direction'));
-    removeFog(hero.x_coord, hero.y_coord);
-});
-
-aside.addEventListener('click', function (e) {
-    e.stopPropagation();
-    if (e.target.dataset.option == 'attack' || e.target.dataset.option == 'break') {
-        hero.attack(aside.dataset.target);
-    }
+    renderScreen(hero.x_coord, hero.y_coord);
 });
 
 window.onresize = () => {
