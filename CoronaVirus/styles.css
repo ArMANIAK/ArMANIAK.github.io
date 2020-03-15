@@ -1,0 +1,63 @@
+body {
+    margin: 0px;
+}
+
+.top {
+    display: flex;
+}
+
+main {
+    width: 80%;
+    height: 80vh;
+    position: relative;
+    background-color: #6699ff;
+}
+
+main > div.field {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+main > div.controls {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+
+.arrow-up {
+    transform: rotate(90deg);
+}
+
+.arrow-right {
+    transform: rotate(180deg);
+}
+
+.arrow-down {
+    transform: rotate(270deg);
+}
+
+aside {
+    background-color: ivory;
+    display: flex;
+    flex-direction: column;
+    width: 19%;
+    height: 80vh;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.aside {
+    height: 70%;
+    font-size: 24px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+content {
+    background-color: khaki;
+    overflow: auto;
+    display: block;
+    height: 20vh;
+}
