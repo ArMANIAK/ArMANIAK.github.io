@@ -1,12 +1,109 @@
 'use strict'
 
-const TILE_SIZE = 75;
+const menu = document.querySelector('.menu');
+menu.onclick = function (event) {
+    let element = event.target;
+    let siblings = element.parentNode.childNodes;
+    for (let i = 0, n = siblings.length; i < n; i++) {
+        if (siblings[i].className == 'active') {
+            siblings[i].className = '';
+        }
+        element.classList.add('active');
+    }
+}
 
-const INFECTING_CHANCE = 0.5;
+const mainScreen = document.querySelector('main > div.field');
+const topScreen = document.querySelector('.top');
+const aside = document.querySelector('.aside');
+const moveControl = document.querySelector('.controls');
+// moveControl.style.display = 'none';
+const debugChat = document.querySelector('content');
 
-const INFECTION_DEADLINESS = 0.02;
+let gameStarted;
+var map;
+var MAP_SIZE;
+var MAP_DENSITY;
+var INFECTING_CHANCE = 0.5;
+var INFECTION_DEADLINESS = 0.02;
+var MEDICAL_STAFF;
+var MEDICINE_EFFECTIVNESS;
+var TILE_SIZE = 75;
+var height;
+var width;
+var x_tiles;
+var y_tiles;
+var hero;
 
-const MEDICINE_EFFECTIVNESS = 0.7;
+const start = document.querySelector('.start');
+start.onclick = function (event) {
+    gameStarted = true;
+    
+    const size = document.querySelector('.size > .active').getAttribute('data-size');
+    const density = document.querySelector('.density > .active').getAttribute('data-density');
+    const medicine = document.querySelector('.medicine > .active').getAttribute('data-medicine');
+    const role = document.querySelector('.role > .active').getAttribute('data-role');
+    
+    if (size == 'large') MAP_SIZE = 40;
+    else if (size == 'medium') MAP_SIZE = 25;
+    else MAP_SIZE = 15;
+    
+    if (density == 'large') MAP_DENSITY = 0.08;
+    else if (density == 'medium') MAP_DENSITY = 0.05;
+    else MAP_DENSITY = 0.01;
+
+    if (medicine == 'developed') {
+        MEDICINE_EFFECTIVNESS = 0.7;
+        MEDICAL_STAFF = 0.4;
+    }
+    else if (medicine == 'developing') {
+        MEDICINE_EFFECTIVNESS = 0.4;
+        MEDICAL_STAFF = 0.2;
+    }
+    else {
+        MEDICINE_EFFECTIVNESS = 0.1;
+        MEDICAL_STAFF = 0;
+    }
+
+    
+    // TO DO
+    
+    
+    
+    // var height = mainScreen.offsetHeight;
+    // var width = mainScreen.offsetWidth;
+    // var x_tiles = Math.floor(width / TILE_SIZE);
+    // var y_tiles = Math.floor(height / TILE_SIZE);
+    
+    map = buildMap(MAP_SIZE);
+    hero = new Character (5, 7, role);
+    generateChar();
+    CalculateScreenSize();
+    renderScreen(5, 7);
+//    moveControl.display = 'block';
+}
+
+const CalculateScreenSize = () => {
+    // let width = window.innerWidth;
+    // if (width < 1024) {
+    //     topScreen.style.display = 'block';
+    //     mainScreen.width = width;
+    //     aside.style.flexDirection = 'row';
+    //     aside.width = width;
+    // }
+    // else {
+    //     topScreen.style.display = 'flex';
+    //     mainScreen.style.width = width * 0.8;    
+    //     aside.style.flexDirection = 'column';
+    //     aside.style.width = width * 0.2;
+    // }
+    x_tiles = Math.floor(mainScreen.offsetWidth / TILE_SIZE);
+    y_tiles = Math.floor(mainScreen.offsetHeight / TILE_SIZE);
+    mainScreen.style.width = x_tiles * TILE_SIZE + 'px';
+    mainScreen.style.height = y_tiles * TILE_SIZE + 'px';
+    width = x_tiles * TILE_SIZE;
+    height = y_tiles * TILE_SIZE;
+}
+
 
 const LANDSCAPE_TYPES = [
     'forest',
@@ -17,7 +114,7 @@ const LANDSCAPE_TYPES = [
     'water',
     'deep_water',
 ];
-const MAP_SIZE = 30;
+
 
 const DIRECTIONS = [
     'left',
@@ -26,28 +123,20 @@ const DIRECTIONS = [
     'down',
 ];
 
-let gameStarted = true;
 
-const mainScreen = document.querySelector('main > div.field');
-const aside = document.querySelector('.aside');
-const moveControl = document.querySelector('.controls');
-const debugChat = document.querySelector('content');
-var height = mainScreen.scrollHeight;
-var width = mainScreen.scrollWidth;
-var x_tiles = Math.floor(width / TILE_SIZE);
-var y_tiles = Math.floor(height / TILE_SIZE);  //  defining the quantity of tiles on each axis
+
+  //  defining the quantity of tiles on each axis
 // debugChat.innerHTML += ('<p>' + x_tiles + 'x' + y_tiles + '</p>');
 
 class Tile {
     constructor(type = 'deep_water') { 
         this.filled = null;
         this.landscape = type;
-        this.hazardous = 0.5;
-        this.populatinDensity = 0.05;
+        this.populatinDensity = MAP_DENSITY;
     }
 }
 
-const buildMap = () => {
+const buildMap = (MAP_SIZE) => {
     let worldMap = new Array;
     for (let y = 0; y < MAP_SIZE; y++) {
         let row = new Array;
@@ -72,8 +161,6 @@ const buildMap = () => {
     return worldMap;
 }
 
-const map = buildMap();
-
 const CHARACTER_TYPE = [
     'hero',
     'infectious',
@@ -87,7 +174,7 @@ const STATISTICS = {
     infectious: 0,
     clean: 0,
     panic: 0,
-    cleaners: 0,
+    cleaner: 0,
     deaths: 0,
 }
 
@@ -97,7 +184,7 @@ class Character {
         this.y_coord = y; 
         this.type = 'characters';
         this.view = type;
-        this.immunity = 0;
+        this.immunity = 0.6;
         STATISTICS[type]++;
         STATISTICS.total++;
         map[y][x].filled = this;
@@ -163,21 +250,35 @@ const checkNearby = (object, x, y) => {
 
 // ЗАРАЖЕНИЕ
         if ((object.view == 'clean' || object.view == 'panic') && neighbour.view == 'infectious') {
-            if (isSuccess(INFECTING_CHANCE * (1 - object.immunity))) {
+            if (isSuccess(1 - INFECTING_CHANCE * object.immunity)) {
                 if (object.view == 'panic') STATISTICS.clean--;
                 STATISTICS[object.view]--;
                 STATISTICS.infectious++;
                 object.view = 'infectious';
+                object.immunity = object.immunity < 0.3 ? 0 : object.immunity - 0.3;
                 debugChat.innerHTML += ('<p>Зарегистрирован еще один случай заражения коронавирусом</p>');
             }
         }
         if (object.view == 'infectious' && (neighbour.view == 'clean' || neighbour.view == 'panic')) {
-            if (isSuccess(INFECTING_CHANCE * (1 - neighbour.immunity))) {
+            if (isSuccess(1 - INFECTING_CHANCE * neighbour.immunity)) {
                 STATISTICS[neighbour.view]--;
                 if (neighbour.view == 'panic') STATISTICS.clean--;
                 STATISTICS.infectious++;
                 neighbour.view = 'infectious';
+                neighbour.immunity = neighbour.immunity < 0.3 ? 0 : neighbour.immunity - 0.3;
                 debugChat.innerHTML += ('<p>Зарегистрирован еще один случай заражения коронавирусом</p>');
+            }
+        }
+
+// ПОВЫШЕНИЕ ИММУНИТЕТА ЦКЗ/ВОЗ
+        if (object.view == 'cleaner') {
+            if (isSuccess(1 - MEDICINE_EFFECTIVNESS)) {
+                neighbour.immunity += 0.1;
+            }
+        }
+        if (object.view == 'infectious' && neighbour.view == 'cleaner') {
+            if (isSuccess(1 - MEDICINE_EFFECTIVNESS)) {
+                object.immunity += 0.1;
             }
         }
 
@@ -186,7 +287,15 @@ const checkNearby = (object, x, y) => {
             if (isSuccess(1 - MEDICINE_EFFECTIVNESS)) {
                 STATISTICS.clean++;
                 STATISTICS.infectious--;
-                neighbour.view = 'infectious';
+                neighbour.view = 'clean';
+                debugChat.innerHTML += ('<p>Излечение возможно. Новый случай излечения зарегистрирован</p>');
+            }
+        }
+        if (object.view == 'infectious' && neighbour.view == 'cleaner') {
+            if (isSuccess(1 - MEDICINE_EFFECTIVNESS)) {
+                STATISTICS.clean++;
+                STATISTICS.infectious--;
+                object.view = 'clean';
                 debugChat.innerHTML += ('<p>Излечение возможно. Новый случай излечения зарегистрирован</p>');
             }
         }
@@ -229,7 +338,7 @@ const testPerson = (person) => {
 }
 
 const changeImmunity = (person) => {
-    person.immunity = Math.random() > 0.5 ? person.immunity + 0.01 : person.immunity - 0.01;
+    person.immunity = Math.random() > 0.5 ? person.immunity > 0.7 ? 0.7 : person.immunity + 0.05 : person.immunity < 0.2 ? 0 : person.immunity - 0.2;
 } 
 
 const moveOn = () => {
@@ -253,15 +362,18 @@ const moveOn = () => {
     }
 }
 
-(function generateChar() {
+const  generateChar = () => {
     for (let row in map) {
         for (let column in map[row]) {
             let tile = map[row][column];
             if (tile.landscape != "deep_water") {
-                if (isSuccess(1 - tile.populatinDensity)) {
+                if (isSuccess(1 - MAP_DENSITY)) {
                     let view;
-                    if (isSuccess(1 - tile.hazardous)) {
+                    if (isSuccess(1 - INFECTING_CHANCE)) {
                         view = 'infectious';
+                    }
+                    else if (isSuccess(1 - MEDICAL_STAFF)) {
+                        view = 'cleaner';
                     }
                     else {
                         view = 'clean';
@@ -272,7 +384,7 @@ const moveOn = () => {
             }
         }
     }
-})();
+};
 
 const checkIndex = (x, y) => {
     if (x < 0 || y < 0 || x >= map[0].length || y >= map.length) return new Tile();
@@ -280,6 +392,7 @@ const checkIndex = (x, y) => {
 }
 
 let renderScreen = (x, y) => {
+    console.log(hero.immunity);
     mainScreen.innerHTML = '';
     let x_start = x - Math.floor(x_tiles / 2); 
     let x_finish = x_start + x_tiles;
@@ -307,8 +420,8 @@ let renderScreen = (x, y) => {
     printStatistics();
 }
 
-let hero = new Character(3, 2, 'clean');
-renderScreen(hero.x_coord, hero.y_coord);
+// let hero = new Character(3, 2, 'clean');
+// renderScreen(hero.x_coord, hero.y_coord);
 
 const isTileFilled = (x, y) => {
     return map[y][x].filled;
@@ -384,9 +497,6 @@ moveControl.addEventListener('click', function (e) {
 });
 
 window.onresize = () => {
-    height = mainScreen.scrollHeight;
-    width = mainScreen.scrollWidth;
-    x_tiles = Math.floor(width / TILE_SIZE);
-    y_tiles = Math.floor(height / TILE_SIZE);
+    CalculateScreenSize();
     renderScreen(hero.x_coord, hero.y_coord);
 }

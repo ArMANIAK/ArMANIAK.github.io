@@ -19,12 +19,44 @@ main > div.field {
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
+    text-align: center;
 }
 
 main > div.controls {
     position: absolute;
     right: 5px;
     bottom: 5px;
+}
+
+.menu {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.size, .density, .medicine, .role {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 25px;
+}
+
+div.size > div, div.density > div, div.medicine > div, div.role > div {
+    height: 60px;
+    width: 150px;
+    padding: 5px;
+    background-color: khaki;
+}
+
+div > div.active {
+    background-color: #22aa22;
+}
+
+div.start {
+    height: 50px;
+    width: 150px;
+    background-color: #22aa22;
 }
 
 .arrow-up {
@@ -51,8 +83,9 @@ aside {
 
 .aside {
     height: 70%;
-    font-size: 24px;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 20px;
+    padding: 10px 20px;
+    font-family: sans-serif;
 }
 
 content {
@@ -60,4 +93,55 @@ content {
     overflow: auto;
     display: block;
     height: 20vh;
+}
+
+@media screen and (max-width: 1024px) {
+    .top {
+        display: block; 
+    }
+    main {
+        width: 100%;
+        height: 60vh;
+
+    }
+    aside {
+        flex-direction: row;
+        width: 100%;
+        height: 20vh;
+    }
+    aside > img {
+        width: 80%;
+        height: 80%;
+    }
+    .aside {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-height: 756px) {
+    content {
+        display: none;
+    }
+}
+
+@media screen and (max-height: 500px) {
+    .top {
+        display: flex;
+    }
+    main {
+        width: 60%;
+        height: 100vh;
+
+    }
+    aside {
+        flex-direction: column;
+        width: 39%;
+        height: 100vh;
+    }
+    aside > img {
+        width: 80%;
+    }
+    .aside {
+        font-size: 12px;
+    }
 }
