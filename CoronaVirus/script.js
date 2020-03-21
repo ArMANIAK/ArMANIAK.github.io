@@ -497,6 +497,8 @@ moveControl.addEventListener('click', function (e) {
 });
 
 window.onresize = () => {
-    CalculateScreenSize();
-    renderScreen(hero.x_coord, hero.y_coord);
+    if (gameStarted) {
+        CalculateScreenSize();
+        renderScreen(hero.x_coord, hero.y_coord);
+    }
 }

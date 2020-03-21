@@ -43,8 +43,8 @@ main > div.controls {
 }
 
 div.size > div, div.density > div, div.medicine > div, div.role > div {
-    height: 60px;
-    width: 150px;
+    height: 9vh;
+    width: 15vw;
     padding: 5px;
     background-color: khaki;
 }
@@ -54,8 +54,8 @@ div > div.active {
 }
 
 div.start {
-    height: 50px;
-    width: 150px;
+    height: 9vh;
+    width: 15vw;
     background-color: #22aa22;
 }
 
