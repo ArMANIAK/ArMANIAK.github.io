@@ -120,7 +120,7 @@ class Character {
         this.attackSpeed = 0;
         this.inventory = [];
         this.equipped = [];
-        map[y][x].filled = JSON.stringify(this);
+        map[y][x].filled = this;
     }
 }
 
@@ -217,7 +217,7 @@ const generateItem = (tile) => {
         let view = 'barrel';
         let object = new Container(view);
         // console.log('Generating ', object);
-        tile.filled = JSON.stringify(object);
+        tile.filled = object;
     }
 }
 
@@ -271,7 +271,7 @@ const renderScreen = (x, y) => {
             if (tile.discovered) {
                 element.style.backgroundImage = 'url(resources/img/bg/' + tile.landscape + '.svg)';
                 if (tile.filled) {
-                    let object = JSON.parse(tile.filled);
+                    let object = tile.filled;
                     let object_image = document.createElement('img');
                     // console.log(object);
                     object_image.src = 'resources/img/' + object.type + '/' + object.view + '.svg';
@@ -424,9 +424,9 @@ Character.prototype.move = function (direction) {
             map[this.y_coord][this.x_coord].filled = null;
             this.x_coord = nextTile.x;
             this.y_coord = nextTile.y;
-            map[this.y_coord][this.x_coord].filled = JSON.stringify(this);
+            map[this.y_coord][this.x_coord].filled = this;
         }
-        else this.interact(JSON.parse(map[nextTile.y][nextTile.x].filled));
+        else this.interact(map[nextTile.y][nextTile.x].filled);
     }
 }
 
