@@ -249,41 +249,50 @@ const moveRight = document.querySelector('.arrow-right');
 const moveDown = document.querySelector('.arrow-down');
 const debugChat = document.querySelector('content');
 const map = buildMap();
-var height = mainScreen.scrollHeight;
-var width = mainScreen.scrollWidth;
-var x_tiles = Math.floor(width / TILE_SIZE);
-var y_tiles = Math.floor(height / TILE_SIZE);  //  defining the quantity of tiles on each axis
-debugChat.innerHTML += ('<p>' + x_tiles + 'x' + y_tiles + '</p>');
+// debugChat.innerHTML += ('<p>' + 'x' + '</p>');
 
-const renderScreen = (x, y) => {
+const renderScreen = () => {
+
+// Add options for media queries to make the game responsive
+
+    mainScreen.height = window.innerHeight * 0.8 + 'px';
+    mainScreen.width = window.innerWidth * 0.8 + 'px';
+    moveControl.style.bottom = window.innerHeight * 0.2 + 25 + 'px';
+    moveControl.style.right = window.innerWidth * 0.2 + 25 + 'px';
     mainScreen.innerHTML = '';
-    let x_start = x - Math.floor(x_tiles / 2); 
-    let x_finish = x_start + x_tiles;
-    let y_start = y - Math.floor(y_tiles / 2); 
-    let y_finish = y_start + y_tiles;
-    for (let i = y_start; i < y_finish; i++) {
-        for (let j = x_start; j < x_finish; j++) {
-            let tile = checkIndex(j, i);  
+    for (let i = 0, n = map.length; i < n; i++) {
+        let row = document.createElement('div');
+        row.className = 'container';
+        row.style.width = map[i].length * TILE_SIZE + 'px';
+        for (let j = 0, l = map[i].length; j < l; j++) {
             let element = document.createElement('div');
             element.className = 'tile';
             element.style.backgroundSize = 'cover';
             element.style.width = element.style.height = TILE_SIZE + 'px';
-            if (tile.discovered) {
-                element.style.backgroundImage = 'url(resources/img/bg/' + tile.landscape + '.svg)';
-                if (tile.filled) {
-                    let object = tile.filled;
-                    let object_image = document.createElement('img');
-                    // console.log(object);
-                    object_image.src = 'resources/img/' + object.type + '/' + object.view + '.svg';
-                    object_image.alt = object.type;
-                    object_image.height = object_image.width = TILE_SIZE;
-                    element.appendChild(object_image);
-                }
-            }
-            else element.style.backgroundImage = 'url(resources/img/bg/fog.svg)';
-            mainScreen.appendChild(element);
+            element.style.backgroundImage = 'url(resources/img/bg/fog.svg)';
+            row.appendChild(element);
         }
+        mainScreen.appendChild(row);
     }
+}
+
+renderScreen();
+
+function renderTile(x, y) {  
+    let tile = map[y][x];
+    let tileDiv = document.querySelectorAll('.container > .tile')[y * map[y].length + x];
+    if (tile.discovered) {
+        tileDiv.innerHTML = '';
+        tileDiv.style.backgroundImage = 'url(resources/img/bg/' + tile.landscape + '.svg)';
+        if (tile.filled) {
+            let object = tile.filled;
+            let object_image = document.createElement('img');
+            object_image.src = 'resources/img/' + object.type + '/' + object.view + '.svg';
+            object_image.alt = object.type;
+            object_image.height = object_image.width = TILE_SIZE;
+            tileDiv.appendChild(object_image);
+        }
+    } 
 }
 
 const removeFog = (x, y) => {
@@ -297,15 +306,21 @@ const removeFog = (x, y) => {
             if (distance < 3) {
                 let tile = checkIndex(j, i);
                 if (!tile.discovered) tile.discovered = 'true';
+                renderTile(j, i);
             }
         }
     }
-    renderScreen(x, y);
+    moveScreen(x, y);
 }
 
-let viewport_x_center = 3;
-let viewport_y_center = 2;  // defining coordinates of the center of the screen
-let hero = new Character(3, 2, 'hero');
+function moveScreen(x, y) {
+    renderTile(x, y);
+    let main = document.querySelector('main');
+    main.scrollTop = (y * TILE_SIZE - parseFloat(mainScreen.height.substr(0, mainScreen.height.length - 2)) / 2);
+    main.scrollLeft = (x * TILE_SIZE - parseFloat(mainScreen.width.substr(0, mainScreen.width.length - 2)) / 2);
+}
+
+let hero = new Character(10, 10, 'hero');
 removeFog(hero.x_coord, hero.y_coord);
 
 const isTileFilled = (x, y) => {
@@ -422,6 +437,8 @@ Character.prototype.move = function (direction) {
     if (map[nextTile.y][nextTile.x].landscape != 'deep_water') {
         if (!isTileFilled(nextTile.x, nextTile.y)) {
             map[this.y_coord][this.x_coord].filled = null;
+            let img = document.querySelectorAll('.container > .tile')[this.y_coord * map[this.y_coord].length + this.x_coord];
+            img.innerHTML = '';
             this.x_coord = nextTile.x;
             this.y_coord = nextTile.y;
             map[this.y_coord][this.x_coord].filled = this;
@@ -463,5 +480,5 @@ window.onresize = () => {
     width = mainScreen.scrollWidth;
     x_tiles = Math.floor(width / TILE_SIZE);
     y_tiles = Math.floor(height / TILE_SIZE);
-    renderScreen(hero.x_coord, hero.y_coord);
+    moveScreen(hero.x_coord, hero.y_coord);
 }
