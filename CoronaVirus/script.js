@@ -16,7 +16,6 @@ const mainScreen = document.querySelector('main > div.field');
 const topScreen = document.querySelector('.top');
 const aside = document.querySelector('.aside');
 const moveControl = document.querySelector('.controls');
-// moveControl.style.display = 'none';
 const debugChat = document.querySelector('content');
 
 let gameStarted;
@@ -37,7 +36,7 @@ var hero;
 const start = document.querySelector('.start');
 start.onclick = function (event) {
     gameStarted = true;
-    
+    moveControl.style.visibility = 'visible';
     const size = document.querySelector('.size > .active').getAttribute('data-size');
     const density = document.querySelector('.density > .active').getAttribute('data-density');
     const medicine = document.querySelector('.medicine > .active').getAttribute('data-medicine');
@@ -64,40 +63,17 @@ start.onclick = function (event) {
         MEDICAL_STAFF = 0;
     }
 
-    
-    // TO DO
-    
-    
-    
-    // var height = mainScreen.offsetHeight;
-    // var width = mainScreen.offsetWidth;
-    // var x_tiles = Math.floor(width / TILE_SIZE);
-    // var y_tiles = Math.floor(height / TILE_SIZE);
-    
     map = buildMap(MAP_SIZE);
     hero = new Character (5, 7, role);
     generateChar();
     CalculateScreenSize();
     renderScreen(5, 7);
-//    moveControl.display = 'block';
 }
 
 const CalculateScreenSize = () => {
-    // let width = window.innerWidth;
-    // if (width < 1024) {
-    //     topScreen.style.display = 'block';
-    //     mainScreen.width = width;
-    //     aside.style.flexDirection = 'row';
-    //     aside.width = width;
-    // }
-    // else {
-    //     topScreen.style.display = 'flex';
-    //     mainScreen.style.width = width * 0.8;    
-    //     aside.style.flexDirection = 'column';
-    //     aside.style.width = width * 0.2;
-    // }
-    x_tiles = Math.floor(mainScreen.offsetWidth / TILE_SIZE);
-    y_tiles = Math.floor(mainScreen.offsetHeight / TILE_SIZE);
+    let main = document.querySelector('main');
+    x_tiles = Math.floor(main.offsetWidth / TILE_SIZE);
+    y_tiles = Math.floor(main.offsetHeight / TILE_SIZE);
     mainScreen.style.width = x_tiles * TILE_SIZE + 'px';
     mainScreen.style.height = y_tiles * TILE_SIZE + 'px';
     width = x_tiles * TILE_SIZE;
@@ -115,18 +91,12 @@ const LANDSCAPE_TYPES = [
     'deep_water',
 ];
 
-
 const DIRECTIONS = [
     'left',
     'right',
     'up',
     'down',
 ];
-
-
-
-  //  defining the quantity of tiles on each axis
-// debugChat.innerHTML += ('<p>' + x_tiles + 'x' + y_tiles + '</p>');
 
 class Tile {
     constructor(type = 'deep_water') { 
@@ -392,7 +362,6 @@ const checkIndex = (x, y) => {
 }
 
 let renderScreen = (x, y) => {
-    console.log(hero.immunity);
     mainScreen.innerHTML = '';
     let x_start = x - Math.floor(x_tiles / 2); 
     let x_finish = x_start + x_tiles;
@@ -419,9 +388,6 @@ let renderScreen = (x, y) => {
     }
     printStatistics();
 }
-
-// let hero = new Character(3, 2, 'clean');
-// renderScreen(hero.x_coord, hero.y_coord);
 
 const isTileFilled = (x, y) => {
     return map[y][x].filled;
