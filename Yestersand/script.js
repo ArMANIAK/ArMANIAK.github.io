@@ -1,24 +1,3 @@
-//
-//                          Prototyping process
-//
-//          To-Do
-//    1. Rendering map
-//       1.1. Building an array of tiles
-//       1.2. Checking whether within borders
-//       1.3. Calculating and rendering from the center of the map
-//    2. Placement and movement of the character
-//    3. Interaction with objects and characters
-//    4. Skills
-//    5. Stats and Level-upping
-//    6. Generating objects
-//    7. Generating characters
-//    8. Day-night cycle
-//    9. Global and local Maps
-//   10. Inventory
-//   11. Using items
-//
-//
-
 'use strict'
 
 const TILE_SIZE = 75;
@@ -103,9 +82,10 @@ class Character {
             charm: 1,
         }
         this.aggroSkills = {
-            magic: 0,
-            knife: 0,
-            sword: 0,
+            unarmed: 50,
+            magic: 1,
+            knife: 1,
+            sword: 1,
         }
         this.peaceSkills = {
             repair: 0,
@@ -117,9 +97,10 @@ class Character {
         this.maxHP = this.level * this.stats.strength;
         this.hitPoints = 10;
         this.race = 'human';
-        this.attackSpeed = 0;
+        this.attackSpeed = 1;
+        this.damage = 1;
         this.inventory = [];
-        this.equipped = [];
+        this.equipped = {};
         map[y][x].filled = this;
     }
 }
@@ -130,10 +111,9 @@ const USAGE_TYPES = [
     'legs',
     'arms',
     'neck',
-    'main_hand',
-    'off_hand',
+    'mainHand',
+    'offHand',
 ];
-
 
 /*  
     objects? containers, resourses, items
@@ -144,8 +124,11 @@ const USAGE_TYPES = [
     item class {type: , usage: , solidity: , weight: , damage: , aggroSkills: {}, peaceSkills: {}}  
     should update heroes skills or calculate?
 */
+
 class Container {
-    constructor(view) {
+    constructor(view, x, y) {
+        this.x_coord = x;
+        this.y_coord = y;
         this.type = 'container';
         this.view = view;
         this.isLocked = (view == 'chest' || view == 'armored chest') ? true : false;
@@ -212,10 +195,10 @@ const isSuccess = (chance) => {
     //
 }
 
-const generateItem = (tile) => {
+const generateItem = (tile, x, y) => {
     if (isSuccess(1 - tile.prosperity)) {
         let view = 'barrel';
-        let object = new Container(view);
+        let object = new Container(view, x, y);
         // console.log('Generating ', object);
         tile.filled = object;
     }
@@ -232,7 +215,7 @@ const buildMap = () => {
         let row = new Array;
         for (let x in MAP[y]) {
             let tile = new Tile(MAP[y][x]);
-            if (tile.landscape != 'deep_water') generateItem(tile);
+            if (tile.landscape != 'deep_water') generateItem(tile, x, y);
             row.push(tile);
         }
         worldMap.push(row);
@@ -329,7 +312,7 @@ const isTileFilled = (x, y) => {
 
 const levelUp = (character) => {}
 
-const skillUp = () => {}
+const skillUp = (character, skill) => {}
 
 const createButton = (message, subject) => {
     // console.log('Create button menu');
@@ -338,20 +321,28 @@ const createButton = (message, subject) => {
     button.style.border = 'solid 2px blue';
     button.style.padding = '10px';
     button.innerText = message;
+    button.dataset.action = message == 'destroy' ? 'attack' : message;
     button.style.textAlign = 'center';
     // console.log(button);
     return button;
 }
 
 const showInteractionMenu = (options, subject) => {
-    // console.log('Interaction menu', options);
     aside.innerHTML = '';
-    aside.setAttribute('data-target', JSON.stringify(subject));
+    aside.setAttribute('data-target', JSON.stringify({x_coord: subject.x_coord, y_coord: subject.y_coord}));
     for (let item in options) {
         let button = createButton(options[item], subject);
         aside.appendChild(button);
     }
-    // console.log(aside);
+    aside.onclick = function(event) {
+        if (event.target != aside) {
+            event.stopPropagation();
+            let coords = JSON.parse(aside.dataset.target);
+            console.log(coords);
+            hero[event.target.dataset.action](map[coords.y_coord][coords.x_coord].filled);
+        }
+        else return;
+    }
 }
 
 const checkOptions = (subject) => {
@@ -360,20 +351,16 @@ const checkOptions = (subject) => {
         case 'container':
         case 'barrel':
         case 'chest':
-            // console.log('It is container');
             options.push('open', 'destroy', 'lock');
             break;
         case 'beast':
-            // console.log("It's beast");
             options.push('tame', 'feed', 'attack');
             break;
         case 'worker':
         case 'trader':
-            // console.log ('It is ' + subject.class);
             options.push('trade', 'talk', 'steal', 'attack');
             break;
         case 'enemy':
-            // console.log('It is enemy');
             options.push('steal', 'attack', 'talk');
             break;
         default:
@@ -383,13 +370,48 @@ const checkOptions = (subject) => {
     return options;
 }
 
-Character.prototype.chanceCalc = function() {
-    // console.log(this);
+Character.prototype.chanceCalc = function(skill) {
+    console.log('this.chanceCalc ' + skill);
+
+    if (isSuccess(skill < 5 ? 0.05 : skill * 0.01)) {
+        skillUp(this, skill);
+        return true;
+    }
+    return false;
     //calculate chance according to skills
 }
 
-Character.prototype.attack = function() {
-    chanceCalc();
+Character.prototype.attack = function(object) {
+    let subject = map[object.y_coord][object.x_coord].filled;
+    let distance = 1;
+    let weapon = this.equipped.mainHand;
+    let skill = weapon ? weapon.attackType : 'unarmed';
+    let interval;
+    interval = setInterval(() => {
+        distance = Math.abs(this.y_coord - object.y_coord) + Math.abs(this.x_coord - object.x_coord);
+        // console.log('Inside interval');
+        if (distance == 1 && this.hitPoints > 0 && 
+            subject.solidity ? subject.solidity > 0 : subject.hitPoints > 0) {
+                // console.log('Attack in interval');
+                if (this.chanceCalc(this.aggroSkills[skill])) {
+                    subject.solidity ? subject.solidity = subject.solidity - this.damage : subject.hitPoints = subject.hitPoints - this.damage;
+                }
+                // else console.log('Attack failed');
+            }
+            else {
+                // console.log('clearing interval');
+                // console.log(distance, this, subject);
+                clearInterval(interval);
+            }
+            
+        }, this.attackSpeed * 1000);
+    
+    
+
+    // How to proceed with constant attacks????
+    // Should I add button for attack?
+    // Should it be charging attack option?
+
     isSuccess(); // add raising skill after successes
     //relationChange();
     //showResult();
@@ -401,20 +423,25 @@ Character.prototype.defence = function() {
 }
 
 Character.prototype.interact = function(subject) {
+    console.dir(subject);
+    if (this.type = 'hero') {
+        let options = checkOptions(subject);
+        showInteractionMenu(options, subject);
+    }
     // check
     // console.log('interaction ', subject, this);
-    let options = checkOptions(subject);
+    
     // if container show 'unlock', 'open', 'break'
     // if resourses show 'collect', 'break'
     // if character show 'attack', 'steal', 'talk'
     // if beast show 'feed', 'tame', 'attack'
-    showInteractionMenu(options, subject);
 }
 Character.prototype.steal = function() {}
 Character.prototype.trade = function() {}
 Character.prototype.talk = function() {}
 
 Character.prototype.move = function (direction) {
+    aside.innerHTML = '';
     let nextTile = {
         x: this.x_coord, 
         y: this.y_coord,
@@ -476,9 +503,9 @@ moveControl.addEventListener('click', function (e) {
 })
 
 window.onresize = () => {
-    height = mainScreen.scrollHeight;
-    width = mainScreen.scrollWidth;
-    x_tiles = Math.floor(width / TILE_SIZE);
-    y_tiles = Math.floor(height / TILE_SIZE);
+    mainScreen.height = window.innerHeight * 0.8 + 'px';
+    mainScreen.width = window.innerWidth * 0.8 + 'px';
+    moveControl.style.bottom = window.innerHeight * 0.2 + 25 + 'px';
+    moveControl.style.right = window.innerWidth * 0.2 + 25 + 'px';
     moveScreen(hero.x_coord, hero.y_coord);
 }
