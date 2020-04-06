@@ -42,9 +42,9 @@ start.onclick = function (event) {
     const medicine = document.querySelector('.medicine > .active').getAttribute('data-medicine');
     const role = document.querySelector('.role > .active').getAttribute('data-role');
     
-    if (size == 'large') MAP_SIZE = 40;
-    else if (size == 'medium') MAP_SIZE = 25;
-    else MAP_SIZE = 15;
+    if (size == 'large') MAP_SIZE = 50;
+    else if (size == 'medium') MAP_SIZE = 35;
+    else MAP_SIZE = 25;
     
     if (density == 'large') MAP_DENSITY = 0.08;
     else if (density == 'medium') MAP_DENSITY = 0.05;

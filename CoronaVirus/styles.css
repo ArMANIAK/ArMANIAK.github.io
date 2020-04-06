@@ -13,61 +13,66 @@ main {
     background-color: #6699ff;
 }
 
-main > div.field {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    text-align: center;
-}
+    main > div.field {
+        display: flex;
+        flex-wrap: wrap;
+        /* align-content: flex-start; */
+        text-align: center;
+    }
+        
+        .menu {
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-main > div.controls {
-    visibility: hidden;
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-}
+            .size, .density, .medicine, .role {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                margin: 2vh;
+            }
 
-.menu {
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-end;
-}
+                div.size > div, div.density > div, div.medicine > div, div.role > div, div.start {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 7vh;
+                    width: 13vw;
+                    padding: 5px;
+                    border-radius: 0.8vh;
+                    background-color: khaki;
+                }
 
-.size, .density, .medicine, .role {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    margin: 25px;
-}
+                div > div.active {
+                    background-color: #22aa22;
+                }
 
-div.size > div, div.density > div, div.medicine > div, div.role > div {
-    height: 7vh;
-    width: 13vw;
-    padding: 5px;
-    background-color: khaki;
-}
+                div.start {
+                    font-weight: bold;
+                    background-color: #22aa22;
+                }
 
-div > div.active {
-    background-color: #22aa22;
-}
+    main > div.controls {
+        visibility: hidden;
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+    }
 
-div.start {
-    height: 9vh;
-    width: 15vw;
-    background-color: #22aa22;
-}
 
-.arrow-up {
-    transform: rotate(90deg);
-}
+    .arrow-up {
+        transform: rotate(90deg);
+    }
 
-.arrow-right {
-    transform: rotate(180deg);
-}
+    .arrow-right {
+        transform: rotate(180deg);
+    }
 
-.arrow-down {
-    transform: rotate(270deg);
-}
+    .arrow-down {
+        transform: rotate(270deg);
+    }
 
 aside {
     background-color: ivory;
