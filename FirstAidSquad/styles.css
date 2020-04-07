@@ -1,0 +1,142 @@
+html {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+html,body{
+    height:100%;
+    margin: 0;
+}
+
+header {
+    width: 100%;
+    position: relative;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+    div#top_contact {
+        background-color: rgb(218, 41, 28); 
+        padding: 5px; 
+        color: white; 
+        text-align: center;
+        padding: 10px;
+    }
+
+    div#banner > img {
+        width: 100%;
+    }
+
+        #game {
+            padding: 10px 20px;
+            position: absolute;
+            bottom: 10vh;
+            left: 45vw;
+            font-size: 18px;
+            border-radius: 5px;
+            background-color: rgb(218, 41, 28);
+            color: white;
+            margin: auto;
+        }
+
+        @media screen and (max-width: 426px) {
+            #game {
+                left: 28vw;
+                bottom: 5vh;
+            }
+        }
+
+nav {
+    margin-top: -5px;
+    background-color: rgb(218, 41, 28); 
+    padding: 5px; 
+    color: white; 
+    padding: 10px;
+}
+
+    nav > ul > li {
+        display: inline;
+        margin-right: 15px;
+    }
+
+    @media screen and (max-width: 768px) {
+        nav > ul > li {
+            display: block;
+            padding-bottom: 0.5rem;
+        }
+    }
+
+    ul > li > a {
+        text-decoration: none;
+        color: white;
+    }
+
+article, .what {
+    margin: 20px;
+}
+
+article > h1, article > h3 {
+    text-align: center;
+}
+
+.what > img {
+    min-width: 285px;
+    width: 40vw;
+    margin-right: 5vw;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    background-color: rgb(218, 41, 28);
+    color: white;
+}
+
+    footer > div {
+        display: flex;
+        margin: 20px;
+    }
+
+    div#authors {
+        flex-direction: column;
+    }
+
+    div#social_media_links {
+        align-items: center;
+        justify-content: end;
+    }
+
+        div#social_media_links > a {
+            display: block;
+            width: 40px;
+            height: 40px;
+            filter: invert();
+            background-size: cover;
+            margin-right: 10px;
+        }
+
+        a#facebook {
+            background: url('img/general/social.png') 0px 0px/40px 40px no-repeat;
+        }
+
+        a#instagram {
+            background: url('img/general/social.png') -40px 0px/40px 40px no-repeat;
+        }
+
+        a#twitter {
+            background: url('img/general/social.png') -80px 0px/40px 40px no-repeat;
+        }
+
+        a#youtube {
+            background: url('img/general/social.png') -120px 0px/40px 40px no-repeat;
+        }
+
+        a#flickr {
+            background: url('img/general/social.png') -160px 0px/40px 40px no-repeat;
+        }
+
+@media screen and (max-width: 426px) {
+    div#social_media_links {
+        flex-direction: column;
+    }
+}
