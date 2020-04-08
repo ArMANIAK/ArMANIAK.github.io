@@ -1,24 +1,3 @@
-//
-//                          Prototyping process
-//
-//          To-Do
-//    1. Rendering map
-//       1.1. Building an array of tiles
-//       1.2. Checking whether within borders
-//       1.3. Calculating and rendering from the center of the map
-//    2. Placement and movement of the character
-//    3. Interaction with objects and characters
-//    4. Skills
-//    5. Stats and Level-upping
-//    6. Generating objects
-//    7. Generating characters
-//    8. Day-night cycle
-//    9. Global and local Maps
-//   10. Inventory
-//   11. Using items
-//
-//
-
 'use strict'
 
 const TILE_SIZE = 75;
@@ -103,9 +82,10 @@ class Character {
             charm: 1,
         }
         this.aggroSkills = {
-            magic: 0,
-            knife: 0,
-            sword: 0,
+            unarmed: 50,
+            magic: 1,
+            knife: 1,
+            sword: 1,
         }
         this.peaceSkills = {
             repair: 0,
@@ -117,10 +97,11 @@ class Character {
         this.maxHP = this.level * this.stats.strength;
         this.hitPoints = this.maxHP;
         this.race = 'human';
-        this.attackSpeed = 0;
+        this.attackSpeed = 1;
+        this.damage = 1;
         this.inventory = [];
-        this.equipped = [];
-        map[y][x].filled = JSON.stringify(this);
+        this.equipped = {};
+        map[y][x].filled = this;
     }
 }
 
@@ -130,12 +111,27 @@ const USAGE_TYPES = [
     'legs',
     'arms',
     'neck',
-    'main_hand',
-    'off_hand',
+    'mainHand',
+    'offHand',
 ];
 
+<<<<<<< HEAD
+=======
+/*  
+    objects? containers, resourses, items
+    should inherit from one class or create different classes?
+
+    container class {type: , isLocked: , solidity: , content: []}
+    resources class {type: , neeedTool: , solidity: , content: []}
+    item class {type: , usage: , solidity: , weight: , damage: , aggroSkills: {}, peaceSkills: {}}  
+    should update heroes skills or calculate?
+*/
+
+>>>>>>> 06ba08321e5b9d495ae3db45a5a71b748a191e00
 class Container {
-    constructor(view) {
+    constructor(view, x, y) {
+        this.x_coord = x;
+        this.y_coord = y;
         this.type = 'container';
         this.view = view;
         this.isLocked = (view == 'chest' || view == 'armored chest') ? true : false;
@@ -202,11 +198,17 @@ const isSuccess = (chance) => {
     //
 }
 
-const generateItem = (tile) => {
+const generateItem = (tile, x, y) => {
     if (isSuccess(1 - tile.prosperity)) {
         let view = 'barrel';
+<<<<<<< HEAD
         let object = new Container(view);
         tile.filled = JSON.stringify(object);
+=======
+        let object = new Container(view, x, y);
+        // console.log('Generating ', object);
+        tile.filled = object;
+>>>>>>> 06ba08321e5b9d495ae3db45a5a71b748a191e00
     }
 }
 
@@ -221,7 +223,7 @@ const buildMap = () => {
         let row = new Array;
         for (let x in MAP[y]) {
             let tile = new Tile(MAP[y][x]);
-            if (tile.landscape != 'deep_water') generateItem(tile);
+            if (tile.landscape != 'deep_water') generateItem(tile, x, y);
             row.push(tile);
         }
         worldMap.push(row);
@@ -234,25 +236,27 @@ const aside = document.querySelector('aside');
 const moveControl = document.querySelector('.controls');
 const debugChat = document.querySelector('content');
 const map = buildMap();
-var height = mainScreen.scrollHeight;
-var width = mainScreen.scrollWidth;
-var x_tiles = Math.floor(width / TILE_SIZE);
-var y_tiles = Math.floor(height / TILE_SIZE);  //  defining the quantity of tiles on each axis
-debugChat.innerHTML += ('<p>' + x_tiles + 'x' + y_tiles + '</p>');
+// debugChat.innerHTML += ('<p>' + 'x' + '</p>');
 
-const renderScreen = (x, y) => {
+const renderScreen = () => {
+
+// Add options for media queries to make the game responsive
+
+    mainScreen.height = window.innerHeight * 0.8 + 'px';
+    mainScreen.width = window.innerWidth * 0.8 + 'px';
+    moveControl.style.bottom = window.innerHeight * 0.2 + 25 + 'px';
+    moveControl.style.right = window.innerWidth * 0.2 + 25 + 'px';
     mainScreen.innerHTML = '';
-    let x_start = x - Math.floor(x_tiles / 2); 
-    let x_finish = x_start + x_tiles;
-    let y_start = y - Math.floor(y_tiles / 2); 
-    let y_finish = y_start + y_tiles;
-    for (let i = y_start; i < y_finish; i++) {
-        for (let j = x_start; j < x_finish; j++) {
-            let tile = checkIndex(j, i);  
+    for (let i = 0, n = map.length; i < n; i++) {
+        let row = document.createElement('div');
+        row.className = 'container';
+        row.style.width = map[i].length * TILE_SIZE + 'px';
+        for (let j = 0, l = map[i].length; j < l; j++) {
             let element = document.createElement('div');
             element.className = 'tile';
             element.style.backgroundSize = 'cover';
             element.style.width = element.style.height = TILE_SIZE + 'px';
+<<<<<<< HEAD
             if (tile.discovered) {
                 element.style.backgroundImage = 'url(resources/img/bg/' + tile.landscape + '.svg)';
                 if (tile.filled) {
@@ -266,8 +270,32 @@ const renderScreen = (x, y) => {
             }
             else element.style.backgroundImage = 'url(resources/img/bg/fog.svg)';
             mainScreen.appendChild(element);
+=======
+            element.style.backgroundImage = 'url(resources/img/bg/fog.svg)';
+            row.appendChild(element);
+>>>>>>> 06ba08321e5b9d495ae3db45a5a71b748a191e00
         }
+        mainScreen.appendChild(row);
     }
+}
+
+renderScreen();
+
+function renderTile(x, y) {  
+    let tile = map[y][x];
+    let tileDiv = document.querySelectorAll('.container > .tile')[y * map[y].length + x];
+    if (tile.discovered) {
+        tileDiv.innerHTML = '';
+        tileDiv.style.backgroundImage = 'url(resources/img/bg/' + tile.landscape + '.svg)';
+        if (tile.filled) {
+            let object = tile.filled;
+            let object_image = document.createElement('img');
+            object_image.src = 'resources/img/' + object.type + '/' + object.view + '.svg';
+            object_image.alt = object.type;
+            object_image.height = object_image.width = TILE_SIZE;
+            tileDiv.appendChild(object_image);
+        }
+    } 
 }
 
 const removeFog = (x, y) => {
@@ -281,15 +309,21 @@ const removeFog = (x, y) => {
             if (distance < 3) {
                 let tile = checkIndex(j, i);
                 if (!tile.discovered) tile.discovered = 'true';
+                renderTile(j, i);
             }
         }
     }
-    renderScreen(x, y);
+    moveScreen(x, y);
 }
 
-let viewport_x_center = 3;
-let viewport_y_center = 2;  // defining coordinates of the center of the screen
-let hero = new Character(3, 2, 'hero');
+function moveScreen(x, y) {
+    renderTile(x, y);
+    let main = document.querySelector('main');
+    main.scrollTop = (y * TILE_SIZE - parseFloat(mainScreen.height.substr(0, mainScreen.height.length - 2)) / 2);
+    main.scrollLeft = (x * TILE_SIZE - parseFloat(mainScreen.width.substr(0, mainScreen.width.length - 2)) / 2);
+}
+
+let hero = new Character(10, 10, 'hero');
 removeFog(hero.x_coord, hero.y_coord);
 
 const isTileFilled = (x, y) => {
@@ -298,7 +332,7 @@ const isTileFilled = (x, y) => {
 
 const levelUp = (character) => {}
 
-const skillUp = () => {}
+const skillUp = (character, skill) => {}
 
 const createButton = (message, subject) => {
     let button = document.createElement('div');
@@ -307,17 +341,30 @@ const createButton = (message, subject) => {
     button.style.padding = '10px';
     button.dataset.option = message;
     button.innerText = message;
+    button.dataset.action = message == 'destroy' ? 'attack' : message;
     button.style.textAlign = 'center';
     return button;
 }
 
 const showInteractionMenu = (options, subject) => {
     aside.innerHTML = '';
-    aside.setAttribute('data-target', JSON.stringify(subject));
+    aside.setAttribute('data-target', JSON.stringify({x_coord: subject.x_coord, y_coord: subject.y_coord}));
     for (let item in options) {
         let button = createButton(options[item], subject);
         aside.appendChild(button);
     }
+<<<<<<< HEAD
+=======
+    aside.onclick = function(event) {
+        if (event.target != aside) {
+            event.stopPropagation();
+            let coords = JSON.parse(aside.dataset.target);
+            console.log(coords);
+            hero[event.target.dataset.action](map[coords.y_coord][coords.x_coord].filled);
+        }
+        else return;
+    }
+>>>>>>> 06ba08321e5b9d495ae3db45a5a71b748a191e00
 }
 
 const checkOptions = (subject) => {
@@ -326,7 +373,11 @@ const checkOptions = (subject) => {
         case 'container':
         case 'barrel':
         case 'chest':
+<<<<<<< HEAD
             options.push('open', 'break', 'lock');
+=======
+            options.push('open', 'destroy', 'lock');
+>>>>>>> 06ba08321e5b9d495ae3db45a5a71b748a191e00
             break;
         case 'beast':
             options.push('tame', 'feed', 'attack');
@@ -345,6 +396,7 @@ const checkOptions = (subject) => {
 }
 
 Character.prototype.chanceCalc = function(skill) {
+<<<<<<< HEAD
     // console.log(this);
     //calculate chance according to skills
 }
@@ -363,6 +415,49 @@ Character.prototype.attack = function(opponent) {
     }
     console.log(attack);
     chanceCalc(attack);
+=======
+    console.log('this.chanceCalc ' + skill);
+
+    if (isSuccess(skill < 5 ? 0.05 : skill * 0.01)) {
+        skillUp(this, skill);
+        return true;
+    }
+    return false;
+    //calculate chance according to skills
+}
+
+Character.prototype.attack = function(object) {
+    let subject = map[object.y_coord][object.x_coord].filled;
+    let distance = 1;
+    let weapon = this.equipped.mainHand;
+    let skill = weapon ? weapon.attackType : 'unarmed';
+    let interval;
+    interval = setInterval(() => {
+        distance = Math.abs(this.y_coord - object.y_coord) + Math.abs(this.x_coord - object.x_coord);
+        // console.log('Inside interval');
+        if (distance == 1 && this.hitPoints > 0 && 
+            subject.solidity ? subject.solidity > 0 : subject.hitPoints > 0) {
+                // console.log('Attack in interval');
+                if (this.chanceCalc(this.aggroSkills[skill])) {
+                    subject.solidity ? subject.solidity = subject.solidity - this.damage : subject.hitPoints = subject.hitPoints - this.damage;
+                }
+                // else console.log('Attack failed');
+            }
+            else {
+                // console.log('clearing interval');
+                // console.log(distance, this, subject);
+                clearInterval(interval);
+            }
+            
+        }, this.attackSpeed * 1000);
+    
+    
+
+    // How to proceed with constant attacks????
+    // Should I add button for attack?
+    // Should it be charging attack option?
+
+>>>>>>> 06ba08321e5b9d495ae3db45a5a71b748a191e00
     isSuccess(); // add raising skill after successes
     //relationChange();
     //showResult();
@@ -374,14 +469,18 @@ Character.prototype.defence = function() {
 }
 
 Character.prototype.interact = function(subject) {
+    console.dir(subject);
+    if (this.type = 'hero') {
+        let options = checkOptions(subject);
+        showInteractionMenu(options, subject);
+    }
     // check
     // console.log('interaction ', subject, this);
-    let options = checkOptions(subject);
+    
     // if container show 'unlock', 'open', 'break'
     // if resourses show 'collect', 'break'
     // if character show 'attack', 'steal', 'talk'
     // if beast show 'feed', 'tame', 'attack'
-    showInteractionMenu(options, subject);
 }
 Character.prototype.steal = function() {}
 Character.prototype.trade = function() {}
@@ -411,11 +510,13 @@ Character.prototype.move = function (direction) {
     if (map[nextTile.y][nextTile.x].landscape != 'deep_water') {
         if (!isTileFilled(nextTile.x, nextTile.y)) {
             map[this.y_coord][this.x_coord].filled = null;
+            let img = document.querySelectorAll('.container > .tile')[this.y_coord * map[this.y_coord].length + this.x_coord];
+            img.innerHTML = '';
             this.x_coord = nextTile.x;
             this.y_coord = nextTile.y;
-            map[this.y_coord][this.x_coord].filled = JSON.stringify(this);
+            map[this.y_coord][this.x_coord].filled = this;
         }
-        else this.interact(JSON.parse(map[nextTile.y][nextTile.x].filled));
+        else this.interact(map[nextTile.y][nextTile.x].filled);
     }
 }
 
@@ -455,9 +556,9 @@ aside.addEventListener('click', function (e) {
 });
 
 window.onresize = () => {
-    height = mainScreen.scrollHeight;
-    width = mainScreen.scrollWidth;
-    x_tiles = Math.floor(width / TILE_SIZE);
-    y_tiles = Math.floor(height / TILE_SIZE);
-    renderScreen(hero.x_coord, hero.y_coord);
+    mainScreen.height = window.innerHeight * 0.8 + 'px';
+    mainScreen.width = window.innerWidth * 0.8 + 'px';
+    moveControl.style.bottom = window.innerHeight * 0.2 + 25 + 'px';
+    moveControl.style.right = window.innerWidth * 0.2 + 25 + 'px';
+    moveScreen(hero.x_coord, hero.y_coord);
 }

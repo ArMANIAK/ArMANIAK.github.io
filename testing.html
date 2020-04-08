@@ -4,57 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
+</head>
+<body>
     <script>
         var a = new Array();
         for (let i = 0; i < 100000; i++) {
             a[i] = Math.floor(Math.random() * 101);
         }
 
-        const findWithFor = function (num) {
-            for (let i = 0, n = a.length; i < n; i++) {
-                if (a[i] == num) return true;
-            }
-            return false;
-        };
+        // const findWithFor = function (num) {
+        //     for (let i = 0, n = a.length; i < n; i++) {
+        //         if (a[i] == num) return true;
+        //     }
+        //     return false;
+        // };
 
-        const findWithIndexOf = function (num) {
-            return a.indexOf(num);
-        };
+        // const findWithIndexOf = function (num) {
+        //     return a.indexOf(num);
+        // };
 
-        const findWithFind = function (num) {
-            return a.find(function(element) {return element == num;});
-        }
+        // const findWithFind = function (num) {
+        //     return a.find(function(element) {return element == num;});
+        // }
 
-        const findWithInclude = function (num) {
-            return a.includes(num);
-        }
+        // const findWithInclude = function (num) {
+        //     return a.includes(num);
+        // }
 
-        const test = func => {
-            for (let i = 0; i < 100000; i++) {
-                let result = func(i);
+        const test = function (func, a) {
+            console.log(func.name);
+            let result;
+            for (let i = 0; i < 10000; i++) {
+                result = func(a);
                 result++;
             }
+            return result;
         }
 
-        let start = new Date();
+        const cycleWithoutLengthVar = function (array) {
+            let res = 0;
+            for (let i = 0; i < array.length; i++) {
+                res += array[i];
+            }
+            return res;
+        }
+
+        const cycleWithLengthVar = function (array) {
+            let res = 0;
+            for (let i = 0, n = array.length; i < n; i++) {
+                res += array[i];
+            }
+            return res;
+        }
+
+        // let start = new Date();
         // test(findWithInclude);
         // test(findWithFind);
         // test(findWithFor);
         // test(findWithIndexOf);
-        for (let i = 0; i < 100000; i++) {
-                let result = findWithInclude(i);
+        // for (let i = 0; i < 100000; i++) {
+                // let result = findWithInclude(i);
                 // let result = findWithFind(i);
                 // let result = findWithFor(i);
                 // let result = findWithIndexOf(i);
-                result++;
-            }
-        let finish = new Date();
+            //     result++;
+            // }
+        // let finish = new Date();
 
-        document.write(finish - start);
+        //Testing without legth variable:
+        {
+            let start = new Date();
+            document.write('Result for test of ' + cycleWithoutLengthVar.name + ': ' + test(cycleWithoutLengthVar, a) + 
+                " (it means nothing just doesn't allow garbage collector to ignore the function execution) <br/>");
+            let finish = new Date();
+            document.write('The time of 10,000 repeatitions is ' + (finish - start) + ' <br/>');
+        }
+
+        //Testing with legth variable:
+        {
+            let start = new Date();
+            document.write('Result for test of ' + cycleWithLengthVar.name + ': ' + test(cycleWithLengthVar, a) + 
+                " (it means nothing just doesn't allow garbage collector to ignore the function execution) <br/>");
+            let finish = new Date();
+            document.write('The time of 10,000 repeatitions is ' + (finish - start) + ' <br/>');
+        }
 
     </script>
-</head>
-<body>
-    
 </body>
 </html>
