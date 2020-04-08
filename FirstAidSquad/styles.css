@@ -38,39 +38,36 @@ header {
             margin: auto;
         }
 
-        @media screen and (max-width: 426px) {
-            #game {
-                left: 28vw;
-                bottom: 5vh;
-            }
-        }
-
 nav {
     margin-top: -5px;
     background-color: rgb(218, 41, 28); 
     padding: 5px; 
     color: white; 
     padding: 10px;
+    display: flex;
+    align-items: center;
 }
 
-    nav > ul > li {
-        display: inline;
-        margin-right: 15px;
+    nav > img {
+        display: none;
     }
 
-    @media screen and (max-width: 768px) {
+    nav > ul {
+        display: flex;
+        flex-direction: row;
+    }
+
         nav > ul > li {
-            display: block;
-            padding-bottom: 0.5rem;
+            list-style: none;
+            margin-right: 20px;
         }
-    }
 
-    ul > li > a {
-        text-decoration: none;
-        color: white;
-    }
+            ul > li > a {
+                text-decoration: none;
+                color: white;
+            }
 
-article, .what {
+article {
     margin: 20px;
 }
 
@@ -78,10 +75,78 @@ article > h1, article > h3 {
     text-align: center;
 }
 
-.what > img {
-    min-width: 285px;
-    width: 40vw;
-    margin-right: 5vw;
+article:not(:last-of-type) {
+    padding-bottom: 20px;
+    border-bottom: solid 1px red;
+}
+
+    .what_illustrated > img {
+        min-width: 285px;
+        width: 40vw;
+        margin-right: 5vw;
+    }
+
+#game_field {
+    display: none;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+}
+
+    #game_field > * {
+        margin: 20px;
+    }
+
+    #game_field > img {
+        width: 95vw;
+        max-width: 700px;
+    }
+
+    #game_field > #counters {
+        width: 90vw;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #answers {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        #answers > * {
+            width: 40vw;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: lightcoral;
+        }
+
+        #answers .active_answer {
+            background-color: green;
+            color: white;
+        }
+
+    #question {
+        display: none;
+    }
+
+    #justification {
+        display: none;
+    }
+
+        #justification.correct {
+            color: green;
+        }
+
+        #justification.incorrect {
+            color: red;
+        }
+
+#greetings {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
 }
 
 footer {
@@ -135,8 +200,43 @@ footer {
             background: url('img/general/social.png') -160px 0px/40px 40px no-repeat;
         }
 
+
+
 @media screen and (max-width: 426px) {
     div#social_media_links {
         flex-direction: column;
+    }
+
+    #game {
+        left: 28vw;
+        bottom: 5vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    nav > img {
+        display: block;
+        height: 10vh;
+    }
+
+    nav > ul {
+        flex-direction: column;
+    }
+
+        nav > ul > li {
+            padding-bottom: 0.5rem;
+        }
+
+    .what_illustrated > img {
+        width: 90vw;;
+    }
+
+    #answers {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    #answers > * {
+        width: 90vw;
     }
 }
