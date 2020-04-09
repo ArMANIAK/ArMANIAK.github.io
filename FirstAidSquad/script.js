@@ -96,7 +96,7 @@ function startGame() {
     }
     else {
         isStarted = true;
-        let score = 0;
+        score = 0;
         document.querySelector('#banner').style.display = 'none';
         let articles = document.querySelectorAll('article');
         for (let i = 0, n = articles.length; i < n; i++) {
