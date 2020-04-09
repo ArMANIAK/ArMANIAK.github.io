@@ -1,32 +1,10 @@
-/* 
-
-Prototyping
-
-1. button press
-2. Hide banner
-3. Receive questions
-4. Shuffle questions
-5. Initialise score
-6. While there are questions {
-    pop a quuestion
-    shuffle answers
-    render card
-    wait for answer (install timer)
-    check correctness
-    show result
-    update score
-    wait for 'next'-button press
-}
-7. Show the total score
-8. If score is low - recomend to attend training
-
-*/
-
 import {quiz} from './quiz.js';
 document.querySelector('button').onclick = startGame;
 document.querySelector('#startGame').onclick = startGame;
 let isStarted = false;
 let maxScore = 0;
+let score;
+
 function shuffle(array) {
     for (let i = 0, n = array.length; i < n; i++) {
         let newIndex = Math.floor(Math.random() * n);
@@ -71,8 +49,8 @@ function nextCard() {
             if (answer === nextQuestion.right) {
                 justification.classList.add('correct');
                 let scoreIndicator = document.querySelector('#score');
-                let score = parseInt(scoreIndicator.innerText.substring(14));
-                scoreIndicator.innerText = 'Твій рахунок: ' + (score + nextQuestion.points);
+                score += nextQuestion.points;
+                scoreIndicator.innerText = 'Твій рахунок: ' + score;
             }
             else {
                 justification.classList.add('incorrect');
@@ -95,14 +73,10 @@ function toggleAnswer(event) {
 }
 
 function endGame() {
-    let score = parseInt(document.querySelector('#score').innerText.substring(14));
     document.querySelector('#game_field').style.display = 'none';
     document.querySelector('#greetings').style.display = 'flex';
     document.querySelector('#greetings > h2').innerText += ' ' + score + ' із ' + maxScore + ' балів.';
     let evaluation = document.querySelector('#evaluation');
-
-    // Take off magic numbers. Calculate max score
-
     if (score > maxScore * 2 / 3) {
         evaluation.innerText = 'На більшість питань ти відповів правильно. Тож ти знаєш, як надавати першу допомогу. Але нехай твої знання залишаться виключно теоретичними';
     }
@@ -132,5 +106,4 @@ function startGame() {
         document.querySelector('#answers').addEventListener('click', toggleAnswer);
         nextCard();
     }
-    
 }
