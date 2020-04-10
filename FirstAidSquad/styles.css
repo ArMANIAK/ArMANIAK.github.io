@@ -69,21 +69,33 @@ nav {
 
 article {
     margin: 20px;
+    border: solid 6px #D11580;
+    padding: 20px;
 }
 
-article > h1, article > h3 {
-    text-align: center;
-}
+    article > p {
+        column-count: 3;
+        column-gap: 20px;
+    }
+        
+    article > h1, article > h3 {
+        text-align: center;
+    }
+/* 
+    article:not(:last-of-type) {
+        padding-bottom: 20px;
+        border-bottom: solid 1px red;
+    } */
 
-article:not(:last-of-type) {
-    padding-bottom: 20px;
-    border-bottom: solid 1px red;
-}
+    .what_illustrated > .illustrations {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
 
-    .what_illustrated > img {
+    .what_illustrated img {
         min-width: 285px;
-        width: 40vw;
-        margin-right: 5vw;
+        width: 41vw;
     }
 
 #game_field {
@@ -187,6 +199,7 @@ footer {
     }
 
     div#social_media_links {
+        position: relative;
         align-items: center;
         justify-content: end;
     }
@@ -220,20 +233,21 @@ footer {
             background: url('img/general/social.png') -160px 0px/40px 40px no-repeat;
         }
 
+        div#version {
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            font-size: small;
+        }
 
-
-@media screen and (max-width: 426px) {
-    div#social_media_links {
-        flex-direction: column;
-    }
-
-    #game {
-        left: 28vw;
-        bottom: 5vh;
-    }
-}
 
 @media screen and (max-width: 768px) {
+
+    article > p {
+        column-count: 2;
+        column-gap: 20px;
+    }
+
     nav > img {
         display: block;
         height: 10vh;
@@ -247,8 +261,13 @@ footer {
             padding-bottom: 0.5rem;
         }
 
-    .what_illustrated > img {
-        width: 90vw;;
+    .what_illustrated > .illustrations {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .what_illustrated img {
+        width: 80vw;
     }
 
     #answers {
@@ -258,5 +277,20 @@ footer {
 
     #answers > * {
         width: 90vw;
+    }
+}
+
+@media screen and (max-width: 426px) {
+    div#social_media_links {
+        flex-direction: column;
+    }
+
+    #game {
+        left: 28vw;
+        bottom: 5vh;
+    }
+
+    article > p {
+        column-count: 1;
     }
 }
