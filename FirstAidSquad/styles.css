@@ -22,6 +22,11 @@ header {
         padding: 10px;
     }
 
+        div#top_contact > a {
+            text-decoration: none;
+            color: white;
+        }
+
     div#banner > img {
         width: 100%;
     }
@@ -182,6 +187,7 @@ article {
 }
 
 footer {
+    position: relative;
     display: flex;
     justify-content: space-between;
     font-size: 14px;
@@ -199,7 +205,6 @@ footer {
     }
 
     div#social_media_links {
-        position: relative;
         align-items: center;
         justify-content: end;
     }
@@ -235,8 +240,8 @@ footer {
 
         div#version {
             position: absolute;
-            bottom: 0px;
-            right: 0px;
+            bottom: 5px;
+            right: 5px;
             font-size: small;
         }
 
@@ -278,6 +283,10 @@ footer {
     #answers > * {
         width: 90vw;
     }
+
+    #social_media_links {
+        flex-wrap: wrap;
+    }
 }
 
 @media screen and (max-width: 426px) {
@@ -292,5 +301,10 @@ footer {
 
     article > p {
         column-count: 1;
+    }
+
+    div#version {
+        left: 5px;
+
     }
 }
