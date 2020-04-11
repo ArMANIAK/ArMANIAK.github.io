@@ -86,12 +86,7 @@ article {
     article > h1, article > h3 {
         text-align: center;
     }
-/* 
-    article:not(:last-of-type) {
-        padding-bottom: 20px;
-        border-bottom: solid 1px red;
-    } */
-
+    
     .what_illustrated > .illustrations {
         display: flex;
         justify-content: space-between;
@@ -289,6 +284,17 @@ footer {
     }
 }
 
+@media screen and (max-width: 520px) {
+    article > p {
+        column-count: 1;
+    }
+
+    div#version {
+        left: 5px;
+
+    }
+}
+
 @media screen and (max-width: 426px) {
     div#social_media_links {
         flex-direction: column;
@@ -297,14 +303,5 @@ footer {
     #game {
         left: 28vw;
         bottom: 5vh;
-    }
-
-    article > p {
-        column-count: 1;
-    }
-
-    div#version {
-        left: 5px;
-
     }
 }
