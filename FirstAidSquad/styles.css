@@ -100,6 +100,7 @@ article {
 
 #game_field {
     display: none;
+    position: relative;
     flex-direction: column;
     align-self: center;
     align-items: center;
@@ -107,6 +108,23 @@ article {
 
     #game_field > * {
         margin: 20px;
+    }
+
+    #game_field > div.toggleSound {
+        position: absolute;
+        line-height: 6.8vw;
+        font-size: 5vw;
+        right: 1.5vw;
+        top: 1.5vw;
+        width: 7vw;
+        height: 7vw;
+        border-radius: 3.5vw;
+        margin: 0px;
+        background-color: lightgrey;
+    }
+
+    #game_field > div.toggleSound:hover {
+        box-shadow: 0 0 5px #000;;
     }
 
     #game_field > img {
@@ -181,6 +199,73 @@ article {
     margin: 20px;
 }
 
+div.modal_confirmation {
+    display: none;
+    background-color:rgba(0,0,0,0.9);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+
+    .modal_confirmation > * {
+        padding: 20px;
+        position: relative;
+        left: 20vw;
+        width: 60vw;
+        top: 20vh;
+    }
+
+    .modal_confirmation .sound_on::after {
+        content: '\1F50A';
+    }
+
+    .modal_confirmation .sound_off::after {
+        content: '\1F507';
+    }
+
+    .modal_confirmation > div.confirmation_heading {
+        border-radius: 7px 7px 0 0;
+        background-color: rgb(218, 41, 28);
+        text-align: center;
+        color: white;
+        font-size: x-large;
+        font-weight: bold;
+    }
+
+        span.dismiss {
+            color: white;
+            float: right;
+            cursor: pointer;
+        }
+
+    .modal_confirmation > div.confirmation_body {
+        border-radius:  0 0 7px 7px;
+        background-color: white;
+        font-size: x-large;
+    }
+
+    .confirmation_message {
+        margin-bottom: 20px;
+    }
+
+    .control {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+        .control > button {
+            border-radius: 3px;
+            padding: 10px;
+            font-size: x-large;
+        }
+
+            .control > button:hover {
+                box-shadow: 0 0 5px #000;
+            }
+
 footer {
     position: relative;
     display: flex;
@@ -239,7 +324,6 @@ footer {
             right: 5px;
             font-size: small;
         }
-
 
 @media screen and (max-width: 768px) {
 

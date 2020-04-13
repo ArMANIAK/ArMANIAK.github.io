@@ -1,9 +1,53 @@
 import {quiz} from './quiz.js';
-document.querySelector('button').onclick = startGame;
+document.querySelector('button#game').onclick = showModal;
 document.querySelector('#startGame').onclick = startGame;
 let isStarted = false;
 let maxScore = 0;
 let score;
+
+function showModal() {
+    document.querySelector('.modal_confirmation').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    document.querySelector('span.dismiss').onclick = dismissModal;
+    document.querySelector('.turn_on').onclick = turnAutoplayOn;
+    document.querySelector('.turn_off').onclick = turnAutoplayOff;
+}
+
+function dismissModal() {
+    document.querySelector('.modal_confirmation').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+function turnAutoplayOn() {
+    document.querySelector('audio#question_sound').removeAttribute('autoplay');
+    document.querySelector('div.toggleSound').dataset.sound = 'off';
+    toggleSound();
+    dismissModal();
+    startGame();
+}
+
+function turnAutoplayOff() {
+    toggleSound();
+    dismissModal();
+    startGame();
+}
+
+function toggleSound() {
+    let audio = document.querySelector('audio#question_sound');
+    let soundToggle = document.querySelector('div.toggleSound');
+    if (soundToggle.dataset.sound == 'on') {
+        audio.removeAttribute('autoplay');
+        audio.pause();
+        soundToggle.dataset.sound = 'off';
+        soundToggle.innerHTML = '\u{1F507}';
+    }
+    else {
+        audio.setAttribute('autoplay', true);
+        audio.play();
+        soundToggle.dataset.sound = 'on';
+        soundToggle.innerHTML = '\u{1F50A}';
+    }
+}
 
 function shuffle(array) {
     for (let i = 0, n = array.length; i < n; i++) {
@@ -23,6 +67,7 @@ function generateCardHTML(object) {
     let questionNum = object.index > 9 ? object.index : ('0' + object.index);
     questionCard.src = 'img/cards/card-' + questionNum + '.png';
     questionCard.alt = object.question;
+    document.querySelector('.toggleSound').onclick = toggleSound;
     document.querySelector('#question').innerHTML = object.question;
     document.querySelector('#question_sound').src = 'voice/card ' + object.index + '.mp3';
     let answers = [object.right, object.wrong1, object.wrong2, object.wrong3];
@@ -30,6 +75,8 @@ function generateCardHTML(object) {
     for (let i = 0; i < 4; i++) {
         document.querySelector('#answer' + (i + 1)).innerHTML = answers[i];
     }
+    let element = document.querySelector('.active_answer');
+    if (element) element.classList.remove('active_answer');
 }
 
 function nextCard() {
@@ -68,7 +115,8 @@ function nextCard() {
 
 function toggleAnswer(event) { 
     event.stopPropagation();
-    document.querySelector('.active_answer').classList.remove('active_answer');
+    let element = document.querySelector('.active_answer');
+    if (element) element.classList.remove('active_answer');
     event.target.classList.add('active_answer');
 }
 
