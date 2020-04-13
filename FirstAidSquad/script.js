@@ -90,24 +90,28 @@ function nextCard() {
         let confirmAnswer = document.querySelector('#confirm');
         confirmAnswer.innerText = 'Відповісти';
         confirmAnswer.onclick = function() {
-            confirmAnswer.innerText = 'Наступне питання';
-            let answer = document.querySelector('#answers > div.active_answer').innerText;
-            justification.style.display = 'flex';
-            if (answer === nextQuestion.right) {
-                justification.classList.add('correct');
-                let scoreIndicator = document.querySelector('#score');
-                score += nextQuestion.points;
-                scoreIndicator.innerText = 'Твій рахунок: ' + score;
-            }
-            else {
-                justification.classList.add('incorrect');
-            }
-            for (let prop in nextQuestion) {
-                if (nextQuestion[prop] === answer) {
-                    justification.innerText = nextQuestion[prop + 'Explanation'];
+            let answer = document.querySelector('#answers > div.active_answer');
+            if (answer) {
+                confirmAnswer.innerText = 'Наступне питання';
+                answer = answer.innerText;
+                justification.style.display = 'flex';
+                if (answer === nextQuestion.right) {
+                    justification.classList.add('correct');
+                    let scoreIndicator = document.querySelector('#score');
+                    score += nextQuestion.points;
+                    scoreIndicator.innerText = 'Твій рахунок: ' + score;
                 }
+                else {
+                    justification.classList.add('incorrect');
+                }
+                for (let prop in nextQuestion) {
+                    if (nextQuestion[prop] === answer) {
+                        justification.innerText = nextQuestion[prop + 'Explanation'];
+                    }
+                }
+                confirmAnswer.onclick = nextCard;
             }
-            confirmAnswer.onclick = nextCard;
+            
         }
     }
     else endGame();
