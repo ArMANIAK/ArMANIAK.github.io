@@ -1,6 +1,6 @@
 import {quiz} from './quiz.js';
 document.querySelector('button#game').onclick = showModal;
-document.querySelector('#startGame').onclick = startGame;
+document.querySelector('#startGame').onclick = showModal;
 let isStarted = false;
 let maxScore = 0;
 let score;
@@ -61,8 +61,6 @@ function shuffle(array) {
 }
 
 function generateCardHTML(object) {
-    let gameField = document.querySelector('#game_field');
-    gameField.style.display = 'flex';
     let questionCard = document.querySelector('#question_card');
     let questionNum = object.index > 9 ? object.index : ('0' + object.index);
     questionCard.src = 'img/cards/card-' + questionNum + '.png';
@@ -87,12 +85,14 @@ function nextCard() {
         let nextQuestion = quiz.pop()
         maxScore += nextQuestion.points;
         generateCardHTML(nextQuestion);
+        document.querySelector('#answers').addEventListener('click', toggleAnswer);
         let confirmAnswer = document.querySelector('#confirm');
         confirmAnswer.innerText = 'Відповісти';
         confirmAnswer.onclick = function() {
             let answer = document.querySelector('#answers > div.active_answer');
             if (answer) {
                 confirmAnswer.innerText = 'Наступне питання';
+                document.querySelector('#answers').removeEventListener('click', toggleAnswer);
                 answer = answer.innerText;
                 justification.style.display = 'flex';
                 if (answer === nextQuestion.right) {
@@ -139,7 +139,6 @@ function endGame() {
 }
 
 function startGame() {
-    document.querySelector('#greetings').style.display = 'none';
     if (isStarted) {
         if(confirm('Ти впевнений, що хочеш почати гру з початку, не дійшовши до кінця?')) {
             isStarted = false;
@@ -149,13 +148,32 @@ function startGame() {
     else {
         isStarted = true;
         score = 0;
+        document.querySelector('#game_field').style.display = 'flex';
+        document.querySelector('#greetings').style.display = 'none';
         document.querySelector('#banner').style.display = 'none';
         let articles = document.querySelectorAll('article');
         for (let i = 0, n = articles.length; i < n; i++) {
             articles[i].style.display = 'none';
         }
         shuffle(quiz);
-        document.querySelector('#answers').addEventListener('click', toggleAnswer);
+        let navLink = document.querySelector('#startGame');
+        navLink.onclick = backToMain;
+        navLink.innerText = "Повернутися до головної";
         nextCard();
     }
+}
+
+function backToMain() {
+    document.querySelector('#banner').style.display = 'block';
+        document.querySelector('#game_field').style.display = 'none';
+        document.querySelector('#greetings').style.display = 'none';
+        let navLink = document.querySelector('#startGame');
+        navLink.onclick = showModal;
+        navLink.innerText = "Почати гру";
+        isStarted = false;
+        document.querySelector('audio#question_sound').pause();
+        let articles = document.querySelectorAll('article');
+        for (let i = 0, n = articles.length; i < n; i++) {
+            articles[i].style.display = 'block';
+        }
 }
