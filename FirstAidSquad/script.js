@@ -1,6 +1,7 @@
 import {quiz} from './quiz.js';
 document.querySelector('button#game').onclick = showModal;
 document.querySelector('#startGame').onclick = showModal;
+let cards;
 let isStarted = false;
 let maxScore = 0;
 let score;
@@ -19,15 +20,19 @@ function dismissModal() {
 }
 
 function turnAutoplayOn() {
-    document.querySelector('audio#question_sound').removeAttribute('autoplay');
-    document.querySelector('div.toggleSound').dataset.sound = 'off';
-    toggleSound();
+    document.querySelector('audio#question_sound').setAttribute('autoplay', true);
+    let soundToggle = document.querySelector('div.toggleSound');
+    soundToggle.dataset.sound = 'on';
+    soundToggle.innerHTML = '\u{1F50A}';
     dismissModal();
     startGame();
 }
 
 function turnAutoplayOff() {
-    toggleSound();
+    document.querySelector('audio#question_sound').removeAttribute('autoplay');
+    let soundToggle = document.querySelector('div.toggleSound');
+    soundToggle.dataset.sound = 'off';
+    soundToggle.innerHTML = '\u{1F507}';
     dismissModal();
     startGame();
 }
@@ -78,11 +83,11 @@ function generateCardHTML(object) {
 }
 
 function nextCard() {
-    if (quiz.length > 0) {
+    if (cards.length > 0) {
         let justification = document.querySelector('#justification');
         justification.style.display = 'none';
         justification.className = '';
-        let nextQuestion = quiz.pop()
+        let nextQuestion = cards.pop()
         maxScore += nextQuestion.points;
         generateCardHTML(nextQuestion);
         document.querySelector('#answers').addEventListener('click', toggleAnswer);
@@ -125,9 +130,11 @@ function toggleAnswer(event) {
 }
 
 function endGame() {
+    isStarted = false;
+    document.querySelector('audio#question_sound').pause();
     document.querySelector('#game_field').style.display = 'none';
     document.querySelector('#greetings').style.display = 'flex';
-    document.querySelector('#greetings > h2').innerText += ' ' + score + ' із ' + maxScore + ' балів.';
+    document.querySelector('#greetings > h2').innerText = 'Вітаю! Ти набрав:  ' + score + ' із ' + maxScore + ' балів.';
     let evaluation = document.querySelector('#evaluation');
     if (score > maxScore * 2 / 3) {
         evaluation.innerText = 'На більшість питань ти відповів правильно. Тож ти знаєш, як надавати першу допомогу. Але нехай твої знання залишаться виключно теоретичними';
@@ -147,7 +154,9 @@ function startGame() {
     }
     else {
         isStarted = true;
+        cards = quiz.slice(0);
         score = 0;
+        maxScore = 0;
         document.querySelector('#game_field').style.display = 'flex';
         document.querySelector('#greetings').style.display = 'none';
         document.querySelector('#banner').style.display = 'none';
@@ -155,7 +164,7 @@ function startGame() {
         for (let i = 0, n = articles.length; i < n; i++) {
             articles[i].style.display = 'none';
         }
-        shuffle(quiz);
+        shuffle(cards);
         let navLink = document.querySelector('#startGame');
         navLink.onclick = backToMain;
         navLink.innerText = "Повернутися до головної";
@@ -165,15 +174,15 @@ function startGame() {
 
 function backToMain() {
     document.querySelector('#banner').style.display = 'block';
-        document.querySelector('#game_field').style.display = 'none';
-        document.querySelector('#greetings').style.display = 'none';
-        let navLink = document.querySelector('#startGame');
-        navLink.onclick = showModal;
-        navLink.innerText = "Почати гру";
-        isStarted = false;
-        document.querySelector('audio#question_sound').pause();
-        let articles = document.querySelectorAll('article');
-        for (let i = 0, n = articles.length; i < n; i++) {
-            articles[i].style.display = 'block';
-        }
+    document.querySelector('#game_field').style.display = 'none';
+    document.querySelector('#greetings').style.display = 'none';
+    let navLink = document.querySelector('#startGame');
+    navLink.onclick = showModal;
+    navLink.innerText = "Почати гру";
+    isStarted = false;
+    document.querySelector('audio#question_sound').pause();
+    let articles = document.querySelectorAll('article');
+    for (let i = 0, n = articles.length; i < n; i++) {
+        articles[i].style.display = 'block';
+    }
 }

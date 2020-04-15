@@ -64,7 +64,7 @@ nav {
 
         nav > ul > li {
             list-style: none;
-            margin-right: 20px;
+            margin-right: 60px;
         }
 
             ul > li > a {
@@ -112,8 +112,8 @@ article {
 
     #game_field > div.toggleSound {
         position: absolute;
-        line-height: 6.8vw;
-        font-size: 5vw;
+        line-height: 6.84vw;
+        font-size: 5.1vw;
         right: 1.5vw;
         top: 1.5vw;
         width: 7vw;
