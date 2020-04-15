@@ -160,11 +160,7 @@ article {
             background-color: green;
             color: white;
         }
-
-    #question {
-        display: none;
-    }
-
+        
     #counters > #countdown {
         visibility: hidden;
     }

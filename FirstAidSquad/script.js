@@ -71,12 +71,12 @@ function generateCardHTML(object) {
     questionCard.src = 'img/cards/card-' + questionNum + '.png';
     questionCard.alt = object.question;
     document.querySelector('.toggleSound').onclick = toggleSound;
-    document.querySelector('#question').innerHTML = object.question;
     document.querySelector('#question_sound').src = 'voice/card ' + object.index + '.mp3';
     let answers = [object.right, object.wrong1, object.wrong2, object.wrong3];
     shuffle(answers);
     for (let i = 0; i < 4; i++) {
-        document.querySelector('#answer' + (i + 1)).innerHTML = answers[i];
+        let answerDiv = document.querySelector('#answer' + (i + 1));
+        answerDiv.innerHTML = answers[i];
     }
     let element = document.querySelector('.active_answer');
     if (element) element.classList.remove('active_answer');
@@ -91,6 +91,7 @@ function nextCard() {
         maxScore += nextQuestion.points;
         generateCardHTML(nextQuestion);
         document.querySelector('#answers').addEventListener('click', toggleAnswer);
+        document.querySelector('#answers').addEventListener('keydown', toggleAnswerWithSpace);
         let confirmAnswer = document.querySelector('#confirm');
         confirmAnswer.innerText = 'Відповісти';
         confirmAnswer.onclick = function() {
@@ -98,6 +99,7 @@ function nextCard() {
             if (answer) {
                 confirmAnswer.innerText = 'Наступне питання';
                 document.querySelector('#answers').removeEventListener('click', toggleAnswer);
+                document.querySelector('#answers').removeEventListener('keydown', toggleAnswerWithSpace);
                 answer = answer.innerText;
                 justification.style.display = 'flex';
                 if (answer === nextQuestion.right) {
@@ -112,6 +114,7 @@ function nextCard() {
                 for (let prop in nextQuestion) {
                     if (nextQuestion[prop] === answer) {
                         justification.innerText = nextQuestion[prop + 'Explanation'];
+                        justification.focus();
                     }
                 }
                 confirmAnswer.onclick = nextCard;
@@ -120,6 +123,12 @@ function nextCard() {
         }
     }
     else endGame();
+}
+
+function toggleAnswerWithSpace (event) {
+    if (event.keyCode == 32 || event.keyCode == 13) {
+        toggleAnswer(event);
+    }
 }
 
 function toggleAnswer(event) { 
