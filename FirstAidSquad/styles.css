@@ -41,7 +41,12 @@ header {
             background-color: rgb(218, 41, 28);
             color: white;
             margin: auto;
+            transition: all 0.4s;
         }
+
+            #game:hover {
+                transform: scale(1.05);
+            }
 
 nav {
     margin-top: -5px;
@@ -121,9 +126,11 @@ article {
         border-radius: 3.5vw;
         margin: 0px;
         background-color: lightgrey;
+        transition: all 0.4s;
     }
 
     #game_field > div.toggleSound:hover {
+        transform: scale(1.05);
         box-shadow: 0 0 5px #000;;
     }
 
@@ -150,10 +157,12 @@ article {
             padding: 10px;
             border-radius: 5px;
             background-color: lightcoral;
+            transition: all 0.4s;
         }
 
         #answers > *:hover {
             filter: drop-shadow(1px 0px 5px black);
+            transform: scale(1.03);
         }
 
         #answers .active_answer {
@@ -182,10 +191,12 @@ article {
         border-radius: 5px;
         background-color: green;
         color: white;
+        transition: all 0.4s;
     }
 
     #confirm:hover {
         background-color: limegreen;
+        transform: scale(1.05);
     }
 
 #greetings {
@@ -234,7 +245,12 @@ div.modal_confirmation {
             color: white;
             float: right;
             cursor: pointer;
+            transition: all 0.4s;
         }
+
+            span.dismiss:hover {
+                transform: scale(1.07);
+            }
 
     .modal_confirmation > div.confirmation_body {
         border-radius:  0 0 7px 7px;
@@ -256,9 +272,11 @@ div.modal_confirmation {
             border-radius: 3px;
             padding: 10px;
             font-size: x-large;
+            transition: all 0.4s;
         }
 
             .control > button:hover {
+                transform: scale(1.05);
                 box-shadow: 0 0 5px #000;
             }
 
@@ -287,6 +305,7 @@ footer {
 
         div#social_media_links > a {
             display: block;
+            border-radius: 4px;
             width: 40px;
             height: 40px;
             filter: invert();
