@@ -3,66 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Загін Першої Допомоги онлайн</title>
+    <title>Загін Першої Допомоги онлайн гра</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="favicon.ico" type="text/html">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <div id="top_contact">(044) 235-01-57      Національний комітет - 01004, Київ, вул. Пушкінська, 30</div>
+        <div id="top_contact" itemscope itemtype="https://schema.org/Organization">
+            <a itemprop="telephone" href="tel:+380442350157">(044) 235-01-57</a>
+            <span hidden itemprop="legalName">Товариство Червоного Хреста України</span> 
+            <span itemprop="department"><span itemscope itemtype="https://schema.org/Organization">Національний комітет -</span></span>
+            <span itemprop="address">01004, Київ, вул. Пушкінська, 30</span>
+        </div>
         <div id="banner">
             <img src="img/general/welcome.png" alt="Ласкаво просимо До гри Загін першої допомоги" />
             <button id="game">Почати гру</button>
         </div>
     </header>
     <nav>
+        <img src="img/general/TCHKHU.png" alt='Логотип Товариства Червоного Хреста України' />
         <ul>
             <li><a href="http://redcross.org.ua" target="_blank">Товариство Червоного Хреста України</a></li>
             <li><a href="https://forms.office.com/Pages/ResponsePage.aspx?id=3mXHzJAJ1EmoDylOKKH5IzVmTTZIlmtCvrHFDQ5dqWBUNVBOTzNGSlVJQVFQTU1OWFdFQVZQUjhQUy4u" target="_blank">Зареєструватися на тренінг</a></li>
-            <li><a href="#">Почати гру</a></li>
+            <li><a id="startGame" href="#">Почати гру</a></li>
         </ul>
     </nav>
     <main>
-        <article>
-            <h1>Загін першої допомоги онлайн</h1>
-            <p> - це web-версія настільної карткової гри "Загін першої допомоги". 
-            Із допомогою яскравих карток ти можеш перевірити свої знання щодо надання першої допомоги.
-            Перш за все гра спрямована на дітей, але й дорослі теж можуть отримати задоволення від неї.
-            Звісно, краще грати командою, зібравшись разом. Але якщо наразі такої можливості немає, 
-            можна зіграти самому.</p>
-    
-            <p>За допомогою відповідей на прості питання легше запом'ятати, що робити в тих чи інших обставинах.
-            А ілюстрації допоможуть запам'ятати це ще краще. То ж вперед - на зустріч загону першої допомоги!</p>
-        </article>
-        <hr />
-        <article class="what">
-            <h3>Що таке настольна гра "Загін першої допомоги", та для чого вона мені?</h3>
-            <img src="img/general/what_is.png" alt="Настольна гра Загін першої допомоги - це командна карткова гра для навчання першій допомозі, 
-                в яку можуть грати діти та дорослі" />
-            <img src="img/general/what_for.png" alt="У процесі гри учасники можуть поновити та структурувати навички з першої допомоги, 
-                набуті на тренінгу від Червоного Хреста України. Діти, виконуючи різні завдання, можуть навчитися надавати взаємодопомогу та самодопомогу
-                і бути готовими діяти в надзвичайних ситуаціях." />
-        </article>
-        <hr />
-        <article>
-            <h3>Чим "Загін першої допомоги онлайн" відрізняється від своєї оффлайн версії?</h3>
-            <p>Оригінальна карткова гра, як і тренінги з першої допомоги, спрямована насамперед на набуття або відпрацювання навичок надання першої допомоги. 
-                Проте формат онлайн гри не передбачає виконання практичних завдань через відсутність контакту, контролю, та можливості швидко перевірити відповідь кожного.
-                Тож залишається тільки виконувати теоретичні завдання. Якщо ви бажаєте відпрацювати навички, реєструйтеся на наші тренінги з першої допомоги.
-            </p>
-            <p>Посилання на форму реєстрації ви зможете знайти у навігаційній панелі.</p>
-            <p>
-                Наразі в онлайн версії гри немає можливості грати разом з кимось або проти когось. Але ми сподіваємося, що додамо цю можливість у найближчий час.
-            </p>
-        </article>
+        <section id="main_page">
+            <article>
+                <h1>Загін першої допомоги онлайн</h1>
+                <p> - це web-версія настільної карткової гри "Загін першої допомоги". 
+                Із допомогою яскравих карток ти можеш перевірити свої знання щодо надання першої допомоги.
+                Перш за все гра спрямована на дітей, але й дорослі теж можуть отримати задоволення від неї.
+                Звісно, краще грати командою, зібравшись разом. Але якщо наразі такої можливості немає, 
+                можна зіграти самому.<br /><br />
+        
+                За допомогою відповідей на прості питання легше запам'ятати, що робити в тих чи інших обставинах.
+                А ілюстрації допоможуть запам'ятати це ще краще. То ж вперед - на зустріч загону першої допомоги!</p>
+            </article>
+            <article class="what_illustrated">
+                <h3>Що таке настольна гра "Загін першої допомоги", та для чого вона мені?</h3>
+                <div class="illustrations">
+                    <img src="img/general/what_is.png" alt="Настольна гра Загін першої допомоги - це командна карткова гра для навчання першій допомозі, 
+                        в яку можуть грати діти та дорослі" />
+                    <img src="img/general/what_for.png" alt="У процесі гри учасники можуть поновити та структурувати навички з першої допомоги, 
+                        набуті на тренінгу від Червоного Хреста України. Діти, виконуючи різні завдання, можуть навчитися надавати взаємодопомогу та самодопомогу
+                        і бути готовими діяти в надзвичайних ситуаціях." />
+                </div>
+            </article>
+            <article>
+                <h3>Чим "Загін першої допомоги онлайн" відрізняється від своєї оффлайн версії?</h3>
+                <p>Оригінальна карткова гра, як і тренінги з першої допомоги, спрямована насамперед на набуття або відпрацювання навичок надання першої допомоги. 
+                    Проте формат онлайн гри не передбачає виконання практичних завдань через відсутність контакту, контролю, та можливості швидко перевірити відповідь кожного.
+                    Тож залишається тільки виконувати теоретичні завдання. Якщо ви бажаєте відпрацювати навички, реєструйтеся на наші тренінги з першої допомоги.
+                    <br /><br />
+                    Посилання на форму реєстрації ви зможете знайти у навігаційній панелі.
+                    <br /><br />
+                    Наразі в онлайн версії гри немає можливості грати разом з кимось або проти когось. Але ми сподіваємося, що додамо цю можливість у найближчий час.
+                </p>
+            </article>
+        </section>
+        <div class="modal_confirmation">
+            <div class="confirmation_heading">
+                Увага! <span class="dismiss">&#10006;</span>
+            </div>
+            <div class="confirmation_body">
+                <div class="confirmation_message">
+                    Ви можете ввімкнути або вимкнути автоматичне програвання тексту завдання. Ви завжди можете змінити своє рішення пізніше, 
+                    натиснувши <span class="sound_on"></span> або <span class="sound_off"></span>
+                </div>
+                <div class="control">
+                    <button class="turn_on"><span class="sound_on"></span> Ввімкнути</button>
+                    <button class="turn_off"><span class="sound_off"></span> Вимкнути</button>
+                </div>
+            </div>
+        </div>
+        <section id="game_field">
+            <div class="toggleSound" data-sound="on"></div>
+
+            <img id="question_card" src='' alt='' />
+            <audio id='question_sound' src='' autoplay></audio>
+            <div id='justification' tabindex="-1"></div>
+            <div id="counters">
+                <div id="score">Твій рахунок: 0</div>
+                <div id="countdown">Залишилось часу: 90</div>
+            </div>
+            <div id="answers">
+                <div id='answer1' tabindex="0">Answer 1</div>
+                <div id='answer2' tabindex="0">Answer 2</div>
+                <div id='answer3' tabindex="0">Answer 3</div>
+                <div id='answer4' tabindex="0">Answer 4</div>
+            </div>
+            <button id='confirm'>Дати відповідь</button>
+        </section>
+        <section id="greetings">
+            <h2></h2>
+            <p id="evaluation"></p>
+        </section>
     </main>
     <footer>
         <div id="authors">
-            <div>Ідея гри та web-дизайн: <strong>Михайло Альошин</strong></div>
-            <div>Завдання та правила: <strong>Надія Ямненко</strong></div>
-            <div>Дизайн карток та ілюстрації: <strong>Анастасія Севрюк, Катерина Криницька, Нікіта Михайловський</strong></div>
-            <div>Редактор: <strong>Іван Степура</strong></div>
-            <div>Голос: <strong>Зоя погоріла</strong></div>
+            <div>Ідея гри та web-дизайн: <strong>Михайло&nbsp;Альошин</strong></div>
+            <div>Завдання та правила: <strong>Надія&nbsp;Ямненко</strong></div>
+            <div>Дизайн карток та ілюстрації: <strong>Анастасія&nbsp;Севрюк, Катерина&nbsp;Криницька, Нікіта&nbsp;Михайловський</strong></div>
+            <div>Редактор: <strong>Іван&nbsp;Степура</strong></div>
+            <div>Голос: <strong>Зоя&nbsp;Погоріла</strong></div>
         </div>
         <div id="social_media_links">
             <a id="facebook" href="https://www.facebook.com/RedCrossUkraine/"></a>
@@ -70,12 +116,13 @@
             <a id="twitter" href="https://twitter.com/RedCrossUkraine"></a>
             <a id="youtube" href="https://www.youtube.com/channel/UCl6u2znJCIWuMPSQAQZ1zgQ"></a>
             <a id="flickr" href="https://www.flickr.com/photos/redcrossukraine/"></a>
+            <div id="version">Версія гри: 1.1.2</div>
         </div>
         
     </footer>
     <noscript>Вся гра виконується за рахунок використання JavaScript коду. 
         Тож, якщо Ви намагаєтеся грати в цю гру, Вам необхідно ввімкнути JavaScript в налаштуваннях свого браузеру
     </noscript>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
