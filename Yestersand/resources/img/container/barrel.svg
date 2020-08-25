@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Creator: CorelDRAW 2018 (64-Bit) -->
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="166.023mm" height="200mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
-viewBox="0 0 17919.29 21586.51"
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="400px" height="470px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 359.26 422.23"
  xmlns:xlink="http://www.w3.org/1999/xlink">
  <defs>
   <style type="text/css">
    <![CDATA[
-    .fil0 {fill:#9A3D00}
-    .fil1 {fill:#FF6600}
+    .fil2 {fill:#9A5700}
+    .fil1 {fill:#9A5700}
+    .fil0 {fill:#BA6900}
    ]]>
   </style>
  </defs>
- <g id="Layer_x0020_1">
+ <g id="Слой_x0020_1">
   <metadata id="CorelCorpID_0Corel-Layer"/>
-  <path class="fil0" d="M-0 10793.25c0,-4462.82 1270.57,-8216.66 2995.19,-9314.4 1184.42,-883.57 3411.82,-1478.85 5964.45,-1478.85 2552.63,0 4780.03,595.28 5964.45,1478.85 1724.63,1097.74 2995.19,4851.58 2995.19,9314.4 0,4462.82 -1270.57,8216.66 -2995.19,9314.4 -1184.42,883.57 -3411.82,1478.85 -5964.45,1478.85 -2552.63,0 -4780.03,-595.28 -5964.45,-1478.85 -1724.63,-1097.74 -2995.19,-4851.58 -2995.19,-9314.4z"/>
-  <ellipse class="fil1" cx="8959.65" cy="2937.33" rx="6869.95" ry="2937.33"/>
+  <path class="fil0" d="M359.26 211.12c0,-59.48 -16.62,-114.19 -43.77,-155.97 -17.74,-31.93 -71.85,-55.15 -135.86,-55.15 -64,0 -118.11,23.22 -135.85,55.15 -27.16,41.78 -43.78,96.49 -43.78,155.97 0,59.48 16.62,114.18 43.78,155.96 17.74,31.93 71.85,55.15 135.85,55.15 64.01,0 118.12,-23.22 135.86,-55.15 27.15,-41.78 43.77,-96.48 43.77,-155.96z"/>
+  <path class="fil1" d="M280.85 360.19c13.36,-27.42 21.54,-63.32 21.54,-102.35 0,-39.03 -8.18,-74.93 -21.54,-102.34 8.91,27.41 14.36,63.31 14.36,102.34 0,39.03 -5.45,74.93 -14.36,102.35z"/>
+  <path class="fil1" d="M222.05 394.98c4.45,-27.42 7.18,-63.32 7.18,-102.35 0,-39.03 -2.73,-74.93 -7.18,-102.34 0,27.41 0,63.31 0,102.34 0,39.03 0,74.93 0,102.35z"/>
+  <path class="fil1" d="M141.34 396.06c0,-27.42 0,-63.32 0,-102.35 0,-39.03 0,-74.93 0,-102.34 -4.45,27.41 -7.18,63.31 -7.18,102.34 0,39.03 2.73,74.93 7.18,102.35z"/>
+  <path class="fil1" d="M76 361.18c-8.91,-27.41 -14.37,-63.31 -14.37,-102.34 0,-39.04 5.46,-74.93 14.37,-102.35 -13.37,27.42 -21.55,63.32 -21.55,102.35 0,39.03 8.18,74.93 21.55,102.34z"/>
+  <ellipse class="fil2" cx="179.63" cy="77.91" rx="142.01" ry="77.91"/>
  </g>
 </svg>

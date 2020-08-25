@@ -98,9 +98,9 @@ class Character {
         this.hitPoints = 10;
         this.race = 'human';
         this.attackSpeed = 1;
-        this.damage = 1;
+        this.damage = 10;
         this.inventory = [];
-        this.equipped = {};
+        this.equipped = [];
         map[y][x].filled = this;
     }
 }
@@ -134,10 +134,16 @@ class Container {
         this.isLocked = (view == 'chest' || view == 'armored chest') ? true : false;
         if (view = 'chest') this.solidity = 50;
         else if (view = 'armored chest') this.solidity = 250;
-        else this.solidity = 10;
+        else if (view == 'barrel') this.solidity = 10;
+        else {
+            this.view = 'sack';
+            this.solidity = 0;
+        }
         this.content = ['pot', 'money'];
     }
 }
+
+Container.prototype.generateContent() = {}
 
 class Resources {
     constructor(view) {
@@ -381,6 +387,14 @@ Character.prototype.chanceCalc = function(skill) {
     //calculate chance according to skills
 }
 
+function showRemains(object) {
+    let inventory = object.inventory ? object.inventory : new Array();
+    let equipped = object.equipped ? object.equipped : new Array();
+    let content = object.content ? object.content : new Array();
+    let remains = inventory.concat(equipped).concat(content);
+    console.log(remains);
+}
+
 Character.prototype.attack = function(object) {
     let subject = map[object.y_coord][object.x_coord].filled;
     let distance = 1;
@@ -390,21 +404,32 @@ Character.prototype.attack = function(object) {
     interval = setInterval(() => {
         distance = Math.abs(this.y_coord - object.y_coord) + Math.abs(this.x_coord - object.x_coord);
         // console.log('Inside interval');
-        if (distance == 1 && this.hitPoints > 0 && 
-            subject.solidity ? subject.solidity > 0 : subject.hitPoints > 0) {
-                // console.log('Attack in interval');
-                if (this.chanceCalc(this.aggroSkills[skill])) {
-                    subject.solidity ? subject.solidity = subject.solidity - this.damage : subject.hitPoints = subject.hitPoints - this.damage;
+        if (distance == 1) {
+            if (this.hitPoints > 0) {
+                if (subject.solidity ? subject.solidity > 0 : subject.hitPoints > 0) {
+                    // console.log('Attack in interval');
+                    if (this.chanceCalc(this.aggroSkills[skill])) {
+                        subject.solidity ? subject.solidity = subject.solidity - this.damage : subject.hitPoints = subject.hitPoints - this.damage;
+                    }
+                    // else console.log('Attack failed');
                 }
-                // else console.log('Attack failed');
+                else {
+                    let inventory = showRemains(subject);
+                    clearInterval(interval);
+                }
             }
             else {
-                // console.log('clearing interval');
-                // console.log(distance, this, subject);
+                let inventory = showRemains(this);
                 clearInterval(interval);
             }
+        }
+        else {
+            // console.log('clearing interval');
+            // console.log(distance, this, subject);
+            clearInterval(interval);
+        }
             
-        }, this.attackSpeed * 1000);
+    }, this.attackSpeed * 1000);
     
     
 
