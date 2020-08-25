@@ -1,0 +1,21 @@
+{
+  "name": "duobank",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "dependencies": {
+    "jest": "^26.4.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.0"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "type": "module",
+  "author": "ArMANIAK",
+  "license": "ISC"
+}
