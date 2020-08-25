@@ -1,0 +1,39 @@
+.post {
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px black;
+}
+
+.post-heading {
+    border-radius: 10px 10px 0px 0px;
+    padding: 20px;
+    background-color: lightgray;
+    height: 200px;
+}
+
+.avatar {
+    float: left;
+    max-height: 160px;
+    max-width: 160px;
+    border: solid 1px black;
+    transition: all 0.5s;
+}
+
+.name {
+    font-weight: bold;
+}
+
+@media screen and (max-width: 420px) {
+    .avatar {
+        max-width: 120px;
+    }
+    .name {
+        clear: both;
+    }
+}
+
+
+.post-body {
+    clear: both;
+    padding: 20px;
+}
