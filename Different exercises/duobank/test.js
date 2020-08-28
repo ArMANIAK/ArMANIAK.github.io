@@ -1,3 +1,5 @@
+'use strict'
+
 const account = require('./script');
 
 test('creation of account', () => {
@@ -23,8 +25,8 @@ test('Regular buying item', () => {
     const acc = new account.Account(1000, 10);
     acc.buyItem(15, 'food');
     expect(acc.balance).toBe(985);
-    expect(acc.purchaseHistory).toContainEqual([15, "food"]);
-    expect(acc.purchaseHistory).not.toContainEqual([17, "food"]);
+    expect(acc.purchaseHistory).toContainEqual([15, "food", 0.75]);
+    expect(acc.purchaseHistory).not.toContainEqual([17, "food", 0.77]);
 });
 
 test('Buying item with partial funding', () => {
@@ -32,7 +34,7 @@ test('Buying item with partial funding', () => {
     acc.buyItem(15, 'food');
     expect(acc.balance).toBe(0);
     expect(acc.credit).toBe(5);
-    expect(acc.purchaseHistory).toContainEqual([15, "food"]);
+    expect(acc.purchaseHistory).toContainEqual([15, "food", 0.55]);
 });
 
 test('Buying item fully via credit limit', () => {
@@ -40,7 +42,7 @@ test('Buying item fully via credit limit', () => {
     acc.buyItem(15, 'food');
     expect(acc.balance).toBe(0);
     expect(acc.credit).toBe(5);
-    expect(acc.purchaseHistory).toContainEqual([15, "food"]);
+    expect(acc.purchaseHistory).toContainEqual([15, "food", 0.15]);
 });
 
 test('Not enough money', () => {
@@ -68,12 +70,39 @@ test('Cashback while buying', () => {
     acc4.buyItem(200, 'fuel');
     acc4.buyItem(100, 'girls');
     expect(acc4.cashback).toBe(65);
+    const acc5 = new account.Account(1000, 200);
+    acc5.buyItem(100, 'food');
+    acc5.buyItem(200, 'fun stuff');
+    expect(acc5.cashback).toBe(5);
+});
+
+test('Refunding', () => {
+    const acc = new account.Account(100, 100);
+    acc.buyItem(100, 'food');
+    acc.refund(50);
+    expect(acc.balance).toBe(50);
+    expect(acc.credit).toBe(100);
+    acc.buyItem(100, 'food');
+    acc.refund(40);
+    expect(acc.balance).toBe(0);
+    expect(acc.credit).toBe(90);
+    acc.refund(30);
+    expect(acc.balance).toBe(20);
+    expect(acc.credit).toBe(100);
 });
 
 test('Item return', () => {
     const acc = new account.Account(1000, 100);
-    acc.buyItem(15, 'food');
-    acc.returnItem(15, 'food');
-    expect(acc.purchaseHistory).not.toContainEqual([15, 'food']);
-    expect(acc.balance).toBe(1000);
+    acc.buyItem(100, 'food');
+    acc.buyItem(150, 'food');
+    expect(acc.purchaseHistory).toHaveLength(2);
+    acc.returnItem(100, 'food');
+    expect(acc.purchaseHistory).not.toContainEqual([100, 'food', 5]);
+    expect(acc.balance).toBe(850);
+});
+
+test('Cashback operations', () => {
+    const acc = new account.Account(1000, 100);
+    acc.buyItem(1100, 'fuel');
+    expect(acc.cashback).toBe(101);
 })

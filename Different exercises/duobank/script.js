@@ -1,10 +1,12 @@
 class Account {
 
-    cashbackPercentageCreditFunds = 1;
+    CB_PERCENT_CREDIT = 1;
+    TAXES_FEE = 20;
     balance;
     credit;
     creditLimit;
     cashback;
+    MINIMAL_CB_WITHDRAWAL = 100;
     cashbackCathegories = {
         'food': 5,
         'fuel': 10,
@@ -23,49 +25,79 @@ class Account {
     }
 
     buyItem(price, cathegory) {
+        let cashback = 0;
         if (this.balance + this.credit < price) {
             throw new Error('Not enough money');
         }
         else if (this.balance >= price) {
             this.balance -= price;
-            this.cashbackCathegories.hasOwnProperty(cathegory) ? this.cashback += price * this.cashbackCathegories[cathegory]*.01 : 0;
+            this.cashbackCathegories.hasOwnProperty(cathegory) ? cashback += price * this.cashbackCathegories[cathegory] * this.CB_PERCENT_CREDIT / 100 : 0;
         }
         else {
             if (this.balance > 0) {
-                this.cashback += this.cashbackCathegories.hasOwnProperty(cathegory) 
-                                ? this.balance * this.cashbackCathegories[cathegory] * 0.01 + (price - this.balance) * 0.01 
-                                : 0;
+                cashback += this.cashbackCathegories.hasOwnProperty(cathegory) 
+                            ? this.balance * this.cashbackCathegories[cathegory] * this.CB_PERCENT_CREDIT / 100 + (price - this.balance) * this.CB_PERCENT_CREDIT / 100 
+                            : 0;
                 this.credit -= price - this.balance;
                 this.balance = 0;
             }
             else {
-                this.cashback += this.cashbackCathegories.hasOwnProperty(cathegory) 
-                                ? (price - this.balance) * 0.01 
-                                : 0;
+                cashback += this.cashbackCathegories.hasOwnProperty(cathegory) 
+                            ? (price - this.balance) * this.CB_PERCENT_CREDIT / 100 
+                            : 0;
                 this.credit -= price;
             }
         }
-        this.purchaseHistory.push([price, cathegory]);
+        this.purchaseHistory.push([price, cathegory, cashback]);
+        this.cashback += cashback;
     }
 
     returnItem(price, cathegory) {
-
-        // rewrite this func 
-
-        
-        let productIndex = this.purchaseHistory.findIndex(el => {console.log(el == [price, cathegory]); el == [price, cathegory]});
-        console.log(productIndex);
+        let productIndex = this.purchaseHistory.findIndex(el => el[0] == price && el[1] == cathegory);
         if (productIndex !== -1) {
-            this.purchaseHistory[productIndex] = undefined;
-
-            // how to store cahback amount for single purchase???
+            this.refund(price);                                                 // refunding money for returned item
+            this.refundCashback(this.purchaseHistory[productIndex][2]);         // refunding cash
+            delete this.purchaseHistory[productIndex];                          // deleting from history            
         }
     }
 
-    withdrawCashback(cashbackAmount) {}
-    showBalance() {}
-    showCredit() {}
-    showCashback() {}
+    refund(sum) {
+        if (this.credit == this.creditLimit) {
+            this.balance += sum;
+        }
+        else if (this.credit + sum <= this.creditLimit) {
+            this.credit += sum;
+        }
+        else {
+            this.balance += sum - (this.creditLimit - this.credit);
+            this.credit = this.creditLimit;
+        }
+    }
+
+    withdrawCashback(cashbackAmount) {
+        if (cashbackAmount >= this.MINIMAL_CB_WITHDRAWAL) {
+            this.refund(cashbackAmount * (1 - this.TAXES_FEE / 100));
+        } 
+        else throw new Error(`Minimal amount for withdrawal is ${this.MINIMAL_CB_WITHDRAWAL}`);
+    }
+    
+    refundCashback(sum) {
+        if (sum <= this.cashback) {
+            this.cashback -= sum;
+        }
+        else {
+            let notRefundedCashback = (sum - this.cashback) * 1.25;
+            this.cashback = 0;
+            if (notRefundedCashback >= this.balance) {
+                this.balance -= notRefundedCashback;
+            }
+            else if (this.credit + this.balance >= notRefundedCashback) {
+                this.credit -= notRefundedCashback - this.balance;
+                this.balance = 0;
+            }
+            else throw new Error('Some error occcur while transaction');
+        }
+    }
 }
 
 module.exports = { Account };
