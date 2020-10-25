@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+    display: flex;
+}
+
+nav {
+    width: 30%;
+}
+
+nav > ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+
+button {
+    background-color: royalblue;
+    padding: 10px 17px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+#output {
+    width: 60%;
+    height: 50vh;
+    border: 1px solid black;
+    display: flex;
+    align-items: flex-end;
+}
