@@ -56,7 +56,6 @@ const drawItWithDiv = () => {
     let segmentWidth = parseFloat(width) / Object.keys(currentMockup).length - padding;
     let segmentHeight = parseFloat(height) / (range.max - range.min);
     for (let stat of Object.keys(currentMockup)) {
-        console.log({stat});
         let el = document.createElement('div');
         el.style.width = Math.floor(segmentWidth) + 'px';
         el.style.height = Math.floor(segmentHeight * (currentMockup[stat] - range.min)) + 'px';
@@ -64,11 +63,29 @@ const drawItWithDiv = () => {
         el.style.backgroundColor = 'red';
         output.appendChild(el);
     }
-    console.dir({width: segmentWidth, height: segmentHeight});
     return false;
 }
 
 function drawItWithCanvas () {
-    currentFunctioncall = drawItWithDiv;
-    console.log('Canvas works');
+    currentFunctioncall = drawItWithCanvas;
+    let range = collectionMinMax(mock1);
+    let heightDif = range.max - range.min;
+    const output = document.querySelector('#output');
+    output.innerHTML = '';
+    const canvas = document.createElement('canvas');
+    canvas.width = output.scrollWidth;
+    canvas.height = output.scrollHeight;
+    output.appendChild(canvas);
+    let axisX = Object.keys(currentMockup);
+    let segmentWidth = parseFloat(canvas.width) / axisX.length - padding;
+    let segmentHeight = parseFloat(canvas.height) / (heightDif);
+    let chart = canvas.getContext('2d');
+    chart.translate(0, canvas.height);
+    chart.beginPath();
+    chart.moveTo(0, 0);
+    for (let i = 0, n = axisX.length; i < n; i++) {
+        if (i == 0) chart.moveTo(i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
+        else chart.lineTo((segmentWidth  + padding) * i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
+    }
+    chart.stroke();
 }
