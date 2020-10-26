@@ -70,7 +70,7 @@ const drawItWithDiv = () => {
 
 // Drawing axes for charts
 
-function drawAxis(canvas, legendPadding, padding) {
+const drawAxis = (canvas, legendPadding, padding) => {
     let chart = canvas.getContext('2d');
     chart.clearRect(0, 0, canvas.width, canvas.height);
     chart.save();
@@ -91,7 +91,49 @@ function drawAxis(canvas, legendPadding, padding) {
     chart.restore();
 }
 
-function drawItWithCanvas () {
+const chartDrawer = (type, ...args) => {
+    switch (type) {
+        case 'barChart':
+            drawBarChart(...args);
+            break;
+        case 'polylineChart':
+            drawPolylineChart(...args);
+            break;
+        default:
+            drawPolylineChartWithPoints(...args);
+            break;
+    }
+}
+
+const drawBarChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {}
+
+const drawPolylineChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
+    chart.beginPath();
+    chart.moveTo(0, 0);
+    for (let i = 0, n = axisX.length; i < n; i++) {
+        if (i == 0) chart.moveTo(i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
+        else chart.lineTo((segmentWidth  + padding) * i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
+    }
+    chart.stroke();
+}
+
+const drawPolylineChartWithPoints = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
+    drawPolylineChart(chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding);
+    for (let i = 0, n = axisX.length; i < n; i++) {
+        chart.beginPath();
+        chart.moveTo(0, 0);
+        chart.arc(
+            (segmentWidth  + padding) * i, 
+            -segmentHeight * (currentMockup[axisX[i]] - range.min),
+            3,
+            0,
+            Math.PI * 2,
+            true);
+            chart.fill();
+        }
+}
+
+const drawItWithCanvas = chartType => {
     currentFunctioncall = drawItWithCanvas;
     let legendPadding = 70;
     let range = collectionMinMax(mock1);
@@ -108,11 +150,8 @@ function drawItWithCanvas () {
     let chart = canvas.getContext('2d');
     drawAxis(canvas, legendPadding, padding);
     chart.translate(legendPadding, canvas.height - legendPadding);
-    chart.beginPath();
-    chart.moveTo(0, 0);
-    for (let i = 0, n = axisX.length; i < n; i++) {
-        if (i == 0) chart.moveTo(i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
-        else chart.lineTo((segmentWidth  + padding) * i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
-    }
-    chart.stroke();
+    chart.save();
+    chartDrawer(chartType, chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding);
+    chart.restore();
+    
 }
