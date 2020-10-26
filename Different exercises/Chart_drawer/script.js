@@ -66,8 +66,76 @@ const drawItWithDiv = () => {
     return false;
 }
 
-function drawItWithCanvas () {
+// Drawing charts with canvas
+
+// Drawing axes for charts
+
+const drawAxis = (canvas, legendPadding, padding) => {
+    let chart = canvas.getContext('2d');
+    chart.clearRect(0, 0, canvas.width, canvas.height);
+    chart.save();
+    chart.translate(legendPadding, padding);
+    chart.beginPath();
+    chart.moveTo(0, 0);
+    chart.lineTo(-5, 20);
+    chart.moveTo(0, 0);
+    chart.lineTo(5, 20);
+    chart.moveTo(0, 0);
+    chart.lineTo(0, canvas.height - legendPadding);
+    chart.lineTo(canvas.width - legendPadding - padding, canvas.height - legendPadding);
+    chart.translate(canvas.width - legendPadding - padding, canvas.height - legendPadding);
+    chart.lineTo(-20, -5);
+    chart.moveTo(0, 0);
+    chart.lineTo(-20, 5);
+    chart.stroke();
+    chart.restore();
+}
+
+const chartDrawer = (type, ...args) => {
+    switch (type) {
+        case 'barChart':
+            drawBarChart(...args);
+            break;
+        case 'polylineChart':
+            drawPolylineChart(...args);
+            break;
+        default:
+            drawPolylineChartWithPoints(...args);
+            break;
+    }
+}
+
+const drawBarChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {}
+
+const drawPolylineChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
+    chart.beginPath();
+    chart.moveTo(0, 0);
+    for (let i = 0, n = axisX.length; i < n; i++) {
+        if (i == 0) chart.moveTo(i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
+        else chart.lineTo((segmentWidth  + padding) * i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
+    }
+    chart.stroke();
+}
+
+const drawPolylineChartWithPoints = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
+    drawPolylineChart(chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding);
+    for (let i = 0, n = axisX.length; i < n; i++) {
+        chart.beginPath();
+        chart.moveTo(0, 0);
+        chart.arc(
+            (segmentWidth  + padding) * i, 
+            -segmentHeight * (currentMockup[axisX[i]] - range.min),
+            3,
+            0,
+            Math.PI * 2,
+            true);
+            chart.fill();
+        }
+}
+
+const drawItWithCanvas = chartType => {
     currentFunctioncall = drawItWithCanvas;
+    let legendPadding = 70;
     let range = collectionMinMax(mock1);
     let heightDif = range.max - range.min;
     const output = document.querySelector('#output');
@@ -77,15 +145,13 @@ function drawItWithCanvas () {
     canvas.height = output.scrollHeight;
     output.appendChild(canvas);
     let axisX = Object.keys(currentMockup);
-    let segmentWidth = parseFloat(canvas.width) / axisX.length - padding;
-    let segmentHeight = parseFloat(canvas.height) / (heightDif);
+    let segmentWidth = parseFloat(canvas.width - legendPadding) / axisX.length - padding;
+    let segmentHeight = parseFloat(canvas.height - padding - legendPadding) / (heightDif);
     let chart = canvas.getContext('2d');
-    chart.translate(0, canvas.height);
-    chart.beginPath();
-    chart.moveTo(0, 0);
-    for (let i = 0, n = axisX.length; i < n; i++) {
-        if (i == 0) chart.moveTo(i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
-        else chart.lineTo((segmentWidth  + padding) * i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
-    }
-    chart.stroke();
+    drawAxis(canvas, legendPadding, padding);
+    chart.translate(legendPadding, canvas.height - legendPadding);
+    chart.save();
+    chartDrawer(chartType, chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding);
+    chart.restore();
+    
 }

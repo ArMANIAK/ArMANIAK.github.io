@@ -23,7 +23,7 @@ button {
 
 #output {
     width: 60%;
-    height: 50vh;
+    height: 60vh;
     border: 1px solid black;
     display: flex;
     align-items: flex-end;
