@@ -99,6 +99,9 @@ const chartDrawer = (type, ...args) => {
         case 'polylineChart':
             drawPolylineChart(...args);
             break;
+        case 'besierChart':
+            drawBesierChart(...args);
+            break;
         default:
             drawPolylineChartWithPoints(...args);
             break;
@@ -113,6 +116,28 @@ const drawPolylineChart = (chart, axisX, currentMockup, range, segmentWidth, seg
     for (let i = 0, n = axisX.length; i < n; i++) {
         if (i == 0) chart.moveTo(i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
         else chart.lineTo((segmentWidth  + padding) * i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
+    }
+    chart.stroke();
+}
+
+const drawBesierChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
+    chart.beginPath();
+    chart.moveTo(0, 0);
+    for (let i = 0, n = axisX.length; i < n; i++) {
+        if (i == 0) chart.moveTo(i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
+        else {
+            let endPointX = (segmentWidth + padding) * i;
+            let dX = endPointX - (segmentWidth  + padding) * (i - 1);
+            let endPointY = -segmentHeight * (currentMockup[axisX[i]] - range.min);
+            chart.bezierCurveTo(
+                (segmentWidth  + padding) * (i - 1) + dX / 3,
+                -segmentHeight * (currentMockup[axisX[i - 1]] - range.min),
+                (segmentWidth  + padding) * (i - 1) + dX / 3 * 2,
+                endPointY,
+                endPointX, 
+                endPointY
+            );
+        }
     }
     chart.stroke();
 }
@@ -149,7 +174,7 @@ const drawItWithCanvas = chartType => {
     let segmentHeight = parseFloat(canvas.height - padding - legendPadding) / (heightDif);
     let chart = canvas.getContext('2d');
     drawAxis(canvas, legendPadding, padding);
-    chart.translate(legendPadding, canvas.height - legendPadding);
+    chart.translate(legendPadding, canvas.height - legendPadding + padding);
     chart.save();
     chartDrawer(chartType, chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding);
     chart.restore();
