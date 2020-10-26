@@ -121,7 +121,6 @@ const drawPolylineChart = (chart, axisX, currentMockup, range, segmentWidth, seg
 }
 
 const drawBesierChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
-    console.log('besier');
     chart.beginPath();
     chart.moveTo(0, 0);
     for (let i = 0, n = axisX.length; i < n; i++) {
