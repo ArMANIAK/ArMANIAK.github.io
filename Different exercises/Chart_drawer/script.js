@@ -66,8 +66,34 @@ const drawItWithDiv = () => {
     return false;
 }
 
+// Drawing charts with canvas
+
+// Drawing axes for charts
+
+function drawAxis(canvas, legendPadding, padding) {
+    let chart = canvas.getContext('2d');
+    chart.clearRect(0, 0, canvas.width, canvas.height);
+    chart.save();
+    chart.translate(legendPadding, padding);
+    chart.beginPath();
+    chart.moveTo(0, 0);
+    chart.lineTo(-5, 20);
+    chart.moveTo(0, 0);
+    chart.lineTo(5, 20);
+    chart.moveTo(0, 0);
+    chart.lineTo(0, canvas.height - legendPadding);
+    chart.lineTo(canvas.width - legendPadding - padding, canvas.height - legendPadding);
+    chart.translate(canvas.width - legendPadding - padding, canvas.height - legendPadding);
+    chart.lineTo(-20, -5);
+    chart.moveTo(0, 0);
+    chart.lineTo(-20, 5);
+    chart.stroke();
+    chart.restore();
+}
+
 function drawItWithCanvas () {
     currentFunctioncall = drawItWithCanvas;
+    let legendPadding = 70;
     let range = collectionMinMax(mock1);
     let heightDif = range.max - range.min;
     const output = document.querySelector('#output');
@@ -77,10 +103,11 @@ function drawItWithCanvas () {
     canvas.height = output.scrollHeight;
     output.appendChild(canvas);
     let axisX = Object.keys(currentMockup);
-    let segmentWidth = parseFloat(canvas.width) / axisX.length - padding;
-    let segmentHeight = parseFloat(canvas.height) / (heightDif);
+    let segmentWidth = parseFloat(canvas.width - legendPadding) / axisX.length - padding;
+    let segmentHeight = parseFloat(canvas.height - padding - legendPadding) / (heightDif);
     let chart = canvas.getContext('2d');
-    chart.translate(0, canvas.height);
+    drawAxis(canvas, legendPadding, padding);
+    chart.translate(legendPadding, canvas.height - legendPadding);
     chart.beginPath();
     chart.moveTo(0, 0);
     for (let i = 0, n = axisX.length; i < n; i++) {
