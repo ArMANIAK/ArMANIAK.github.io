@@ -149,7 +149,7 @@ const drawItWithCanvas = chartType => {
     let segmentHeight = parseFloat(canvas.height - padding - legendPadding) / (heightDif);
     let chart = canvas.getContext('2d');
     drawAxis(canvas, legendPadding, padding);
-    chart.translate(legendPadding, canvas.height - legendPadding);
+    chart.translate(legendPadding, canvas.height - legendPadding + padding);
     chart.save();
     chartDrawer(chartType, chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding);
     chart.restore();
