@@ -24,6 +24,8 @@ let mock2 = {
 let currentFunctioncall = null;
 const currentMockup = mock1;
 const padding = 10;
+const arrowLength = 20;
+const arrowWidth = 6;
 
 // Helper functions are here
 
@@ -77,16 +79,16 @@ const drawAxis = (canvas, legendPadding, padding) => {
     chart.translate(legendPadding, padding);
     chart.beginPath();
     chart.moveTo(0, 0);
-    chart.lineTo(-5, 20);
+    chart.lineTo(-arrowWidth / 2, arrowLength);
     chart.moveTo(0, 0);
-    chart.lineTo(5, 20);
+    chart.lineTo(arrowWidth / 2, arrowLength);
     chart.moveTo(0, 0);
     chart.lineTo(0, canvas.height - legendPadding);
     chart.lineTo(canvas.width - legendPadding - padding, canvas.height - legendPadding);
     chart.translate(canvas.width - legendPadding - padding, canvas.height - legendPadding);
-    chart.lineTo(-20, -5);
+    chart.lineTo(-arrowLength, -arrowWidth / 2);
     chart.moveTo(0, 0);
-    chart.lineTo(-20, 5);
+    chart.lineTo(-arrowLength, arrowWidth / 2);
     chart.stroke();
     chart.restore();
 }
@@ -108,14 +110,18 @@ const chartDrawer = (type, ...args) => {
     }
 }
 
-const drawBarChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {}
+const drawBarChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
+    for (let i = 0, n = axisX.length; i < n; i++) {
+        chart.fillRect(i * (segmentWidth + padding), 0, segmentWidth, -segmentHeight * (currentMockup[axisX[i]] - range.min));
+    }
+}
 
 const drawPolylineChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
     chart.beginPath();
     chart.moveTo(0, 0);
     for (let i = 0, n = axisX.length; i < n; i++) {
         if (i == 0) chart.moveTo(i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
-        else chart.lineTo((segmentWidth  + padding) * i, - segmentHeight * (currentMockup[axisX[i]] - range.min));
+        else chart.lineTo((segmentWidth  + padding) * i, -segmentHeight * (currentMockup[axisX[i]] - range.min));
     }
     chart.stroke();
 }
@@ -130,9 +136,9 @@ const drawBesierChart = (chart, axisX, currentMockup, range, segmentWidth, segme
             let dX = endPointX - (segmentWidth  + padding) * (i - 1);
             let endPointY = -segmentHeight * (currentMockup[axisX[i]] - range.min);
             chart.bezierCurveTo(
-                (segmentWidth  + padding) * (i - 1) + dX / 3,
+                (segmentWidth  + padding) * (i - 1) + dX / 2,
                 -segmentHeight * (currentMockup[axisX[i - 1]] - range.min),
-                (segmentWidth  + padding) * (i - 1) + dX / 3 * 2,
+                (segmentWidth  + padding) * (i - 1) + dX / 2,
                 endPointY,
                 endPointX, 
                 endPointY
@@ -170,8 +176,8 @@ const drawItWithCanvas = chartType => {
     canvas.height = output.scrollHeight;
     output.appendChild(canvas);
     let axisX = Object.keys(currentMockup);
-    let segmentWidth = parseFloat(canvas.width - legendPadding) / axisX.length - padding;
-    let segmentHeight = parseFloat(canvas.height - padding - legendPadding) / (heightDif);
+    let segmentWidth = parseFloat(canvas.width - legendPadding - arrowLength) / axisX.length - padding;
+    let segmentHeight = parseFloat(canvas.height - padding - legendPadding - arrowLength) / heightDif;
     let chart = canvas.getContext('2d');
     drawAxis(canvas, legendPadding, padding);
     chart.translate(legendPadding, canvas.height - legendPadding + padding);
