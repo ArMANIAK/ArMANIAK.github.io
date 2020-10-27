@@ -22,7 +22,7 @@ let mock2 = {
 };
 
 let currentFunctioncall = null;
-const currentMockup = mock1;
+const currentMockup = mock2;
 const padding = 10;
 const arrowLength = 20;
 const arrowWidth = 6;
@@ -49,7 +49,7 @@ const collectionMinMax = collection => {
 
 const drawItWithDiv = () => {
     currentFunctioncall = drawItWithDiv;
-    let range = collectionMinMax(mock1);
+    let range = collectionMinMax(currentMockup);
     let heightDif = range.max - range.min;
     const output = document.querySelector('#output');
     output.innerHTML = '';
@@ -93,7 +93,7 @@ const drawAxis = (canvas, legendPadding, padding) => {
     chart.restore();
 }
 
-const chartDrawer = (type, ...args) => {
+const drawChart = (type, ...args) => {
     switch (type) {
         case 'barChart':
             drawBarChart(...args);
@@ -164,10 +164,32 @@ const drawPolylineChartWithPoints = (chart, axisX, currentMockup, range, segment
         }
 }
 
+const makeLegendForAxisX = (chart, axisX, segmentWidth, padding) => {
+    let fontSize = 16;
+    chart.font = `${fontSize}px serif`;
+    let legendLength = axisX.reduce((acc, el) => acc += chart.measureText(el).width, 0);
+    let rows = Math.ceil(legendLength / (segmentWidth * axisX.length));
+    chart.textBaseline = 'top';
+    for (let i = 0, n = axisX.length; i < n; i++) {
+        let verticalPosition = i % rows;
+        chart.fillText(axisX[i], i * (segmentWidth + padding), fontSize / 2 + fontSize * verticalPosition);
+        chart.beginPath();
+        chart.moveTo(0, 0);
+        chart.arc(
+            (segmentWidth  + padding) * i, 
+            0,
+            3,
+            0,
+            Math.PI * 2,
+            true);
+            chart.fill();
+    }
+};
+
 const drawItWithCanvas = chartType => {
     currentFunctioncall = drawItWithCanvas;
     let legendPadding = 70;
-    let range = collectionMinMax(mock1);
+    let range = collectionMinMax(currentMockup);
     let heightDif = range.max - range.min;
     const output = document.querySelector('#output');
     output.innerHTML = '';
@@ -182,7 +204,7 @@ const drawItWithCanvas = chartType => {
     drawAxis(canvas, legendPadding, padding);
     chart.translate(legendPadding, canvas.height - legendPadding + padding);
     chart.save();
-    chartDrawer(chartType, chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding);
+    drawChart(chartType, chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding);
     chart.restore();
-    
+    makeLegendForAxisX(chart, axisX, segmentWidth, padding);
 }
