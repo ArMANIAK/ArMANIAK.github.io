@@ -15,6 +15,7 @@ let mock2 = {
     17: 54,
     20: 32,
     33: 28,
+    36: 22,
     41: 17,
     44: 0,
     48: 10,
@@ -22,7 +23,7 @@ let mock2 = {
 };
 
 let currentFunctioncall = null;
-const currentMockup = mock2;
+const currentMockup = mock1;
 const padding = 10;
 const arrowLength = 20;
 const arrowWidth = 6;
@@ -93,6 +94,57 @@ const drawAxis = (canvas, legendPadding, padding) => {
     chart.restore();
 }
 
+const makeLegendForAxisX = (chart, axisX, segmentWidth, padding) => {
+    let fontSize = 16;
+    chart.font = `${fontSize}px serif`;
+    let legendLength = axisX.reduce((acc, el) => acc += chart.measureText(el).width, 0);
+    let rows = Math.ceil(legendLength / (segmentWidth * axisX.length));
+    chart.textBaseline = 'top';
+    for (let i = 0, n = axisX.length; i < n; i++) {
+        let verticalPosition = i % rows;
+        chart.fillText(axisX[i], i * (segmentWidth + padding), fontSize / 2 + fontSize * verticalPosition);
+        chart.beginPath();
+        chart.moveTo(0, 0);
+        chart.arc(
+            (segmentWidth  + padding) * i, 
+            0,
+            3,
+            0,
+            Math.PI * 2,
+            true);
+            chart.fill();
+    }
+};
+
+const makeLegendForAxisY = (chart, axisX, currentMockup, range, segmentHeight, padding, legendPadding) => {
+    let fontSize = 16;
+    chart.font = `${fontSize}px serif`;
+    chart.textBaseline = 'middle';
+    chart.textAlign = 'right';
+    let legendValues = Object.values(currentMockup);
+    legendValues.sort((a, b) => {
+        if (a < b) return -1;
+        else if (a == b) delete a;
+        else return 1;
+    });
+    let uniqueValues = legendValues.filter((el, ind, array) => array.indexOf(el) === ind);
+    for (let i = 0, n = uniqueValues.length; i < n; i++) {
+        chart.fillText(uniqueValues[i], -5, -segmentHeight * (uniqueValues[i] - range.min), legendPadding);
+            chart.beginPath();
+            chart.moveTo(0, 0);
+            chart.arc(
+                0, 
+                -segmentHeight * (uniqueValues[i] - range.min),
+                3,
+                0,
+                Math.PI * 2,
+                true);
+                chart.fill();
+    }
+}
+
+// Choose the function to render chart depending on chart type
+
 const drawChart = (type, ...args) => {
     switch (type) {
         case 'barChart':
@@ -110,11 +162,15 @@ const drawChart = (type, ...args) => {
     }
 }
 
+// Drawing bar chart
+
 const drawBarChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
     for (let i = 0, n = axisX.length; i < n; i++) {
         chart.fillRect(i * (segmentWidth + padding), 0, segmentWidth, -segmentHeight * (currentMockup[axisX[i]] - range.min));
     }
 }
+
+// Drawing Polyline chart with edges
 
 const drawPolylineChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
     chart.beginPath();
@@ -125,6 +181,8 @@ const drawPolylineChart = (chart, axisX, currentMockup, range, segmentWidth, seg
     }
     chart.stroke();
 }
+
+// Draw polyline chart with smooth line
 
 const drawBesierChart = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
     chart.beginPath();
@@ -148,6 +206,8 @@ const drawBesierChart = (chart, axisX, currentMockup, range, segmentWidth, segme
     chart.stroke();
 }
 
+// Draw polyline chart with smooth line and points on the chart
+
 const drawPolylineChartWithPoints = (chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding) => {
     drawPolylineChart(chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding);
     for (let i = 0, n = axisX.length; i < n; i++) {
@@ -163,28 +223,6 @@ const drawPolylineChartWithPoints = (chart, axisX, currentMockup, range, segment
             chart.fill();
         }
 }
-
-const makeLegendForAxisX = (chart, axisX, segmentWidth, padding) => {
-    let fontSize = 16;
-    chart.font = `${fontSize}px serif`;
-    let legendLength = axisX.reduce((acc, el) => acc += chart.measureText(el).width, 0);
-    let rows = Math.ceil(legendLength / (segmentWidth * axisX.length));
-    chart.textBaseline = 'top';
-    for (let i = 0, n = axisX.length; i < n; i++) {
-        let verticalPosition = i % rows;
-        chart.fillText(axisX[i], i * (segmentWidth + padding), fontSize / 2 + fontSize * verticalPosition);
-        chart.beginPath();
-        chart.moveTo(0, 0);
-        chart.arc(
-            (segmentWidth  + padding) * i, 
-            0,
-            3,
-            0,
-            Math.PI * 2,
-            true);
-            chart.fill();
-    }
-};
 
 const drawItWithCanvas = chartType => {
     currentFunctioncall = drawItWithCanvas;
@@ -207,4 +245,5 @@ const drawItWithCanvas = chartType => {
     drawChart(chartType, chart, axisX, currentMockup, range, segmentWidth, segmentHeight, padding, legendPadding);
     chart.restore();
     makeLegendForAxisX(chart, axisX, segmentWidth, padding);
+    makeLegendForAxisY(chart, axisX, currentMockup, range, segmentHeight, padding, legendPadding);
 }
