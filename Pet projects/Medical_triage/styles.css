@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    display: flex;
+}
+
+main {
+    width: 80vw;
+}
+
+#board {
+    background: url('./assets/images/map.PNG') no-repeat;
+    background-size: cover;
+    height: 70vh;
+    width: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.tile {
+    background: rgba(255, 255, 255, 0.5);
+    border: solid 3px white;
+    box-sizing: border-box;
+}
+
+.victimized {
+    border: solid 3px red;
+}
+
+@media screen and (max-width: 720px) {
+    body {
+        flex-direction: column;
+    }
+
+    main {
+        width: 100%;
+    }
+
+    #board {
+        height: 40vh;
+    }
+}
