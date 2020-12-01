@@ -53,6 +53,11 @@ header {
     box-sizing: border-box;
 }
 
+.btn:hover {
+    background-color: #96C6E0;
+    border-color: #96C6E0;
+}
+
 .header {
     font-family: "Antitype Redwood", serif;
     margin-top: 0;
@@ -158,6 +163,32 @@ h1.header {
     display: block;
 }
 
+.radio {
+    padding-left: 25px;
+}
+
+.radio_input {
+    position: absolute;
+    appearance: none;
+}
+
+.radio_box {
+    position: absolute;
+    margin-left: -25px;
+    width: 22px;
+    height: 21px;
+    background-repeat: no-repeat;
+    background-image: url('./assets/test_img/radio.svg');
+}
+
+.radio_input:hover + .radio_box {
+    background-image: url('./assets/test_img/radio_hover.svg');
+}
+
+.radio_input:checked + .radio_box {
+    background-image: url('./assets/test_img/radio_checked.svg');
+}
+
 #pretest .btn, #test .btn {
     padding: 12px 32px;
     font-size: 24px;
@@ -175,6 +206,11 @@ h1.header {
     border: 1px solid #96C6E0;
     box-sizing: border-box;
     margin-left: 20px;
+}
+
+.btn.outline:hover {
+    background-color: #96C6E0;
+    border-color: #96C6E0;
 }
 
 .img-container {
