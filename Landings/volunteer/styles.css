@@ -1,0 +1,480 @@
+@font-face {
+    font-family: "Xarrovv";
+    src: url("./assets/fonts/Xarrov.otf");
+}
+
+@font-face {
+    font-family: "ProximaNova";
+    src: url("./assets/fonts/ProximaNova-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Antitype Redwood";
+    src: url("./assets/fonts/Anitype\ Redwood.otf");
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: gray;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container {
+    max-width: 1200px;
+    background: white;
+}
+
+.container > section {
+    padding: 20px 40px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 40px 0;
+}
+
+.btn {
+    display: inline-block;
+    font-family: Xarrovv, serif;
+    font-weight: normal;
+    font-size: 18px;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: #2D2F33;
+    padding: 8px 24px;
+    background: #C1E3F0;
+    border: 1px solid #C1E3F0;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.header {
+    font-family: "Antitype Redwood", serif;
+    margin-top: 0;
+    margin-bottom: 40px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+h2.header {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 62px;
+    line-height: 100%;
+    letter-spacing: 5px;
+    color: #000000;
+}
+
+div.hero {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row-reverse;
+}
+
+.result {
+    width: 620px;
+
+}
+
+#test_result > h1.header {
+    margin-top: 10px;
+}
+
+.result .btn {
+    padding: 12px 32px;
+    font-size: 24px;
+    margin-bottom: 40px;
+}
+
+.share {
+    display: flex;
+    margin-bottom: 40px;
+    margin-top: 50px;
+}
+
+.share > * {
+    margin-top: 0;
+    margin-right: 20px;
+    display: flex;
+}
+
+.share > div > a {
+    margin-right: 20px;
+    display: block;
+}
+
+.stage {
+    font-family: Xarrovv, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 150%;
+    color: #2D2F33;
+    margin-bottom: 0;
+}
+
+.proxima-16 {
+    font-family: ProximaNova, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    color: #2D2F33;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+h3.header {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 37px;
+    line-height: 150%;
+    letter-spacing: 3px;
+    color: #000000;
+}
+
+#pretest, #test {
+    display: flex;
+}
+
+h1.header {
+    font-size: 104px;
+    margin: 40px 0px 27px 0;
+    order: 1;
+}
+
+#pretest p, #test label {
+    font-family: "ProximaNova", serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    margin-top: 25px;
+    display: block;
+}
+
+#pretest .btn, #test .btn {
+    padding: 12px 32px;
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+#test img {
+    margin-top: 150px;
+    width: 384px;
+    height: 429px;
+}
+
+.btn.outline {
+    background-color: #fff;
+    border: 1px solid #96C6E0;
+    box-sizing: border-box;
+    margin-left: 20px;
+}
+
+.img-container {
+    width: 466px;
+    height: 226px;
+    background-color: #C4C4C4;
+    margin-bottom: 40px;
+}
+
+#be_volunteer {
+    background: center / cover url('./assets/bg_texture.svg');
+    font-family: Xarrovv;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 150%;
+    text-align: center;
+    color: #2D2F33;
+    margin: 0 -40px;
+    padding: 0 40px;
+    height: 515px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#volunteer_story > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.slider {
+    display: flex;
+    overflow: hidden;
+}
+
+.slider-tile {
+    display: inline-flex;
+    margin: 0 15px;
+}
+
+.card {
+    display: flex;
+    font-family: Xarrovv, serif;
+    align-items: flex-start;
+    margin-bottom: 36px;
+}
+
+.card > div.volunteer-photo {
+    width: 84px;
+    height: 84px;
+    background: left / cover url('./assets/volunteers/2.png');
+    border-radius: 50%;
+}
+
+.card > div.story {
+    width: 330px;
+    margin-left: 22px;
+}
+
+div.story > p {
+    font-family: ProximaNova, serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 150%;
+    color: #2D2F33;
+}
+
+div.story > a {
+    display: block;
+    text-decoration: none;
+    width: 280px;
+    margin-top: 24px;
+    border-top: 1px solid #E9E9EA;
+    padding-top: 15px;
+    font-size: 18px;
+    line-height: 25px;
+    color: #3E86AE;
+}
+
+.card h4 {
+    margin-top: 0;
+    margin-bottom: 11px;
+    font-size: 24px;
+}
+
+#share_story > div, #volunteer_life > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.control > * {
+    margin-left: 20px;
+}
+
+form {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.form_element {
+    box-sizing: border-box;
+    width: 480px;
+    margin-bottom: 20px;
+}
+
+.form_element.form_input {
+    border: 1px solid #C0C4CB;
+    border-radius: 3px;
+    padding: 8px 20px;
+}
+
+.form_element > * {
+    font-family: Xarrovv, serif;
+    color: #6E7178;
+    font-size: 12px;
+}
+
+.form_element > input {
+    border: none;
+    display: block;
+    font-size: 18px;
+    line-height: 25px;
+    color: #2D2F33;
+    width: 450px;
+}
+
+footer > * {
+    margin-bottom: 54px;
+}
+
+#footer_contacts > * {
+    display: flex;
+    font-family: Xarrovv, serif;
+    margin-bottom: 20px;
+}
+
+#footer_contacts > div > div {
+    width: 500px;
+    display: flex;
+}
+
+#footer_contacts img {
+    margin-right: 20px;
+}
+
+footer {
+    margin-top: 74px;
+    padding: 0 50px;
+}
+
+#footer_logo {
+    border-top: solid #E9E9EA 1px;
+    padding-top: 45px;
+}
+
+.phone_number {
+    font-family: Xarrovv, serif;
+    font-size: 36px;
+    line-height: 51px;
+    margin-top: -10px;
+}
+
+#footer_for_social {
+    display: flex;
+    justify-content: space-between;
+}
+
+#policies > a {
+    display: block;
+    text-decoration: none;
+    font-family: ProximaNova, serif;
+    font-size: 12px;
+    line-height: 20px;
+    color: #96C6E0;
+}
+
+#socials > * {
+    margin-left: 20px;
+}
+
+#footer_registration {
+    text-align: center;
+    padding-top: 30px;
+    border-top: solid 1px #E9E9EA;
+    font-family: ProximaNova, serif;
+    font-size: 12px;
+    line-height: 20px;
+    color: #A1A5AE;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 100%;
+        max-width: 720px;
+    }
+
+    .container > section, .container > * {
+        padding: 10px;
+    }
+
+    .decorative-bars {
+        display: none;
+    }
+
+    div.hero {
+        flex-direction: column;
+    }
+
+    .hero img {
+        max-width: 400px;
+    }
+
+    .stage {
+        text-align: center;
+    }
+
+    .stage:before {
+        content: url('./assets/bars_few.svg');
+        margin-right: 20px;
+        background-size: 100% 100%;
+    }
+
+    .stage:after {
+        content: url('./assets/bars_few.svg');
+        margin-left: 20px;
+        background-size: 100% 100%;
+    }
+
+    .result {
+        width: 100%;
+    }
+
+    .result .btn {
+        padding: 12px 16px;
+        font-size: 22px;
+    }
+
+    .img-container {
+        width: 95%;
+    }
+
+    .btn.outline {
+        margin-left: 13px;
+    }
+
+    .share {
+        flex-direction: column;
+    }
+
+    #be_volunteer {
+        height: 100%;
+        margin: 0 -10px;
+        padding: 0 10px;
+    }
+    
+    #volunteer_story > div {
+        display: block;
+    }
+
+    .card > div.story {
+        width: 230px;
+    }
+
+    #submit_donation {
+        background-color: #DBEEF5;
+    }
+
+    .form_element {
+        width: 380px;
+    }
+
+    .form_element > input {
+        width: 350px;
+        background-color: #DBEEF5;;
+    }
+
+    #footer_logo {
+        display: none;
+    }
+
+    #footer_contacts > * {
+        display: block;
+    }
+
+    #footer_contacts > div > div {
+        width: 400px;
+        margin-bottom: 20px;
+    }
+
+    #policies {
+        display: none;
+    }
+
+    .control {
+        display: none;
+    }
+}
