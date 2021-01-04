@@ -87,10 +87,6 @@ a {
     animation: appearance 0.7s;
 }
 
-.card:nth-child(n) {
-    animation-delay: calc(n * 0.1);
-}
-
 @keyframes appearance {
     0% {transform: scale(0);}
     75% {transform: scale(1.1);}
