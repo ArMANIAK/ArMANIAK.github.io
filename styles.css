@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;900&display=swap');
+
 body {
     margin: 0;
     background-color: #000000;
     color: #FFFFFF;
+    font-family: 'Roboto', sans-serif;
     font-size: 1em;
 }
 
@@ -12,26 +15,105 @@ body {
     border-radius: 15px;
 }
 
+.container > * {
+    padding: 4%;
+}
+
+.container > *:nth-child(2n) {
+    background-color: #222222;
+}
+
+#header {
+    display: flex;
+    align-items: stretch;
+}
+
+#title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 45%;
+    padding-right: 4%;
+}
+
+#position_and_name {
+    text-align: right;
+}
+
+#expertise_badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.badge {
+    width: 150px;
+    height: 36px;
+    text-align: center;
+    line-height: 36px;
+    border-radius: 18px;
+    background-color: #7777ff;
+    margin-top: 20px;
+}
+
+#image {
+    height: 350px;;
+}
+
 a {
     color: #FFFFFF;
     text-decoration: none;
 }
 
-h3 {
-    text-align: center;
+#competencies-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: center;
 }
 
-header {
-    text-align: center;
-    background-color: #ccccff;
+.card {
+    background-color: #FFFFFF;
+    color: black;
+    width: 200px;
     padding: 20px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    box-shadow: 0 0 5px white;
+    animation: appearance 0.7s;
 }
 
-header > * {
-    margin-right: 50px;
-    vertical-align: middle;
-    color: royalblue;
-    display: inline-block;
+.card:nth-child(n) {
+    animation-delay: calc(n * 0.1);
+}
+
+@keyframes appearance {
+    0% {transform: scale(0);}
+    75% {transform: scale(1.1);}
+    100% {transform: scale(1);}
+}
+
+.card > img {
+    display: block;
+    height: 100px;
+    margin: 10px auto;
+}
+
+.chart-item {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #333333;
+}
+
+.chart-item > h4 {
+    min-width: 100px;
 }
 
 nav {
@@ -66,9 +148,8 @@ section {
 article {
     display: flex;
     padding: 10px 20px;
-    justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #333;
 }
 
 article:last-child {
@@ -80,6 +161,7 @@ article:last-child {
 }
 
 .page_description {
+    width: 100%;
     text-align: left;
 }
 
