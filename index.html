@@ -39,6 +39,7 @@
         </div>
         <div id="competencies">
             <h2>Competencies</h2>
+            <div id="competencies-body"></div>
         </div>
         <div id="experience">
             <h2>Experience</h2>
@@ -233,17 +234,7 @@
                 </section>
             </content>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-            <script>
-                $link = $('nav a');
-                $table = $('content > section');
-                $link.each((index, element) => {
-                    element.onclick = () => {
-                        $('.active').toggleClass('active').toggleClass('inactive');
-                        $table[index].classList.toggle('active');
-                        $table[index].classList.toggle('inactive');
-                    }
-                });
-            </script>
+            <script src="script.js"></script>
         </div>
     </div>
 </body>
