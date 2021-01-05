@@ -26,6 +26,7 @@ body {
 
 #header {
     display: flex;
+    justify-content: space-evenly;
     align-items: stretch;
 }
 
@@ -33,7 +34,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    max-width: 45%;
+    max-width: 40%;
     padding-right: 4%;
 }
 
@@ -54,7 +55,9 @@ body {
     line-height: 36px;
     border-radius: 18px;
     background-color: #7777ff;
-    margin-top: 20px;
+    margin: 40px 20px 0 0;
+    position: relative;
+    overflow: hidden;
 }
 
 #image {
@@ -121,17 +124,55 @@ a {
     min-width: 100px;
 }
 
-nav {
-    background-color: #7777ff;
-}
-
 nav > * {
     display: inline-block;
 }
 
 nav li {
+    padding: 12px 30px;
+    border-radius: 7px;
+    background-color: #1C1C1C;
     margin-right: 30px;
     display: inline-block;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+nav li:before, .badge:before {
+    content: '';
+    width: 7px;
+    height: 170px;
+    background-color: #fff;
+    position: absolute;
+    left: -60px;
+    top: -40px;
+    transform: rotate(-50deg);
+    animation: blink 1.5s infinite;
+}
+
+nav li:after, .badge:after {
+    content: '';
+    width: 2px;
+    height: 170px;
+    background-color: #fff;
+    position: absolute;
+    left: -20px;
+    top: -40px;
+    transform: rotate(-50deg);
+    animation: blink 1.5s infinite;
+}
+
+nav li:hover:after, nav li:hover:before, .badge:hover:after, .badge:hover:before {
+    animation: none;
+}
+
+nav li:hover, .badge:hover {
+    transform: scale(1.05);
+}
+
+@keyframes blink {
+    100% {left: 360px }
 }
 
 li > a {
