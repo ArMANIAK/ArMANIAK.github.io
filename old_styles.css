@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    background-color: #ccccff;
+    padding: 20px;
+}
+
+header > * {
+    margin-right: 50px;
+    vertical-align: middle;
+    color: royalblue;
+    display: inline-block;
+}
+
+nav {
+    background-color: #7777ff;
+}
+
+nav > * {
+    display: inline-block;
+}
+
+nav li {
+    margin-right: 30px;
+    display: inline-block;
+}
+
+li > a {
+    color: #7777ff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav li > a {
+    font-weight: bold;
+    text-decoration: none;
+    color: yellow;
+}
+
+li {
+    list-style: none;
+}
+
+content > table.inactive {
+    display: none;
+}
+
+td, th {
+    padding: 20px 10px;
+}
+
+td:first-child {
+    width: 20%;
+}
+
+td:last-child {
+    width: 80%;
+}
