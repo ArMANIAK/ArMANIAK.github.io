@@ -72,6 +72,33 @@ body {
     height: 60vh;
 }
 
+@media screen and (max-width: 425px) {
+    .container {
+        max-width: 90%;
+    }
+
+    #header {
+        flex-direction: column;
+    }
+
+    #title {
+        max-width: 100%;
+    }
+
+    #expertise_badges {
+        display: none;
+    }
+
+    #image > img {
+        width: 100%;
+        height: auto;
+    }
+
+    article {
+        flex-direction: column;
+    }
+}
+
 a {
     color: #FFFFFF;
     text-decoration: none;
@@ -211,3 +238,19 @@ article:last-child {
     text-align: left;
 }
 
+@keyframes burger {
+    from {transform: scale(0);}
+    to {transform: scale(1);}
+}
+
+@media screen and (max-width: 425px) {
+    nav {
+        background-color: #1C1C1C;
+        border-radius: 15px;
+    }
+
+    nav li {
+        display: block;
+        margin-right: 0;
+    }
+}
