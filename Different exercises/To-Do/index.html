@@ -14,7 +14,22 @@
         <input type="text" placeholder="Что делать?"/>
         <div class="button">Добавить</div>
     </div>
+    <hr>
+    <div id="vue_todo">
+        <h2>To-do list with Vue.js</h2>
+        <ul class="list">
+            <li v-for="todoItem in todoList">
+                <input type="checkbox" :checked="todoItem.isDone" @change="todoItem.isDone = !todoItem.isDone"> 
+                <span>{{ todoItem.todo }}</span>
+                <span class="tag" v-for="tag in getTags(todoItem.id)" v-if="tag.tag">{{ tag.tag }}</span>
+            </li>
+        </ul>
+        <label>Task to do: <input type="text" @submit="addTask" placeholder="Type the task to do" v-model.lazy="todoInput"></label>
+        <label>Tags for task: <input type="text" @submit="addTag" size="50" placeholder="Type tags associated with this task separated with commas" v-model.lazy="todoTags"></label>
+        <div class="button" @click="addTodo()">Add to-do</div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
