@@ -49,6 +49,8 @@ const component = Vue.component('app-task', {
             <input type="checkbox" :checked="task.isDone" @change="task.isDone = !task.isDone"> 
             <strong>{{ task.todo }}</strong>
             <span class="tag" v-for="tag in tags" v-if="tag.tag">{{ tag.tag }}</span>
+            <span>&#128230;</span> 
+            <span style="font-size: 24px" @click="del(task.id)">&#128501;</span>
         </li>
         `,
     data: function() {
@@ -57,7 +59,9 @@ const component = Vue.component('app-task', {
         }
     },
     props: {
+        del: Function,
         task: {
+            id: Number,
             isDone: Boolean,
             todo: String
         },
@@ -77,13 +81,13 @@ let vue = new Vue({
         }
     },
     methods: {
-        addTask: function() {
+        addTask() {
             if (!this.todoInput) return null;
             let id = this.todoList.length > 0 ? this.todoList[this.todoList.length - 1].id + 1 : 0;
             this.todoList.push({ id: id, isDone: false, todo: this.todoInput });
             return id;
         },
-        addTag: function() {
+        addTag() {
             let taskTags = this.todoTags.split(',');
             let tagIds = [];
             taskTags.forEach(element => {
@@ -100,7 +104,7 @@ let vue = new Vue({
             });
             return tagIds;
         },
-        addTodo: function() {
+        addTodo() {
             let taskId = this.addTask();
             if (!taskId) return;
             let tagIds = this.addTag();
@@ -108,12 +112,15 @@ let vue = new Vue({
                 todoListTags.push({id: todoListTags.length, todoId: taskId, tagId: el})
             });
         },
-        getTags: function(taskId) {
+        getTags(taskId) {
             let taskTags = [];
             for (let item of todoListTags) {
                 if (item.todoId === taskId) taskTags.push(tags.filter(el => el.id == item.tagId)[0]); //such awkward constructions would be avoided in real projects with backend  via 'SELECT ... WHERE' query to DB
             }
             return taskTags;
+        },
+        deleteTask(taskId) {
+            this.todoList = this.todoList.filter(el => el.id !== taskId);
         }
     }
 })

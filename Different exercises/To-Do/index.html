@@ -18,7 +18,7 @@
     <div id="vue_todo">
         <h2>To-do list with Vue.js</h2>
         <ul class="list">
-            <app-task v-for="todoItem in todoList" :task="todoItem" :tags="getTags(todoItem.id)"/>
+            <app-task v-for="todoItem in todoList" :task="todoItem" :tags="getTags(todoItem.id)" :del="deleteTask" />
         </ul>
         <label>Task to do: <input type="text" @submit="addTask" placeholder="Type the task to do" v-model.lazy="todoInput"></label>
         <label>Tags for task: <input type="text" @submit="addTag" size="50" placeholder="Type tags associated with this task separated with commas" v-model.lazy="todoTags"></label>
