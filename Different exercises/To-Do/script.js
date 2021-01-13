@@ -84,11 +84,10 @@ let vue = new Vue({
         },
         addTag: function() {
             let taskTags = this.todoTags.split(',');
-            console.log(taskTags);
             let tagIds = [];
             taskTags.forEach(element => {
                 element = element ? element.trim() : '';
-                for (let tag in tags) {
+                for (let tag of this.tags) {
                     if (tag.tag !== element) continue;
                     else {
                         tagIds.push(tag.id);
