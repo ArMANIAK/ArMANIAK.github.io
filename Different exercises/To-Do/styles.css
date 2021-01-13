@@ -43,3 +43,25 @@ li {
     border-radius: 12px;
     background-color: #ccc;
 }
+
+#db, .entity {
+    display: flex;
+    margin-right: 20px;
+}
+
+.entity > div {
+    border: 1px solid #777;
+    padding: 5px;
+}
+
+.entity > div:nth-child(1) {
+    width: 80px;
+}
+
+.entity > div:nth-child(2) {
+    width: 250px;
+}
+
+.entity > div:nth-child(3) {
+    width: 250px;
+}

@@ -71,6 +71,7 @@ let vue = new Vue({
     data: function() {
         return {
             todoList: todoList,
+            tags: tags, // this field added only for debugging purposes
             todoInput: '',
             todoTags: ''
         }
