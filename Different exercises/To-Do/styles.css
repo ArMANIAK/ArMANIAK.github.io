@@ -10,15 +10,58 @@ input {
 }
 
 .button {
+    display: inline-block;
+    cursor: pointer;
     margin: 5px 15px;
     padding: 5px;
     border-radius: 5px;
     background-color: blue;
     height: 24px;
+    line-height: 24px;
     color: white;
-    box-shadow: 0px 3px 5px #333;
+    box-shadow: 0px 3px 3px #777;
+}
+
+ul {
+    padding-left: 0;
 }
 
 li {
     list-style: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px #777;
+    margin: 10px;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+}
+
+.tag {
+    margin: 0 15px;
+    font-size: 12px;
+    padding: 5px 8px;
+    border-radius: 12px;
+    background-color: #ccc;
+}
+
+#db, .entity {
+    display: flex;
+    margin-right: 20px;
+}
+
+.entity > div {
+    border: 1px solid #777;
+    padding: 5px;
+}
+
+.entity > div:nth-child(1) {
+    width: 80px;
+}
+
+.entity > div:nth-child(2) {
+    width: 250px;
+}
+
+.entity > div:nth-child(3) {
+    width: 250px;
 }

@@ -14,7 +14,36 @@
         <input type="text" placeholder="Что делать?"/>
         <div class="button">Добавить</div>
     </div>
+    <hr>
+    <div id="vue_todo">
+        <h2>To-do list with Vue.js</h2>
+        <ul class="list">
+            <app-task v-for="todoItem in todoList" :task="todoItem" :tags="getTags(todoItem.id)"/>
+        </ul>
+        <label>Task to do: <input type="text" @submit="addTask" placeholder="Type the task to do" v-model.lazy="todoInput"></label>
+        <label>Tags for task: <input type="text" @submit="addTag" size="50" placeholder="Type tags associated with this task separated with commas" v-model.lazy="todoTags"></label>
+        <div class="button" @click="addTodo()">Add to-do</div>
+        <hr>
+        <div id="db">
+            <div id="tasks">
+                <h3>To-Do list in database</h3>
+                <div class="entity" v-for="task in todoList">
+                    <div>{{ task.isDone }}</div>
+                    <div>{{ task.todo }}</div>
+                    <div>{{ getTags(task.id).reduce((acc, el) => acc += '  ' + el.tag, '') }}</div>
+                </div>
+            </div>
+            <div id="tags">
+                <h3>Tags list in database</h3>
+                <div class="entity" v-for="tag in tags">
+                    <div>{{ tag.id }}</div>
+                    <div>{{ tag.tag }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
