@@ -41,14 +41,39 @@ let todoListTags = [
     {id: 3, todoId: 4, tagId: 1},
     {id: 4, todoId: 5, tagId: 0},
     {id: 5, todoId: 5, tagId: 1},
-]
+];
+
+const component = Vue.component('app-task', {
+    template: `
+        <li>
+            <input type="checkbox" :checked="task.isDone" @change="task.isDone = !task.isDone"> 
+            <strong>{{ task.todo }}</strong>
+            <span class="tag" v-for="tag in tags" v-if="tag.tag">{{ tag.tag }}</span>
+        </li>
+        `,
+    data: function() {
+        return {
+            // empty object as all the data comes from parent. data may be deleted from config
+        }
+    },
+    props: {
+        task: {
+            isDone: Boolean,
+            todo: String
+        },
+        tags: Array
+    }
+
+})
 
 let vue = new Vue({
     el: '#vue_todo',
-    data: {
-        todoList: todoList,
-        todoInput: '',
-        todoTags: ''
+    data: function() {
+        return {
+            todoList: todoList,
+            todoInput: '',
+            todoTags: ''
+        }
     },
     methods: {
         addTask: function() {
