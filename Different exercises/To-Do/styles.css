@@ -36,6 +36,11 @@ li {
     align-items: center;
 }
 
+input:checked + * {
+    text-decoration: line-through;
+    color: #777;
+}
+
 .tag {
     margin: 0 15px;
     font-size: 12px;
