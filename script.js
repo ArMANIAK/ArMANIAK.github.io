@@ -23,7 +23,6 @@ let badges = document.querySelectorAll('.badge');
 badges.forEach((el, ind) => el.innerText = competencies[ind].tech);
 
 const createCard = tech => {
-    console.log(tech);
     let competency = competencies.filter(el => el.tech == tech)[0];
     let card = document.createElement('div');
     card.className = 'card';
@@ -55,12 +54,10 @@ const createChart = tech => {
 }
 
 const renderCards = () => {
-    console.log('rendering cards');
     competencies.forEach(el => createCard(el.tech));
 }
 
 const renderChart = () => {
-    console.log('chart');
     competencies.forEach(el => createChart(el.tech));
 }
 
