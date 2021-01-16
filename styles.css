@@ -36,6 +36,7 @@ body {
     justify-content: space-between;
     max-width: 45%;
     padding-right: 4%;
+    align-self: stretch;
 }
 
 #position_and_name {
@@ -58,6 +59,23 @@ body {
     margin: 25px 10px 0 10px;
     position: relative;
     overflow: hidden;
+    animation: appearance 1s;
+}
+
+.badge:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.badge:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.badge:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.badge:nth-child(5) {
+    animation-delay: 0.5s;
 }
 
 #image {
@@ -84,26 +102,6 @@ body {
     #title {
         max-width: 100%;
         padding-right: 0;
-    }
-
-    .badge {
-        animation: appearance 1s;
-    }
-
-    .badge:nth-child(2) {
-        animation-delay: 0.2s;
-    }
-
-    .badge:nth-child(3) {
-        animation-delay: 0.3s;
-    }
-
-    .badge:nth-child(4) {
-        animation-delay: 0.4s;
-    }
-
-    .badge:nth-child(5) {
-        animation-delay: 0.5s;
     }
 
     #image {
