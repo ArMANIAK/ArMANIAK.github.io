@@ -175,6 +175,45 @@ a {
     min-width: 100px;
 }
 
+.gantt-chart {
+    position: relative;
+}
+
+.gantt-item {
+    position: relative;
+    font-size: auto;
+    padding: 7px;
+    border-radius: 4px;
+    margin: 15px;
+}
+
+.gantt-item-tip {
+    padding: 10px;
+    background-color: #333333;
+    border-radius: 7px;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    z-index: 1;
+    transform: scale(0);
+    transition: all 0.4s;
+}
+
+.gantt-item-tip:before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    background-color: #333333;
+    transform: rotate(45deg);
+    position: absolute;
+    top: -7px;
+    left: 10%;
+}
+
+.gantt-item:hover > .gantt-item-tip {
+    transform: scale(1);
+}
+
 nav > * {
     display: inline-block;
 }
