@@ -13,9 +13,9 @@ const competencies = [
     { tech: "CSS", level: 5, logo: './assets/css_logo.png' },
     { tech: "JavaScript", level: 6, logo: './assets/js_logo.png' },
     { tech: "PHP", level: 4, logo: './assets/php_logo.png' },
-    { tech: "SQL", level: 3, logo: './assets/sql_logo.png' },
+    { tech: "SQL", level: 4, logo: './assets/sql_logo.png' },
     { tech: "TypeScript", level: 3, logo: './assets/ts_logo.png' },
-    { tech: "React", level: 3, logo: './assets/react_logo.png' },
+    { tech: "React", level: 4, logo: './assets/react_logo.png' },
     { tech: "C++", level: 2, logo: './assets/cpp_logo.png' }
 ]
 
@@ -27,6 +27,9 @@ const relevantExperience = [
     { startDate: new Date(2020, 01, 29), endDate: new Date(2020, 06, 08), title: 'CyberBionic Systematics. Front-end', tech: ['HTML', 'CSS', 'Javascript', 'TypeScript', 'Angular'], type: 'Courses', tip: "Front-end developer professional courses by CyberBionic Systematics" },
     { startDate: new Date(2020, 02, 22), endDate: new Date(2020, 12, 17), title: 'IT Nation. Web Development', tech: ['HTML', 'CSS', 'Javascript', 'PHP', 'MySQL', 'React'], type: 'Courses', tip: "Educational program IT Nation included courses, webinars, bootcamp and hackathon" },
     { startDate: new Date(2020, 11, 01), endDate: new Date(2020, 12, 31), title: 'SupportYourApp. Internship', tech: ['HTML', 'CSS', 'Javascript', 'PHP', 'MySQL', 'React'], type: 'Internship', tip: "Internship in SupportYourApp on full-stack web-developer position. This two-month internship was a prize on hackathon 'IT hacks 2020' and I won it." },
+    { startDate: new Date(2021, 02, 07}, endDate: new Date(), title: 'IT Dream Service', tech: ['HTML', 'CSS', 'Javascript', 'PHP', 'MySQL', 'AngularJS', 'CodeIgniter'], type: 'Project support', tip: "Support and development of existing commercial projects on ondemand basis, full-stack web-developer position." },
+    { startDate: new Date(2021, 09, 08}, endDate: new Date(), title: 'Acropolium', tech: ['HTML', 'CSS', 'Javascript', 'PHP', 'MySQL', 'React', 'Laravel', 'AWS'], type: 'Fulltime job', tip: "Fulltime position on full-stack role. Development of existing project using Laravel, React, MySQL, AWS, Docker" },
+ 
 ]
 
 let badges = document.querySelectorAll('.badge');
