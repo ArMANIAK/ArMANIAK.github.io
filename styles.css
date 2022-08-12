@@ -185,11 +185,13 @@ a {
     padding: 7px;
     border-radius: 4px;
     margin: 15px;
+    color: black;
 }
 
 .gantt-item-tip {
     padding: 10px;
     background-color: #333333;
+    color: white;
     border-radius: 7px;
     position: absolute;
     top: 35px;
